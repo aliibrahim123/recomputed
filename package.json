@@ -1,0 +1,26 @@
+{
+	"name": "recomputed",
+	"version": "0.0.0",
+	"description": "personal blog",
+	"author": "aliibrahim123",
+	"scripts": {
+		"start": "vite .",
+		"build": "vite build",
+		"generate-js-source": "node scripts/generateJSSource.js"
+	},
+	"type": "module",
+	"homepage": "https://aliibrahim123.github.io/recomputed/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/aliibrahim123/recomputed.git"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@tailwindcss/vite": "^4.0.15",
+		"@types/node": "^22.10.5",
+		"glob": "^11.0.1",
+		"tailwindcss": "^4.0.15",
+		"vite": "^6.2.3",
+		"vite-plugin-directory-index": "^3.0.1"
+	}
+}
