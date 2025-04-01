@@ -5,8 +5,7 @@
 	"author": "aliibrahim123",
 	"scripts": {
 		"start": "vite .",
-		"build": "vite build",
-		"generate-js-source": "node scripts/generateJSSource.js"
+		"build": "vite build"
 	},
 	"type": "module",
 	"homepage": "https://aliibrahim123.github.io/recomputed/",
@@ -22,5 +21,8 @@
 		"tailwindcss": "^4.0.15",
 		"vite": "^6.2.3",
 		"vite-plugin-directory-index": "^3.0.1"
+	},
+	"dependencies": {
+		"@neocomp/full": "^0.2.14"
 	}
 }

@@ -3,7 +3,52 @@
 	<title>ReComputed: a personal blog</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./styles/app.css">
+	<link rel="stylesheet" class=preserve-on-route href="./styles/app.css">
 	<script type="module" src="./src/base.ts"></script>
 </head>
-<div class="bg-red-500 a">Hello</div>
+<body class="bg-gray-50 dark:bg-slate-950 dark:text-white">
+  <div id="root" comp-name="bare" class="min-h-screen flex flex-col">
+	<header class="
+	  bg-linear-180 dark:from-indigo-900/70 dark:to-slate-900/90 from-gray-200 to-gray-400/70 
+	  sm:px-10 px-5 md:py-7 py-3 sm:py-5
+	">
+		<h1 class="font-mono sm:text-7xl md:text-8xl text-5xl text-center pb-3 tracking-wide font-semibold">ReComputed</h1>
+		<div class="sm:text-2xl text-xl text-center text-pretty font-medium">a personal blog for computer related topics</div>
+	</header>
+	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-5 pt-5">
+		<div class="
+		  bg-gray-100 dark:bg-slate-900/100 
+		  rounded-xl rounded-b-2xl border-2 border-gray-300/60 dark:border-slate-800/60
+		">
+			<div class="
+			  bg-gray-300 dark:bg-slate-800 p-2 text-xl text-center 
+			  border-3 border-gray-400/40 dark:border-slate-700/50 rounded-xl
+			">CPU Microarchitecture</div>
+			<div class="py-1 px-2 text-[1.1em] *:block *:underline *:underline-offset-2">
+				comming soon
+			</div>
+		</div>
+		<div @do="repeatClass(el, '.n')">
+			<div @do="repeatClass(el, '.0.n')">Language Design</div>
+			<div @do="repeatClass(el, '.1.n')">comming soon</div>
+		</div>
+		<div @do="repeatClass(el, '.n')">
+			<div @do="repeatClass(el, '.0.n')">Game Development</div>
+			<div @do="repeatClass(el, '.1.n')">comming soon</div>
+		</div>
+		<div @do="repeatClass(el, '.n')">
+			<div @do="repeatClass(el, '.0.n')">Web Development</div>
+			<div @do="repeatClass(el, '.1.n')">
+				<a href="./web-dev/neocomp/intro.html">NeoComp.js framework</a>
+				<a href="./web-dev/">all articles</a>
+			</div>
+		</div>
+		<div @do="repeatClass(el, '.n')">
+			<div @do="repeatClass(el, '.0.n')">Algorithms and Data Structures</div>
+			<div @do="repeatClass(el, '.1.n')">comming soon</div>
+		</div>
+	</div>
+	<div class="grow-1"></div>
+	<div @comp:this="footer" :arg:root-href="./"></div>
+  </div>
+</body>

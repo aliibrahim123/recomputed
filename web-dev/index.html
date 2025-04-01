@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+	<title>ReComputed: web development articles</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" class=preserve-on-route href="../styles/app.css">
+	<script type="module" src="../src/base.ts"></script>
+</head>
+<body class="bg-gray-50 dark:bg-slate-950 dark:text-white">
+  <div id="root" comp-name="bare" class="min-h-screen flex flex-col">
+	<header class="
+	  bg-linear-180 dark:from-indigo-900/70 dark:to-slate-900/90 from-gray-200 to-gray-400/70 
+	  sm:px-10 px-5 py-4 sm:py-6
+	">
+		<h1 class="font-mono sm:text-5xl text-4xl text-center font-semibold">Web Development</h1>
+	</header>
+	<div class="lg:px-20 px-5 sm:px-10 py-3 flex flex-col gap-4">
+		<div>
+			<h2 class="text-2xl font-medium">NeoComp.js Framework</h2>
+			<ul class="pl-5 text-[1.1em] *:list-disc *:underline *:underline-offset-3">
+			  <li><a>Intro: What and Why a Framework.</a></li>
+			  <li><a>The Failure of the Render Function.</a></li>
+			  <li><a>The Different Ways of Implementing Templating</a></li>
+			  <li><a>OOP in Components, Better and without Verbose.</a></li>
+			  <li><a>The Effectiveness of Direct DOM Interactions.</a></li>
+			  <li><a>Zero Refresh Optimization Router: WPA with Instant Navigation.</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="grow-1"></div>
+	<div @comp:this="footer" :arg:root-href="../"></div>
+  </div>
+</body>
