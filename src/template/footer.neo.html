@@ -1,4 +1,4 @@
-<neo:template id="footer" class="dark:bg-slate-900 bg-gray-200 py-1.5 px-3 flex flex-row justify-between">
+<neo:template id="footer" class="dark:bg-slate-900 bg-gray-200 py-1.5 px-3 flex flex-row gap-3">
 	<span class="
 	  inline-grid grid-cols-3 gap-0.5 rounded-full 
 	  bg-gray-950/8 p-0.75 text-gray-950 dark:bg-white/10 dark:text-white
@@ -34,5 +34,14 @@
 			</svg>
 		</span>
 	</span>
-	<a :href="${rootHref}" class="mr-3 text-xl font-mono">ReComputed</a>
+	<span class=" inline-grid grid-cols-2 rounded-full gap-0.5
+	bg-gray-950/8 items-center text-gray-950 dark:bg-white/10 dark:text-white">
+		<span class="rounded-full py-0.25 px-1 ml-1" @on(click)="comp.set('contentWidth', '120ch')"
+		  @effect(contentWidth)="comp.toggleStyle(el, comp.get('contentWidth') === '120ch')"
+		>120ch</span>
+		<span class="rounded-full py-0.25 px-1 mr-1" @on(click)="comp.set('contentWidth', '100%')"
+		  @effect(contentWidth)="comp.toggleStyle(el, comp.get('contentWidth') === '100%')"
+		>100%</span>
+	</span>
+	<a :href="${rootHref}" class="mr-3 text-xl my-auto font-mono ml-auto">ReComputed</a>
 </neo:template>

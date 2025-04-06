@@ -1,5 +1,7 @@
 import { defined } from "./utils.ts";
 
+export type ContentWidth = '120ch' | '100%';
+
 if (!localStorage.getItem('theme')) localStorage.setItem('theme', 'system');
 export function updateTheme() {
 	document.documentElement.classList.toggle("dark",
@@ -31,5 +33,5 @@ export function repeatClass (el: HTMLElement, source: string) {
 
 declare global {
 	var repeatClass: (el: HTMLElement, source: string) => void;
-}
+} 
 globalThis.repeatClass = repeatClass;

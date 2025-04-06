@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+	<title>ReComputed: Intro: What and Why a Framework</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" class=preserve-on-route href="../../styles/app.css">
+	<script type="module" src="../../src/base.ts"></script>
+	<script type="module" src='../../src/article.ts'></script>
+</head>
+<body class="bg-gray-50 dark:bg-slate-950 dark:text-white">
+  <div id="root" comp-name="@lazy:article" root-href="../../">
+	<div id="title">Intro: What and Why a Framework</div>
+	<h1>The Web Platform has evolved alot</h1>
+	<p>Sometimes, we need to set down and appreciate how much the web platform has evolved.</p>
+	<p>From a clunky start as a static documents with many quirks. to today, a feature rich heavy apps 
+		platform that rival the native platforms, with its efficiency and ease of use and its unmatched 
+		<b>evolving</b>.
+	</p>
+	<p>the web platform has been the leader in the inovation in UI design space. inspiring nearlly all the UI 
+		design technologies, while some adpot it in their stacks.
+	</p>
+	<p>While the web platform and its technology are easy to use comparend to other technologies, it is 
+		slightly verbose and low level as it is a platform not a framework.
+	</p>
+	<p>For this reason the frontend frameworks has been created, as a high level declarative thin layer 
+		around the advance web technologies, to make developing complex applications and websites easier, 
+		faster and safier.
+	</p>
+	<p>Were did all of this <b>complexity</b> in todays frameworks come from?</p>
+	
+	<h1>What happened to Simplicity in Frameworks?</h1>
+	<p>I dont mean simplicity in fundumentals or API surface, I mean simplicity in implementation, the
+		runtime internals and codegen tooling that powers the modern frameworks.
+	</p>
+	<p>there is no doubt that the modern frameworks have become heavy and complex in their internals. 
+		most of them weight greater that 100kb gzip, which cause serous performance issues espicially slow load times.
+	</p>
+	<p>they also integrated complex and heavy technologies into their runtimes, just to be a little more declarative, look at the entire spectrum of VDOM implementations.
+	</p>
+	<p>they also relied more and more on compilers and codegen in their tooling, to add functionallity not 	possible with normal javascript. some use compilers to allow reactivity with normal javascript expressions, like <a href="https://svelte.dev/">Svelte</a>.
+	</p>
+	<p>additionally frameworks had integrated custom domain syntax to javascript, like <a href="https://facebook.github.io/jsx/">JSX</a>. which requires additional work in code viewers and parsers in order to support it.</p>
+	<p>the quest for less verbosity had taken us to the realm of complex techniques and implementations, not because the web is verbose, but since the binefits started to require a lot for less.</p>
+	
+	<h1>The Power of Simplicity</h1> 
+	<p>if you had notciced, over the years the the frontend frameworks had depended more on complex technologies just to be more a little more declarative.</p>
+	<p>i am not against declarative in programming, espicially in places having solid structure, like UI design. but i am here to highlight the existence of many solid and lightweight techniques that can incoperated into the frameworks. <br>
+	they are a little bit more verbose, but in pair and may exceed the heavier ones in flexibility and functionality.</p>
+	<p>these techniques will not take anything from us, they are just the features you expect but coexist seemlisly with the rest of the application code as they use only on the natives ways.</p>
+
+	<h2>the web natives are good enough</h2>
+	<p>the web natives are enough and surprisingly powerful and flexible if implemented correctly, but a little less expressive from the frameworks own techniques, but do we really need to reinvent the wheel just for a little more?</p>
+	<p>in this series of artciles, i will discuss the current trend of the complex implementations, and how we can solve them through the power of simplicity and remaining close to the natives.</p>
+	<p>for that i have developed <a href="https://github.com/aliibrahim123/neocomp.js">NeoComp.js</a>, an idea to show how simple lightweight techniques can delever amazing results while having execellent performance.</p>
+
+	<h2>it is not a production framework</h2>
+	<p>do not increment the new frameworks counter, this is not and will not be, in the current time, a well maintained and production ready framework.</p>
+	<p>it is just a collections of ideas to support an argument done in free time and created for personal use. if you liked a feature, feel free to implement it in your framework.</p>
+	<p>now before diving into how we can fix the complexity by simplicity, lets just discuss.</p>
+	
+	<h1>Why a Framework</h1>
+	<p>if you had hated the wars between frameworks or didnt believed in the importance of a framework, and you tried creating a slighly interactive website in plain vanilla javascript. the results would be:</p>
+	<ol>
+		<li>complexity spagity code only God understand it and deinvented the DRY and SOLID principles.</li>
+		<li>a new framework entering the arena, capable to self destruct and reinvented the whole horse.</li>
+	</ol>
+	<h3>why this?</h3>
+	<p>comparing the web to other platforms, it is not verbose. but it still is a platform having a low level API.</p>
+	<p>it needs just a good belt of utilities and a well structure to make life dont suck.</p>
+	<p>this is the core idea of using a framework, a community accepted common foundation, utilities, and tools that establish a wide ecosystem with standared development environment.</p>
+
+	<h1>What is a Framework</h1>
+	<p>didnt i just stated the definition of an framework. yes but it is required to explain the identity of the framework and its roles and common features to really understand what we need to improve.</p>
+	<p>a framework is a peice of code that act as the foundation of the application, it is the responsible for core functionalities and implementation of the fundumentals.<br>
+	and in the web frontend world, they are:</p>
+	<ul>
+		<li><b>logic encapsulation and composition:</b> commonly implemented through components, a unit of UI containing its associated logic, and are in identity composable.</li>
+		<li><b>DOM construction and bindings: </b>provide a solid and easy way of associating logic and bindings to the native DOM, and it is the main reason of diverge.</li>
+	</ul>
+	<p>all the frameworks had setteled on a general markup of components and agrued on the esintial fundumentals and building peices, with slight dialect differences.</p>
+	<p>what is not agrued on is the shape of the bindings to the DOM, this is the main reason of the diverse and diverge you see in the modern framework and their paradigms.</p>
+	<p>some use VDOM, others use fined-grained DOM bindings, other use compilers to convert normal javascript expressions into reactive ones, other render on server then continue the work in the client, and countless other technology invented just to bind some data and events to the DOM. Why?</p>
+	<p>maybe since we have turned from classical OOP inspired imperative MVC frameworks to a fully declarative functional reactive frameworks in a short time while that technology is still maturing, as it still has a fundumental flaw, which restained it by legacy stuff.</p>
+	<p>I am talking about React and the render function faluire.</p>
+  </div>
+</body>
+ 

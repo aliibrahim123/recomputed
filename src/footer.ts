@@ -7,21 +7,22 @@ interface TypeMap extends BaseMap {
 	props: {
 		theme: string;
 		rootHref: string;
+		contentWidth: string;
 	},
 	args: {
 		rootHref: string;
 	}
 }
 
-class Footer extends Component<TypeMap> {
+export class Footer extends Component<TypeMap> {
 	static override defaults: CompOptions = {
 		...Component.defaults,
 		store: { addUndefined: true },
 		view: { template: template.footer }
 	};
 	static selectedClasses = tw`
-		bg-white ring inset-ring ring-gray-950/10 inset-ring-white/10 sm:p-0 dark:bg-gray-700 
-		dark:text-white dark:ring-transparent
+		bg-white ring inset-ring ring-gray-950/10 inset-ring-white/10 
+		dark:bg-gray-700 dark:text-white dark:ring-transparent
 	`;
 	override init() {
 		this.set('rootHref', this.args({ rootHref: '/' }).rootHref);
@@ -29,7 +30,11 @@ class Footer extends Component<TypeMap> {
 			localStorage.theme = this.get('theme');
 			updateTheme();
 		});
-		this.set('theme', localStorage.getItem('theme') || '');
+		this.set('theme', localStorage.getItem('theme') || 'system');
+		this.effect(['contentWidth'], () => 
+			localStorage.setItem('contentWidth', this.get('contentWidth'))
+		);
+		this.set('contentWidth', localStorage.getItem('contentWidth') || '120ch');
 		this.initDom();
 	}
 	toggleStyle (el: HTMLElement, set: boolean) {

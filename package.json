@@ -23,6 +23,9 @@
 		"vite-plugin-directory-index": "^3.0.1"
 	},
 	"dependencies": {
-		"@neocomp/full": "^0.2.14"
+		"@neocomp/full": "^0.2.14",
+		"@tailwindcss/typography": "^0.5.16",
+		"@types/prismjs": "^1.26.5",
+		"prismjs": "^1.30.0"
 	}
 }

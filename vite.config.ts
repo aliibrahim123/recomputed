@@ -22,9 +22,6 @@ export default defineConfig({
 			preserveEntrySignatures: 'allow-extension'
 		}
 	},
-	esbuild: {
-		keepNames: true
-	},
 	plugins: [directoryPlugin(), neoTempPlugin(), tailwindcss(), htmlPlugin()]
 });
 
@@ -37,7 +34,7 @@ function htmlPlugin (): Plugin {
 		return result.replaceAll(/<(script|link) [^>]+>/g, (match) => {
 			//if link but not stylesheet, do not modify
 			const isLink = match.startsWith('<link');
-			if (isLink && !match.includes('stylesheet')) return result;
+			if (isLink && !match.includes('stylesheet')) return match;
 			
 			//id = src file name without extension
 			const src = match.match(/(src|href)\s*=\s*"(?<path>[^"]+)"/)?.groups?.path || '';

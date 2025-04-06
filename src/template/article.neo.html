@@ -1,0 +1,18 @@
+<neo:template id="article" class="min-h-screen flex flex-col">
+	<header class="
+	  bg-linear-180 dark:from-indigo-900/70 dark:to-slate-900/90 from-gray-200 to-gray-400/70 
+	  sm:px-10 px-5 py-4
+	">
+		<h1 class="font-mono text-4xl text-center font-semibold" :text>${title}</h1>
+	</header>
+	<article :content(content)="{content}" class="
+	  lg:px-20 px-3 sm:px-10 py-3 prose leading-5! mx-auto
+	  prose-p:my-3 prose-headings:mb-2 prose-headings:mt-2 dark:prose-invert max-w-none
+	" @effect(contentWidth)="
+	  const width = comp.get('contentWidth');
+	  el.classList.toggle('max-w-full!', width === '100%');
+	  el.classList.toggle('max-w-[120ch]!', width === '120ch');
+	"></article>
+	<div class="grow-1"></div>
+	<footer @comp:this="footer" @out(contentWidth)="contentWidth" :arg:rootHref="{comp.get('rootHref')}"></footer>
+</neo:template> 
