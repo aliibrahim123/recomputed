@@ -8,8 +8,11 @@
 	<script type="module" src='../../src/article.ts'></script>
 </head>
 <body class="bg-gray-50 dark:bg-slate-950 dark:text-white">
-	<div id="root" comp-name="@lazy:article" root-href="../../">
-	<div id="title">Intro: What and Why a Framework</div>
+  <div id="root" comp-name="@lazy:article" root-href="../../">
+	<div id="info">
+		<span prop="title">Intro: What and Why a Framework</span>
+		<span prop="created">7-4-2025</span>
+	</div>
 	<h1>The Web Platform has evolved a lot</h1>
 	<p>Sometimes, we need to sit down and appreciate how much the web platform has evolved.</p>
 	<p>From a clunky start as static documents with many quirks, to today, a feature-rich platform for
@@ -41,11 +44,11 @@
 	</p>
 	<p>They have also relied more and more on compilers and codegen in their tooling to add
 		functionality not possible with normal JavaScript. Some use compilers to allow reactivity
-		with normal JavaScript expressions, like <a href="https://svelte.dev/">Svelte</a>.
+		with normal JavaScript expressions, like <a -href='webdiv.svelte'>Svelte</a>.
 	</p>
 	<p>Additionally, frameworks have integrated custom domain syntax into JavaScript, like
-		<a href="https://facebook.github.io/jsx/">JSX</a>, which requires additional work in code 
-		viewers and parsers to support it.
+		<a -href="webdiv.jsx">JSX</a>, which requires additional work in code viewers and parsers to
+		support it.
 	</p>
 	<p>The quest for less verbosity has taken us to the realm of complex techniques and implementations,
 		not because the web is verbose, but because the benefits started to require a lot for less.
@@ -73,8 +76,8 @@
 	<p>In this series of articles, I will discuss the current trend of complex implementations and how 
 		we can solve them through the power of simplicity and remaining close to the natives.
 	</p>
-	<p>For that, I have developed <a href="https://github.com/aliibrahim123/neocomp.js">NeoComp.js</a>, 
-		a proof of concept to show how simple lightweight techniques can deliver amazing results while
+	<p>For that, I have developed <a -href="webdiv.neocomp">NeoComp.js</a>, a proof of concept to show
+		how simple lightweight techniques can deliver amazing results while
 		having excellent performance.
 	</p>
 
@@ -134,12 +137,13 @@
 		in the client, and countless other technologies invented just to bind some data and events 
 		to the DOM, Why all of this diversity?
 	</p>
-	<p>we loved React diversity but it caused serous performance problems. the solutions that kept 
+	<p>we loved <a -href="webdiv.react">React</a> declarativity but it caused serous performance problems. the solutions that kept 
 		the declarativity relied on transpilers / compilers, while ones that favored performance over 
 		declarativity were not sold well, while React becomed restrained by legacy code.
 	</p>
 	<p>In the <a href="./failure_of_render_fn.html">next article</a> we will dive in the problems 
 		associated with the render function paradigm and the alternative solution for it.
 	</p>
+  </div>
 </body>
  

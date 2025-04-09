@@ -7,7 +7,6 @@ import { repeatClass } from './style.ts';
 
 declare global {
 	var router: ZRORouter;
-	var rootComp: BareComp; 
 }
 
 class BareComp extends Component<BaseMap> {
@@ -20,13 +19,12 @@ class BareComp extends Component<BaseMap> {
 }
 registry.add('bare', BareComp);
 
-
 globalThis.router = new ZRORouter();
 
 function update () {
 	if (registry.root) registry.removeRoot();
 	const rootEl = query('#root')[0];
-	globalThis.rootComp = new (registry.get(rootEl.getAttribute('comp-name') || ''))(rootEl) as any;
+	const rootComp = new (registry.get(rootEl.getAttribute('comp-name') || ''))(rootEl) as any;
 	registry.setRoot(rootComp);
 }
 router.onAfterUpdate.on(update);

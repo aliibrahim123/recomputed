@@ -34,8 +34,11 @@
 			</svg>
 		</span>
 	</span>
-	<span class=" inline-grid grid-cols-2 rounded-full gap-0.5
+	<span class=" inline-grid grid-cols-3 rounded-full gap-0.5
 	bg-gray-950/8 items-center text-gray-950 dark:bg-white/10 dark:text-white">
+		<span class="rounded-full py-0.25 px-1 ml-1" @on(click)="comp.set('contentWidth', '100ch')"
+		  @effect(contentWidth)="comp.toggleStyle(el, comp.get('contentWidth') === '100ch')"
+		>100ch</span>
 		<span class="rounded-full py-0.25 px-1 ml-1" @on(click)="comp.set('contentWidth', '120ch')"
 		  @effect(contentWidth)="comp.toggleStyle(el, comp.get('contentWidth') === '120ch')"
 		>120ch</span>
