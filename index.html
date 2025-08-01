@@ -6,8 +6,8 @@
 	<link rel="stylesheet" class=preserve-on-route href="./styles/app.css">
 	<script type="module" src="./src/base.ts"></script>
 </head>
-<body class="bg-gray-50 dark:bg-slate-950 dark:text-white">
-  <div id="root" comp-name="bare" class="min-h-screen flex flex-col">
+<body>
+  <div id="root" comp-name="page" root-href="./" walk>
 	<header class="
 	  bg-linear-180 dark:from-indigo-900/70 dark:to-slate-900/90 from-gray-200 to-gray-400/70 
 	  sm:px-10 px-5 md:py-7 py-3 sm:py-5
@@ -48,7 +48,5 @@
 			<div @do="repeatClass(el, '.1.n')">comming soon</div>
 		</div>
 	</div>
-	<div class="grow-1"></div>
-	<div @comp:this="footer" :arg:root-href="./"></div>
   </div>
 </body>

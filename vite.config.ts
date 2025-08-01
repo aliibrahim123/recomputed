@@ -22,7 +22,7 @@ export default defineConfig({
 			preserveEntrySignatures: 'allow-extension'
 		}
 	},
-	plugins: [directoryPlugin(), neoTempPlugin(), tailwindcss(), htmlPlugin()]
+	plugins: [directoryPlugin(), neoTempPlugin( { macro: true } ), tailwindcss(), htmlPlugin()]
 });
 
 //keep id in script and link tags
