@@ -11,7 +11,7 @@
   <div id="root" comp-name="@lazy:article" root-href="../../">
 	<div id="info">
 		<span prop="title">Intro: What and Why a Framework</span>
-		<span prop="created">7-4-2025</span>
+		<span prop="created">1-8-2025</span>
 	</div>
 	<h1>The Web Platform has evolved a lot</h1>
 	<p>Sometimes, we need to sit down and appreciate how much the web platform has evolved.</p>
@@ -35,19 +35,19 @@
 	<p>I don't mean simplicity in fundamentals or API surface, I mean simplicity in implementation,
 		the runtime internals, and codegen tooling that powers modern frameworks.
 	</p>
-	<p>There is no doubt that modern frameworks have become heavy and complex in their internals.
+	<p>There is no doubt that modern frameworks have become heavy and bulky in their internals.
 		Most of them weigh greater than 100kb gzipped, which causes serious performance issues, 
 		especially slow load times.
 	</p>
-	<p>They have also integrated complex and heavy technologies into their runtimes just to be a 
+	<p>They have also integrated complex and costly technologies into their runtimes just to be a 
 		little more declarative. Look at the entire spectrum of VDOM implementations.
 	</p>
 	<p>They have also relied more and more on compilers and codegen in their tooling to add
 		functionality not possible with normal JavaScript. Some use compilers to allow reactivity
-		with normal JavaScript expressions, like <a -href='webdiv.svelte'>Svelte</a>.
+		with normal JavaScript expressions, like Svelte.
 	</p>
 	<p>Additionally, frameworks have integrated custom domain syntax into JavaScript, like
-		<a -href="webdiv.jsx">JSX</a>, which requires additional work in code viewers and parsers to
+		JSX, which requires additional work in code viewers and parsers to
 		support it.
 	</p>
 	<p>The quest for less verbosity has taken us to the realm of complex techniques and implementations,
@@ -64,25 +64,24 @@
 		They are a little bit more verbose, but in pair and may exceed the heavier ones in flexibility 
 		and functionality.
 	</p>
-	<p>These techniques will not take anything from us; they are just the features you expect but coexist
+	<p>These techniques will not take anything from us, they are just the features you expect but coexist
 		seamlessly with the rest of the application code as they use only native ways.
 	</p>
 
 	<h2>The web natives are good enough</h2>
-	<p>The web natives are enough and surprisingly powerful and flexible if implemented correctly, but a
-		little less expressive than the frameworks' own techniques. But do we really need to reinvent the
+	<p>The web natives are good enough and surprisingly powerful and flexible if implemented correctly, but a
+		little less expressive than the frameworks own techniques. But do we really need to reinvent the
 		wheel just for a little more?
 	</p>
 	<p>In this series of articles, I will discuss the current trend of complex implementations and how 
 		we can solve them through the power of simplicity and remaining close to the natives.
 	</p>
-	<p>For that, I have developed <a -href="webdiv.neocomp">NeoComp.js</a>, a proof of concept to show
-		how simple lightweight techniques can deliver amazing results while
-		having excellent performance.
+	<p>For that, I have developed <a -href='webdev.neocomp'>NeoComp.js</a>, a proof of concept framework to 
+		show how simple lightweight techniques can deliver amazing results while having excellent performance.
 	</p>
 
 	<h2>It is not a production framework</h2>
-	<p>Do not increment the new frameworks counter; this is not and will not be, in the current time,
+	<p>Do not increment the new frameworks counter, this is not and will not be, in the current time,
 		a well-maintained and production-ready framework.
 	</p>
 	<p>It is just a collection of ideas to support an argument done in free time and created for 
@@ -90,58 +89,27 @@
 	</p>
 	<p>Now, before diving into how we can fix the complexity by simplicity, let's just discuss.</p>
 
-	<h1>Why a Framework</h1>
-	<p>If you have hated the wars between frameworks or didn't believe in the importance of a framework,
-		and you tried creating a slightly interactive website in plain vanilla JavaScript, the results
-		would be:
+	<h1>Why this Diversity in Frameworks</h1>
+	<p>the major role of frameworks in the webdev world is logic encapsulation and composition, and DOM building and binding.
 	</p>
-	<ol>
-		<li>complex spaghetti code only God understands it and deinvented the DRY and SOLID principles.</li>
-		<li>A new framework entering the arena, capable of self-destructing and reinventing the whole 
-			horse.
-		</li>
-	</ol>
-	<h3>Why this?</h3>
-	<p>Comparing the web to other platforms, it is not verbose. But it still is a platform having a
-		low-level API.
+	<p>All frameworks have settled on a general markup of components and agreed on the core 
+		fundamentals, with slight dialect differences.
 	</p>
-	<p>It just needs a good belt of utilities and a well-structured approach to make life not suck.</p>
-	<p>This is the core idea of using a framework: a community-accepted common foundation, utilities,
-		and tools that establish a wide ecosystem with a standard development environment.
-	</p>
-
-	<h1>What is a Framework</h1>
-	<p>Didn't I just state the definition of a framework? Yes, but it is required to explain the identity
-		of the framework and its roles and common features to really understand what we need to improve.
-	</p>
-	<p>A framework is a piece of code that acts as the foundation of the application. It is responsible
-		for core functionalities and the implementation of the fundamentals.<br>
-		And in the web frontend world, they are:
-	</p>
-	<ul>
-		<li><b>Logic encapsulation and composition:</b> commonly implemented through components, a 
-			unit of UI containing its associated logic, and are inherently composable.
-		</li>
-		<li><b>DOM construction and bindings:</b> provide a solid and easy way of associating logic 
-			and bindings to the native DOM, and it is the main reason for divergence.
-		</li>
-	</ul>
-	<p>All frameworks have settled on a general markup of components and agreed on the essential 
-		fundamentals and building pieces, with slight dialect differences.
-	</p>
-	<p>What is not agreed upon is the shape of the bindings to the DOM. This is the main reason for 
-		the diversity and divergence you see in modern frameworks and their paradigms.
+	<p>What is not agreed upon is the shape of the bindings to the DOM. and this is the main reason for divergence in modern frameworks and their paradigms.
 	</p>
 	<p>Some use VDOM, others use fine-grained DOM bindings, others use compilers to convert normal 
-		JavaScript expressions into reactive ones, others render on the server then continue the work 
-		in the client, and countless other technologies invented just to bind some data and events 
-		to the DOM, Why all of this diversity?
+		javascript expressions into reactive ones, others streams javascript based on user interactions, and there still who use JQuery and support IE7, and countless other technologies invented just to bind some state to and with the DOM, Why all of this diversity?
 	</p>
-	<p>we loved <a -href="webdiv.react">React</a> declarativity but it caused serous performance problems. the solutions that kept 
+
+	<h2>A Never Ending Quest for Declarativity</h2>
+	<p>The web platform was reletively low in verbosity from the beginning, and evolving means less 
+		complexity, and when React came, it erased the word imperetive from the dictionary
+	</p>
+	<p>We loved React declarativity but it caused serous performance problems. the solutions that kept 
 		the declarativity relied on transpilers / compilers, while ones that favored performance over 
-		declarativity were not sold well, while React becomed restrained by legacy code.
+		declarativity were not sold well, while React becomed restrained by legacy code restricting it from fixing its self. 
 	</p>
-	<p>In the <a href="./failure_of_render_fn.html">next article</a> we will dive in the problems 
+	<p>In the <a href="./failure_of_render_fn.html">next article</a> we will dive into the problems 
 		associated with the render function paradigm and the alternative solution for it.
 	</p>
   </div>

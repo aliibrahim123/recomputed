@@ -2,6 +2,7 @@ import { Component, registry, type BaseMap, type CompOptions } from "@neocomp/fu
 import { query } from "@neocomp/full/rawdom";
 import { links } from "./links.ts";
 import { $template } from "@neocomp/full/comp-base/tempGen";
+import { highlight } from "./syntax-highlight/core.ts";
 
 interface TypeMap extends BaseMap {
 	props: {
@@ -67,10 +68,12 @@ class Article extends Component<TypeMap> {
 		}
 		this.initDom();
 
+		if (this.el.hasAttribute('highlight')) highlight();
+
 		this.set('contentWidth', localStorage.getItem('contentWidth') || '120ch');
 		router.attachToDom();
 
-		this.fireInit()
+		this.fireInit();
 	}
 }
 

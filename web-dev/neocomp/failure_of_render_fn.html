@@ -6,12 +6,13 @@
 	<link rel="stylesheet" class=preserve-on-route href="../../styles/app.css">
 	<script type="module" src="../../src/base.ts"></script>
 	<script type="module" src='../../src/article.ts'></script>
+	<link rel="stylesheet" class=preserve-on-route href="../../styles/syntax-highlight.css">
 </head>
 <body class="bg-gray-50 dark:bg-slate-950 dark:text-white">
-  <div id="root" comp-name="@lazy:article" root-href="../../">
+  <div id="root" comp-name="@lazy:article" root-href="../../" highlight>
 	<div id="info">
 		<span prop="title">The Failure of the Render Function</span>
-		<span prop="created">9-4-2025</span>
+		<span prop="created">2-8-2025</span>
 	</div>
 	<h3><q>React is Slow</q>.</h3>
 	<p>how many time have you heard that? you cant count.<br>
@@ -20,18 +21,112 @@
 
 	<h1>The Promise of React</h1>
 	<h2>The Frameworks before React</h2>
-	<p>the web before React was simple, most websites are static / server rendered pages, with some javascript sprinkled on top for simple but good interactivity. but if you want to do any advance work on the client side, your options are, compared to day, are a little bit less reactive.</p>
-	<p>pre-React frameworks like <a -href="webdiv.backbone">Backbone</a> and others were classical OOP inspired MVCs. they focused alot on the code structure and the data layer, and less if any on the view layer and data binding.</p>
-	<p>when you want to update a DOM node, you would use the limited templating provided by your framework, or you would use <a -href='webdiv.jquery'>JQuery</a>to query the node and update it manually.</p>
-	<p>the MVC frameworks  </p>
-	<p>and then, React came and changed the whole web with a revolutionary concept.</p>
-
-	<h2>React most Important Feature, declarativity</h2>
+	<p>the web before React was simple, most websites are static / server rendered pages, with some javascript sprinkled on top for simple but good interactivity. but if you want to do any advance work on the client side, your options are, compared to day, a little bit less reactive.</p>
+	<p>pre-React frameworks like Backbone and others were classical OOP inspired MVCs. they focused alot on the code structure and the data layer, and less if any on the view layer and data binding.</p>
+	<p>when you want to update a DOM node, you would use the limited templating provided by your framework, or you would use JQueryto query the node and update it manually.</p>
+	<p>and then, React came to simplify web development and make declarative reactive ui the norm, and for that it came up with a revolutionary concept.</p>
 	
+	<h2>The Render Function: The React Way</h2>
+	<p>the render function in definition is a function that recreates the ui structure on each update, and it is the only one responsible for that.</p>
+	<p>while render functions were introduce before react, the web started from a static pages rebuild on the server on each update, and many client frameworks after that implemented similar technologies like templates, react optimized it and made it javascripty</p>
+	<p>react adopted a technology like the old string templates, html syntaxed templates inline in javascript, but what sets it apart is the fact they corresponds to normal javascript values, they can be passed normally between variables and functions like ordinary javascript values, this allowd the ui code to be fully declarative with minimal syntax changes.</p>
+	<pre><code class="language-jsx"><!--
+		const comp1 = (to) => <div>hello {to}</div>;
+		const comp2 = boolean ? comp1 : (() => <div>empty</div>)
+		return <div>{data.map(comp2)}</div>
+	--></code></pre>
+	<p>after react allowed writing ui in factory paradigm with full reactivity, they were serious performance problems with rerendering the entire app on each user interaction, it was impossible to accept this concept in the production, but the react team came with a solution</p>
 
-	<h1>The OverRender Hell</h1>
+	<h2>VDOM to the Rescue</h2>
+	<p>VDOM is a lightweight representaion of the native DOM, it doesnt do anything on its own, but when the integrated into render function in that it creates VDOM not native DOM, some critical benifits emerge.</p>
+	<p>other than being lightweight in usage, VDOM allows to avoid rerendering the entire app on each update by differing the current VDOM from the previous one, and then updating only the changed parts, this is called VDOM conciliation and it is the main reason why react is possible</p>
+	<p>VDOM conciliation is absolutly the reason that provided the modern web with the simplicity at scale we have today, but it wasnt magic, it didnt erase the problem, only decreasing its appearence</p>
+
+	<h1>The ShortComes of the Render Function</h1>
+	<h2>The OverRender Hell</h2>
+	<p>render function are performant at the local scale, yes they are inefficent compared to direct approuches, but the difference is negligible as our computers are computational beasts.</p>
+	<p>however, as the ambetions grow bigger and bigger and the complexity of a blog website skyrocketed, a crack in the render function formula had appeared, and it was overrendering</p>
+	<p>in render functions when a state is changed, all of its children rerenders, while this is controllable in local scope, it gets out of hand really quickly when working with global state, as any single interaction propagates inside the entirity of the app rerunning all of its logic. and it doesnt stop here.</p>
+	<p>adding to the pain, the introducing of new sources of update other than user interaction like animation, scrolling and hover, had lead to rerunning of hundereds kb worth of code mostly every frame, making many websites unresponsive in newer hardware and unusable in older hardware</p>
+	<p>while overrenders are a common problem in the react world, there is another source of pain</p>
+
+	<h2>Ever Growing Snapshots of States</h2>
+	<p>functions are amazing for imutable ui, but that only exists in static sites, and since functions has no concept of instanced presisted variables (class fields), the react team hacked a way for having states inside functions, and it footguns the footgunner. </p>
+	<p>inside render functions, you call api functions to get a snapshot of the state at the moment of calling, while this is fine inside the function scope, it causes problem when using state in other ways especially in clojures</p>
+	<p>every core api and hook that accept functions is given by users clojures that capture the states, and since these clojures can span more than one updates, you use states from a past moment not the up to date state, and good luck hunting bugs, a spacetime ones.</p>
+	<pre><code class="language-javascript"><!--
+		function comp (props) {
+			const [state, setState] = useState();
+			useEffect(async () => {
+				await fetch(url);
+				someFunc(state); //state from the past
+			}, [state])
+			// ...
+		}
+	--></code></pre>
+
+	<h2>Hard Vendor Locking</h2>
+	<p>render functions are synchronous, and they run on every update, these behavior doesnt play will when dealing with code outside react, for that every interaction with the outside has to be wrapped inside an effect.</p>
+	<p>also, because of VDOM reconciation, the entirity of DOM is controlled by react and its internal systems, so any manual update to a DOM node created from a render function at best will be overwritten, and at worst the DOM structure will be broken.</p>
+	<p>these reasons caused dificulties integrating react with many regions of the javascript ecosystems, especially other ui frameworks.</p>
+
 	<h1>React has Performance Issues, But</h1>
+	<h2>It cant Change</h2>
+	<p>if react was easily fixable, the react team would done that from the beginning. but the problem is in reacts identity, its core concepts, any attempt to fix the performance issues would have to break the core of react, requireing a major refactor of the react ecosystem and react powered websites.</p>
+		
+	<p>react popularity made it restrained by the modern web codebases, many frameworks tried to fix react but they failed, becaused migrating into an alternative requires insane abount of manforce, and that is not affordable for every companies.</p>
+	
+	<h2>It is Being Enhanced</h2>
+	<p>even though react can not change its fundamentals, it can be improved from inside. and we can see this clearly as the react team has done milestones in terms of performance and scalability. espicially with react fiber and the react compiler. batching of updates in idle and auto memorization proved to be effective speed boasts without changing a letter.</p>
+	
+	<h2>It is Fast Enough</h2>
+	<p>depsite all of the above, react is still fast enough for most use cases. overrendering can be avoided completly with good practices and signals. </p>
+	<p>we are not developing game engines, we are developing websites with static structure and dynamic contents. the problem is with streaming updates, and these requires a native approaches not react.</p>
+	
+	<h2>It is Evolving the Web</h2>
+	<p>whatever happen we must remember a thing, we are not discussing a quirky technology forced on us. we are discussing the framework that started and is driving the modern evolution of the web.</p>
+	<p>declarative ui, jsx, model view union, function based components, server components, native mobile support and many other revolutionary concepts was introduced by react to the webdev world and had becomed a standared.</p>
+	<p>react was the one that forced the hyper evolving web we have today, it brings the newest hotest concept to the mass public and the rest of the framework work on improving. you dont know, maybe react enefficincy was a good thing after all.</p>
+	<p>and still, react core paradigm is flawed, even though fixing it will break alot of codebases, react must change, the core concepts are well established in the community (signals, fine grained reactivity...), what required is a new performant type of components that can coexists seamlessly with the old components, this is the secret recipe in fixing react.</p>
+
 	<h1>The React Alternative</h1>
+	<p>many frameworks tried to fix react in there own way, and everyone has good points. but the most promising one that is similar to react in syntax is solidjs.</p>
+	<p>solidjs is a javascript framework based on functional components and fine grained reactivity, and it is the fastest widely used framework in the world.</p>
+	<p>it is very similar to react in syntax and related primitives, it use jsx, use functional components, has similar apis. however solid is faster, smaller, effecient and solid.</p>
+	<p>the key in understanding solids results is to understant how it works under the hood.</p>
+	
+	<h2>Quick Solid Anatomy</h2>
+	<pre><code class="language-jsx"><!--
+		function Counter() {
+			const [count, setCount] = createSignal(0);
+			createEffect(() => console.log('count: ', count()));
+
+			return (<div>
+				<button onClick={() => setCount((n) => n + 1)}>count: {count()}</button><br>
+				count * 2: {count() * 2}
+			</div>);
+		}
+	--></code></pre>
+	<p>there core primitive in solid are:</p>
+	<ul>
+		<li><b>signals:</b> lightweight objects that wrap a state, and can track their listeners.</li>
+		<li><b>effects:</b> functions that depends on signals and get executed when a signal changes.</li>
+	</ul>
+	<p>the component function is like a factory function, it is called once on creation and define the initial states, define the signals, effects, event listeners, and construct the initial ui structure.</p>
+	<p>after that updates propagate through events to signals and effects, and last to the DOM by the effects defined in the template</p>
+
+	<h2>The Power of Fine Grained Reactivity</h2>
+	<p>you woud be wondering what is the benifits of signals and effect over the react way, the solid way also called fine grained reactivity allows effecint and direct DOM updates while adding no additional syntax.</p>
+	<p>if you noticed, the reactive bits of the code are coupled in effects, which creates direct update paths as only the required code is rerun, also signals allow the automatic tracking of dependencies while adding no extra syntax.</p>
+	<p>these factors allow solid to have direct update paths with automatic dependencies detection, achieving its goal in performance and declarativity, as opposite to react that need to rerender the whole app since everything is coupled togather.</p>
+	<p>while this technique is effecint as manual updates, it is less expressive that the render functions, advance features like conditional and list rendering requires custom logic, while in react they exists in native syntax.</p>
+	<p>the render functions allow the changing of the entire ui structure expressivly, while fine grained reactivity is stuck with static structure, but here is the thing, do we really need this power, our websites from largest to smallest are static structure dynamic content.</p>
+	<p>the problem was the less declarative nature of the past frameworks, react come up with declarivity but it was inefficent at scale, the rest of the world tried fixing it and are still fighting, while the probelm has been fixed long ago by auto dependency detection fine grained reactivity, and that is the story of the modern framework war.</p>
+	
+	<h2>About NeoComp</h2>
+	<p>neocomp also adopted the solids concepts, auto dependency detection fine grained reactivity, but with a twist, it uses object opriented paradigm insted of functional paradigm.</p>
+	<p>the functional paradigm is great in declarative minimal verbosity ui development, but it has some limititaion for statefull large component, espicially in terms of organization.</p>
+	<p>before discussing the benifits of the object oriented component over functional ones, lets dive in <a href = './impl_templating.html'>the different ways of implementing template</a></p>
+	<p></p>
   </div>
 </body>
- 
