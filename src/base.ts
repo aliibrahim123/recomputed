@@ -2,7 +2,6 @@ import { ZRORouter } from '@neocomp/full/zro-router';
 import { Component, registry, type BaseMap, type CompOptions, type Template } from '@neocomp/full/comp-base'
 import { query } from '@neocomp/full/rawdom';
 import './footer.ts';
-import { repeatClass } from './style.ts';
 import { $template } from '@neocomp/full/comp-base/tempGen';
 import { microWalk, tw } from './utils.ts';
 

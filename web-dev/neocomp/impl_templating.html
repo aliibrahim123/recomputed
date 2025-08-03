@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<head>
+	<title>ReComputed: The Different Ways of Implementing Templating</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" class="preserve-on-route" href="../../styles/app.css">
+	<script type="module" src="../../src/base.ts"></script>
+	<script type="module" src='../../src/article.ts'></script>
+	<link rel="stylesheet" class="preserve-on-route" href="../../styles/syntax-highlight.css">
+</head>
+<body>
+  <div id="root" comp-name="@lazy:article" style="display: none" root-href="../../" highlight>
+	<div id="info">
+		<span prop="title">The Different Ways of Implementing Templating</span>
+		<span prop="created">3-8-2025</span>
+	</div>
+	<p>templates are crutial for the well being of the framework, they are the language of the developer to the DOM, allowing developers to express their UI in a declarative expressive manner</p>
+	<p>templates are in definition blueprints that represent the initial structure of the DOM of the component with its inline logic, in which a runtime transform them into the final DOM strucure.</p>
+	<p>over the years, different techniques have been invented to implement templates having different properties, some were naivly simple, others required a new language, and some transform into lower ones.</p>
+	<p>and for all the used templating technologies, they can be categorized according to their reliance on compilers and transformers into 4 types of implementations.</p>
+
+	<h1>Native Values</h1>
+	<p>the first implementations of templates were difined using normal functional javascript, they didnt reliad on complex compilation processes, they just were declared with vanilla javascript values.</p>
+	<p>they are the simplest and most protable form of templates as they can be used in any enviroment. also they are a lower form as all the other implementations are tranformed at the end into this form since its simplicity and nativity.</p>
+	<p>the native values templates can be further classefied into 3 types based:</p>
+	<ol>
+	  <li>
+		<b>template strings:</b> just a normal html with code in cruly braces defined in a string, there intuitive and compactness made them common between the frameworks, yet they suffer from the need of parsing which increase bundle size.
+		<pre><code class="language-javascript"><!--
+			render(html`<div>count: ${count()}</div><button onclick=${inc}>increment</button>`)
+		--></code></pre>
+	  </li>
+	  <li>
+		<b>template functions:</b> common in VDOM frameworks, they are a function that take properties of an element and return its DOM form or a respresentation of it, they are the most efficient form of templates but they are slightly harder to read and write and they dont nest well.
+		<pre><code class="language-javascript"><!--
+			render(h('div', null, [`count: ${count}`, h('button', { onclick: inc }, 'increment')]))
+		--></code></pre>
+	  </li>
+	  <li>
+		<b>serialized templates:</b> a lower form of templates in plain objects, generally result from a transformation process of a higher form of templates at runtime or at bundle time, they are lightweight and efficient, but very dificult to write manually.
+		<pre><code class="language-javascript"><!--
+			{ nodes: [
+				{ tag: 'div', id: 4342, attrs: {}, children: ['count: 0'] },
+				{ tag: 'button', id: 5343, attrs: {}, children: ['increment'] }
+			], actions: [
+				{ type: 'text-bind', target: 4342, parts: [
+					{ type: 'literial', value: 'count: ' },
+					{ type: 'prop', name: 'count' }
+				] },
+				{ type: 'event', target: 5343, event: 'click', handler: inc }
+			] }
+		--></code></pre>
+	  </li>
+	  <p>while native values templates are the most protable form of templates, they requires custom parsing at runtime or are dificult to write, for that reason the javascript community developed new implementations of templates that leverage the power of compilers and transformers.</p>
+	</ol>
+
+	<h1>Module Compilation</h1>
+	<p>a fast and easy way of incorporating compilers into the templates generation is to write the templates in a standalone module then parsing them and serializing them into the app bundle.</p>
+	<p>this way worked so well, as it reused the existing parsing engines, reduced the bundle size and made the templates more efficient, without effecting the rest of the application or the IDEs and javascript parsers and viewer.</p>
+	<p>while having templates in separate modules is not a harmfull idea, it caused hoping between the templates and their component logic found in separate files, so single file components were invented, in which the logic is written inside a script tag in the template, along with styles, and the majority of the frameworks adpoted this approach.</p>
+	<pre><code class="language-html"><!--
+		<div>count: {count}</div>
+		<button onclick={inc}>increment</button>
+
+		<script>
+			let count = state(0);
+			function inc() { count.value++ }
+		</script>
+	--></code></pre>
+	<p>the single file components encapsulate all the concerns of the component, enabling better type safety and easier debugging, also it enabled better compiler optimizations.</p>
+	<p>this implementation however wansnt free of cons, it depended on a build step, however build step is not that difficult or unintuitive, just an example script copy pasted from project to project, moreover, we are force to use tooling as even using modules requires having a development server.</p>
+
+	<h1>Transpilation</h1>
+	<p>some frameworks wanted the templates to be inline with the code, and also want to have the benifits of compilers, the template modules were not an option as they separated template and logic, for that template transpilation was invented.</p>
+	<p>transpilation is a general concept, it is a build step process in which javascript enhanced with custom syntax is transformed into vanilla javascript, it is commenly used in the ecosystem, espicially in typescript, and downgrading javascript syntax to be compatable with older runtimes.</p>
+	<p>the most notable form of template transpilation is JSX, developed to be used with react but had been adopted by multiple frameworks, which allowed template to be written inline with the code in html syntax with code wrapped with cruly braces.</p>
+	<pre><code class="language-jsx"><!--
+		function counter () {
+			let [count, setCount] = useState(0);
+
+			return (<>
+				<div>count: {count}</div>
+				<button onClick={() => setCount(count + 1)}>increment</button>
+			</>)
+		}
+	--></code></pre>
+	<p>an advantage of transpilation over modules is the free of usage, modules allow templates in a single big blob, while transpilation allows them to be used in whatever place they are needed, in utilities to components.</p> 
+	<p>also transpiled templates share the same block scope of the using code, a thing modules can not do or can only at the component level.</p>
+	<p>although the additional benifits of transpiled templates over template modules, they have a distructive issue, adding custom syntax make the code incopatible with the standared code parsers and viewers requiring additional work to support it, although JSX has become a standared, not every parser supports it.</p>
+	<p>moreover, there is a way to have the same benifits of transpilation without the custom syntax.</p>
+
+	<h1>Vanilla Transformation</h1>
+	<p>vanilla transformation is a general process in which vanilla javascript (not nesseccary functional) is transformed into another javascript, in order to make it effecient or enhance its behaviour</p>
+	<p>a notable example of vanilla transformation is the svelte compiler. svelte compiles vanilla javascript expressions into reactive ones, changing their behaviour to run when their dependencies change.</p>
+	<p>this technology is incridible, it enable enhancing the behaviour and capabilities of the code without effecting its syntax, making it fully compatible with standard code parsers and viewer, and it is not limited for the whole module.</p>
+
+	<h2>Compile Time Substitution</h2>
+	<p>also known as macros, it is the substitution of a function call into another equivalent javascript expression, it, like vanilla transformation, allow the enhancing and optimizing of code without effecing its syntax and compliance with the specifications, the difference is it works on the micro scale.</p>
+	<p>the concept is genral and highly capable, it is used in defferent fields espicially language related one like constant evaluation, and it can be used in templating.</p>
+	<p>template macros take a native values templates like template string and transform it into an optimized form, all of that while not effecting the syntax, reducing the bundle size by removing the parsing system, and most amazingly it can be used without a build step as the source can be run normally.</p>
+	<pre><code class="language-javascript"><!--
+		$template(`
+			<div .text>count: @{count}</div>
+			<button @on(click)='comp.count.value++'>increment</button>
+		`)
+	--></code></pre>
+	<p>this type of implementation might be the best approuch till now, having all the benifits of its processors while being optional and unnoticable, and capable of optimizing all native value templates.</p>
+
+	<h2>About NeoCmp</h2>
+	<p>neocomp mainly has runtime string templates optionally optimized with the power of the template mcaro, in addition, it has template modules and can have templates directly in any DOM tree, achieving its goal of being a flexible framework for all enviroments, and complementing this goal, <a href='./oop_components_done_right.thml'>the hidden power of object oriented components, done right</a>.</p>
+</body>

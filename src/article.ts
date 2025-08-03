@@ -37,6 +37,10 @@ const template = $template(/* html */`<neo:template id="article" class="min-h-sc
 				comp.get('content').map(e => e.innerText.trim().split(/\\s+/).length)
 				.reduce((a, b) => a + b)	
 			}</span></span>
+			<span><b>characters:</b><span .text> $(){
+				comp.get('content').map(e => e.innerText.replaceAll(/\s+/g, '').length)
+				.reduce((a, b) => a + b)
+			}</span></span>
 			<span><b>created:</b><span .text> \${created}</span></span>
 		</div>
 		<div .content(content)="{content}" @ref="content" class="
@@ -56,6 +60,7 @@ class Article extends Component<TypeMap> {
 	};
 	constructor (el?: HTMLElement) {
 		super(el);
+		this.el.style.display = '';
 		this.set('rootHref', this.el.getAttribute('root-href') || './');
 
 		const info = this.query('#info')[0];

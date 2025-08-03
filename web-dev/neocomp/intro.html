@@ -3,115 +3,81 @@
 	<title>ReComputed: Intro: What and Why a Framework</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" class=preserve-on-route href="../../styles/app.css">
+	<link rel="stylesheet" class="preserve-on-route" href="../../styles/app.css">
 	<script type="module" src="../../src/base.ts"></script>
 	<script type="module" src='../../src/article.ts'></script>
 </head>
 <body>
-  <div id="root" comp-name="@lazy:article" root-href="../../">
+  <div id="root" comp-name="@lazy:article" style="display: none" root-href="../../">
 	<div id="info">
 		<span prop="title">Intro: What and Why a Framework</span>
 		<span prop="created">1-8-2025</span>
 	</div>
 	<h1>The Web Platform has evolved a lot</h1>
 	<p>Sometimes, we need to sit down and appreciate how much the web platform has evolved.</p>
-	<p>From a clunky start as static documents with many quirks, to today, a feature-rich platform for
-		heavy apps that rivals native platforms with its efficiency, ease of use, and unmatched 
-		<b>evolving</b>.
+	<p>From a clunky start as static documents with many quirks, to today, a feature-rich platform for heavy apps that rivals native platforms with its efficiency, ease of use, and unmatched <b>evolution</b>.
 	</p>
-	<p>The web platform has been the leader in innovation in the UI design space, inspiring nearly all
-		UI design technologies, while some adopt it in their stacks.
+	<p>The web platform has been the leader in innovation in the UI design space, inspiring nearly all UI design technologies, while some adopt it in their stacks.
 	</p>
-	<p>While the web platform and its technology are easy to use compared to other technologies,
-		it is slightly verbose and low-level as it is a platform, not a framework.
+	<p>While the web platform and its technology are easy to use compared to other technologies, it is slightly verbose and low-level as it is a platform, not a framework.
 	</p>
-	<p>For this reason, frontend frameworks have been created as a high-level declarative thin layer 
-		around the advanced web technologies to make developing complex applications and websites
-		easier, faster, and safer.
+	<p>For this reason, frontend frameworks have been created as a high-level declarative thin layer around the advanced web technologies to make developing complex applications and websites easier, faster, and safer.
 	</p>
 	<p>Where did all of this <b>complexity</b> in today's frameworks come from?</p>
 
 	<h1>What happened to Simplicity in Frameworks?</h1>
-	<p>I don't mean simplicity in fundamentals or API surface, I mean simplicity in implementation,
-		the runtime internals, and codegen tooling that powers modern frameworks.
+	<p>I don't mean simplicity in fundamentals or API surface; I mean simplicity in implementation, the runtime internals, and codegen tooling that powers modern frameworks.
 	</p>
-	<p>There is no doubt that modern frameworks have become heavy and bulky in their internals.
-		Most of them weigh greater than 100kb gzipped, which causes serious performance issues, 
-		especially slow load times.
+	<p>There is no doubt that modern frameworks have become heavy and bulky in their internals. Most of them weigh more than 100kb gzipped, which causes serious performance issues, especially slow load times.
 	</p>
-	<p>They have also integrated complex and costly technologies into their runtimes just to be a 
-		little more declarative. Look at the entire spectrum of VDOM implementations.
+	<p>They have also integrated complex and costly technologies into their runtimes just to be a little more declarative. Look at the entire spectrum of VDOM implementations.
 	</p>
-	<p>They have also relied more and more on compilers and codegen in their tooling to add
-		functionality not possible with normal JavaScript. Some use compilers to allow reactivity
-		with normal JavaScript expressions, like Svelte.
+	<p>They have also relied more and more on compilers and codegen in their tooling to add functionality not possible with normal JavaScript. Some use compilers to allow reactivity with normal JavaScript expressions, like Svelte.
 	</p>
-	<p>Additionally, frameworks have integrated custom domain syntax into JavaScript, like
-		JSX, which requires additional work in code viewers and parsers to
-		support it.
+	<p>Additionally, frameworks have integrated custom domain-specific syntax into JavaScript, like JSX, which requires additional work in code viewers and parsers to support it.
 	</p>
-	<p>The quest for less verbosity has taken us to the realm of complex techniques and implementations,
-		not because the web is verbose, but because the benefits started to require a lot for less.
+	<p>The quest for less verbosity has taken us to the realm of complex techniques and implementations, not because the web is verbose, but because the benefits started to require a lot for less.
 	</p>
 
 	<h1>The Power of Simplicity</h1>
-	<p>If you have noticed, over the years, frontend frameworks have depended more on complex technologies
-		just to be a little more declarative.
+	<p>If you have noticed, over the years, frontend frameworks have depended more on complex technologies just to be a little more declarative.
 	</p>
-	<p>I am not against declarative programming, especially in places having a solid structure, like 
-		UI design. But I am here to highlight the existence of many solid and lightweight techniques 
-		that can be incorporated into frameworks.<br>
-		They are a little bit more verbose, but in pair and may exceed the heavier ones in flexibility 
-		and functionality.
+	<p>I am not against declarative programming, especially in places with a solid structure, like UI design. But I am here to highlight the existence of many solid and lightweight techniques that can be incorporated into frameworks.<br> They are a little bit more verbose, but they are on par with and may exceed the heavier ones in flexibility and functionality.
 	</p>
-	<p>These techniques will not take anything from us, they are just the features you expect but coexist
-		seamlessly with the rest of the application code as they use only native ways.
+	<p>These techniques will not take anything from us; they are just the features you expect but coexist seamlessly with the rest of the application code as they use only native ways.
 	</p>
 
 	<h2>The web natives are good enough</h2>
-	<p>The web natives are good enough and surprisingly powerful and flexible if implemented correctly, but a
-		little less expressive than the frameworks own techniques. But do we really need to reinvent the
-		wheel just for a little more?
+	<p>The web natives are good enough and surprisingly powerful and flexible if implemented correctly, but a little less expressive than the framework's own techniques. But do we really need to reinvent the wheel just for a little more?
 	</p>
-	<p>In this series of articles, I will discuss the current trend of complex implementations and how 
-		we can solve them through the power of simplicity and remaining close to the natives.
+	<p>In this series of articles, I will discuss the current trend of complex implementations and how we can solve them through the power of simplicity and remaining close to the natives.
 	</p>
-	<p>For that, I have developed <a -href='webdev.neocomp'>NeoComp.js</a>, a proof of concept framework to 
-		show how simple lightweight techniques can deliver amazing results while having excellent performance.
+	<p>For that, I have developed <a -href='webdev.neocomp'>NeoComp.js</a>, a proof-of-concept framework to show how simple lightweight techniques can deliver amazing results while having excellent performance.
 	</p>
 
 	<h2>It is not a production framework</h2>
-	<p>Do not increment the new frameworks counter, this is not and will not be, in the current time,
-		a well-maintained and production-ready framework.
+	<p>Do not increment the new frameworks counter; this is not, and will not be, at the current time, a well-maintained and production-ready framework.
 	</p>
-	<p>It is just a collection of ideas to support an argument done in free time and created for 
-		personal use. If you liked a feature, feel free to implement it in your framework.
+	<p>It is just a collection of ideas to support an argument done in free time and created for personal use. If you liked a feature, feel free to implement it in your framework.
 	</p>
-	<p>Now, before diving into how we can fix the complexity by simplicity, let's just discuss.</p>
+	<p>Now, before diving into how we can fix the complexity with simplicity, let's just discuss.</p>
 
-	<h1>Why this Diversity in Frameworks</h1>
-	<p>the major role of frameworks in the webdev world is logic encapsulation and composition, and DOM building and binding.
+	<h1>Why this Diversity in Frameworks?</h1>
+	<p>The major roles of frameworks in the webdev world are logic encapsulation and composition, and DOM building and binding.
 	</p>
-	<p>All frameworks have settled on a general markup of components and agreed on the core 
-		fundamentals, with slight dialect differences.
+	<p>All frameworks have settled on a general markup of components and agreed on the core fundamentals, with slight dialect differences.
 	</p>
-	<p>What is not agreed upon is the shape of the bindings to the DOM. and this is the main reason for divergence in modern frameworks and their paradigms.
+	<p>What is not agreed upon is the shape of the bindings to the DOM, and this is the main reason for divergence in modern frameworks and their paradigms.
 	</p>
-	<p>Some use VDOM, others use fine-grained DOM bindings, others use compilers to convert normal 
-		javascript expressions into reactive ones, others streams javascript based on user interactions, and there still who use JQuery and support IE7, and countless other technologies invented just to bind some state to and with the DOM, Why all of this diversity?
+	<p>Some use VDOM, others use fine-grained DOM bindings, others use compilers to convert normal JavaScript expressions into reactive ones, others stream JavaScript based on user interactions, and there are still those who use JQuery and support IE7, and countless other technologies invented just to bind some state to and with the DOM. Why all of this diversity?
 	</p>
 
-	<h2>A Never Ending Quest for Declarativity</h2>
-	<p>The web platform was reletively low in verbosity from the beginning, and evolving means less 
-		complexity, and when React came, it erased the word imperetive from the dictionary
+	<h2>A Never-Ending Quest for Declarativity</h2>
+	<p>The web platform was relatively low in verbosity from the beginning, and evolving means less complexity, and when React came, it erased the word "imperative" from the dictionary.
 	</p>
-	<p>We loved React declarativity but it caused serous performance problems. the solutions that kept 
-		the declarativity relied on transpilers / compilers, while ones that favored performance over 
-		declarativity were not sold well, while React becomed restrained by legacy code restricting it from fixing its self. 
+	<p>We loved React's declarativity, but it caused serious performance problems. The solutions that kept the declarativity relied on transpilers/compilers, while ones that favored performance over declarativity were not sold well, while React became restrained by legacy code, restricting it from fixing itself. 
 	</p>
-	<p>In the <a href="./failure_of_render_fn.html">next article</a> we will dive into the problems 
-		associated with the render function paradigm and the alternative solution for it.
+	<p>In the <a href="./failure_of_render_fn.html">next article</a>, we will dive into the problems associated with the render function paradigm and the alternative solution for it.
 	</p>
   </div>
 </body>
- 
