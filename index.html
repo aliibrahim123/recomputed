@@ -19,7 +19,7 @@
 		<div class="
 		  bg-gray-100 dark:bg-slate-900/100 
 		  rounded-xl rounded-b-2xl border-2 border-gray-300/60 dark:border-slate-800/60
-		">
+		" style="display:none">
 			<div class="
 			  bg-gray-300 dark:bg-slate-800 p-2 text-xl text-center 
 			  border-3 border-gray-400/40 dark:border-slate-700/50 rounded-xl
@@ -28,7 +28,7 @@
 				comming soon
 			</div>
 		</div>
-		<div @do="repeatClass(el, '.n')">
+		<div @do="repeatClass(el, '.n')" class="hidden">
 			<div @do="repeatClass(el, '.0.n')">Language Design</div>
 			<div @do="repeatClass(el, '.1.n')">comming soon</div>
 		</div>
