@@ -120,10 +120,10 @@
 	<p>These factors allow Solid to have direct update paths with automatic dependency detection, achieving its goal of performance and declarativity, as opposed to React that needs to re-render the whole app since everything is coupled together.</p>
 	<p>While this technique is as efficient as manual updates, it is less expressive than render functions. Advanced features like conditional and list rendering require custom logic, while in React, they exist in native syntax.</p>
 	<p>The render functions allow the changing of the entire UI structure expressively, while fine-grained reactivity is stuck with a static structure. But here is the thing: do we really need this power? Our websites, from largest to smallest, are static structures with dynamic content.</p>
-	<p>The problem was the less declarative nature of the past frameworks. React came up with declarativity, but it was inefficient at scale. The rest of the world tried fixing it and are still fighting, while the problem has been fixed long ago by auto-dependency detection fine-grained reactivity, and that is the story of the modern framework war.</p>
+	<p>The problem was the less declarative nature of the past frameworks. React came up with declarativity, but it was inefficient at scale. The rest of the world further refined and optimized it and are still fighting, while the problem has been fixed long ago by fine-grained reactivity, and that is the story of the modern framework war.</p>
 	
 	<h2>About NeoComp</h2>
-	<p>NeoComp also adopted the SolidJS concepts—auto-dependency detection and fine-grained reactivity—but with a twist: it uses an object-oriented paradigm instead of a functional paradigm.</p>
+	<p>NeoComp also adopted the SolidJS concepts—fine-grained reactivity—but with a twist: it uses an object-oriented paradigm instead of a functional paradigm.</p>
 	<p>The functional paradigm is great for declarative, minimal-verbosity UI development, but it has some limitations for stateful large components, especially in terms of organization.</p>
 	<p>Before discussing the benefits of the object-oriented component over functional ones, let's dive into <a href='./impl_templating.html'>the different ways of implementing templates</a>.</p>
   </div>

@@ -2,8 +2,8 @@ import { ZRORouter } from '@neocomp/full/zro-router';
 import { Component, registry, type BaseMap, type CompOptions, type Template } from '@neocomp/full/comp-base'
 import { query } from '@neocomp/full/rawdom';
 import './footer.ts';
-import { $template } from '@neocomp/full/comp-base/tempGen';
-import { microWalk, tw } from './utils.ts';
+import { $template, walkInDom } from '@neocomp/full/comp-base/tempGen';
+import { tw } from './utils.ts';
 
 declare global {
 	var router: ZRORouter;
@@ -27,7 +27,7 @@ class PageComp extends Component<BaseMap> {
 	static override template = template;
 	constructor (el: HTMLElement) {
 		super(el, 'full');
-		if (el.hasAttribute('walk')) microWalk(this, el);
+		if (el.hasAttribute('walk')) walkInDom(this, el);
 	}
 }
 registry.add('page', PageComp);
