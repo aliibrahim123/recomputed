@@ -15,23 +15,23 @@
 		<span prop="created">4-8-2025</span>
 	</div>
 	<h1>The Limitations of Functional Components</h1>
-	<p>functional declarative components are from the greatest milestone in the evolution of ui development, they transfer us from the overengineered MCV architecture manual DOM updates mess to the declarative reactive components we know and love, however, they have their limitations.</p>
-	<p>the declarative nature of todays frameworks simplified DOM construction and updates, but in the same time, it had take DOM ownership from us and restricted the manipulation of the DOM under its territory.</p>
+	<p>Functional declarative components are one of the greatest milestones in the evolution of UI development. They transitioned us from the over-engineered MVC architecture and manual DOM updates to the declarative, reactive components we know and love. However, they have their limitations.</p>
+	<p>The declarative nature of today's frameworks simplified DOM construction and updates, but at the same time, it took away DOM ownership and restricted our ability to manipulate the DOM under its control.</p>
 	<p>The unpredictable nature of framework internals, a consequence of declarativity, while being localized by fine-grained reactivity to specific elements, has constrained the ability to manipulate the DOM manually. At best, such manual changes will be overwritten.</p> 
-	<p>Furthermore, because components are functions that return a the structure, this approach prohibits starting from existing DOM elements and complicates the manipulation of the component DOM after removal.</p>
-	<p>In addition, functions dont scale, the factory paradigm is meant for small components that are simple with little state and reactivity, not for complex large components that encapuslate complicated logic and enourmous state.</p>
-	<p>Moreover, the abstracted nature of the functional components limits their ability to interact with the outside world, forcing the user to declare them inside the component since they are not normal values, increasing logic complexity inside components.</p>
-	<p>when you call them they return the structure not themself, our components has lost their identity.</p>
+	<p>Furthermore, because components are functions that return the structure, this approach prohibits starting from existing DOM elements and complicates the manipulation of the component's DOM after removal.</p>
+	<p>In addition, functions don't scale. The factory paradigm is designed for small, simple components with minimal state and reactivity, not for complex, large components that encapsulate complicated logic and enormous state.</p>
+	<p>Moreover, the abstracted nature of functional components limits their ability to interact with the outside world, forcing their declaration inside the component since they are not normal values, which increases logic complexity within components.</p>
+	<p>When you call them, they return the structure, not the component itself. Our components have lost their identity.</p>
 
-	<h1>The OOP Components were not Bad</h1>
-	<p>the object oriented components, like any OOP techology, are not bad, the culture and traditions is what make them feel like that, the focus of MVC patterns and not on the actual ui was the issue of the past framework, not object oriented paradigm.</p>
-	<p>the real problem was the separation of data from ui, what is the real benifits of separation concerns through the countless classical MVx patterns while the data is already processed by the server, it just created countless useless concept that should not be used.</p>
-	<p>moreover, these frameworks just provided little if any templating, at minimal you would use jquery for manual DOM manipulation, or use a templating engine that provided minimal bindings, as opposite to the the deep reactivity expressive templating we have today.</p>
-	<p>in short, the issue was the the focus on the complecated design patterns associated with the classical OOP culture, and the lack of declarative reactivity, which is not problem with OOP component itself, however, functional programming won because of its minimal nature in a time we were tired of everything related to classical OOP.</p>
-	<p>and surprising fact, the old day view units where actually a render function wrapped in a class, something that stucked in react with the class based components before the hooks evolution.</p>
-	<p>as opposite to what someone might think, declarative reactivity is not limited to functional paradigm, functions declarative nature make them the best choice, but it is a concept that be adopted even in imperative programing, and it absolutly able to thrive in OOP components.</p>
+	<h1>The OOP Components Were Not Bad</h1>
+	<p>Object-oriented components, like any OOP technology, are not inherently bad. The culture and traditions associated with them are what made them feel that way. The issue with past frameworks was their focus on complex MVC patterns, not on the UI itself, and this was a problem of architecture, not of the object-oriented paradigm.</p>
+	<p>The real problem was the separation of data from the UI. What are the real benefits of separating concerns through countless classical MVx patterns when the data is already processed by the server? It just created countless useless concepts that should not have been used.</p>
+	<p>Moreover, these frameworks provided little, if any, templating. At a minimum, you would use jQuery for manual DOM manipulation or use a templating engine that provided minimal bindings, in contrast to the deep reactivity and expressive templating we have today.</p>
+	<p>In short, the issue was the focus on the complicated design patterns associated with classical OOP culture and the lack of declarative reactivity, which is not a problem with the OOP component itself. However, functional programming won because of its minimal nature at a time when we were tired of everything related to classical OOP.</p>
+	<p>And, as a surprising fact, the old view units were actually a render function wrapped in a class, a pattern that persisted in React with its class-based components before the evolution of hooks.</p>
+	<p>Contrary to what one might think, declarative reactivity is not limited to the functional paradigm. While a function's declarative nature makes it a good choice, it is a concept that can be adopted even in imperative programming, and it is absolutely able to thrive in OOP components.</p>
 	<details @chunk:closable-code="(
-		{title: 'declarative reactivity in imperative programing example', lang: 'javascript', el}
+		{title: 'Declarative Reactivity in Imperative Programming Example', lang: 'javascript', el}
 	)"><!--
 		const display = createElement('div');
 		addChild(display, createTextNode('count: '));
@@ -46,9 +46,9 @@
 	--></details>
 
 	<h1>About NeoComp Components</h1>
-	<p>NeoComp is a concept framework that fuse declarative reactivity with object oriented components, combining the simplicity of the reactivity with the flexible power of object oriented components, creating a flixible components for all use cases.</p>
-	<p>NeoComp components are ordinary object oriented components encapuslating their own logic and states, with declarative reactivity in their apis, wrapping an element, and binding through their states to the DOM through fine-grained reactivity.</p>
-	<p>events call mothods on the component, in which these methods update the states that are binded to the DOM through bindings declared in templates.</p>
+	<p>NeoComp is a concept framework that fuses declarative reactivity with object-oriented components, combining the simplicity of reactivity with the flexible power of OOP components, thereby creating flexible components for all use cases.</p>
+	<p>NeoComp components are ordinary object-oriented components that encapsulate their own logic and state. They feature declarative reactivity in their APIs, wrapping an element and binding via their states to the DOM through fine-grained reactivity.</p>
+	<p>Events call methods on the component, which then update the states that are bound to the DOM through bindings declared in templates.</p>
 	<pre><code class='language-javascript'><!--
 		class Counter extends Component {
 			static template = $template(`
@@ -62,11 +62,11 @@
 			}
 		}
 	--></code></pre>
-	<p>neocomp approuch tries to bridge the gap between the both worlds, having the simple yet powerful fine-grained reactivity, while still having the organizational benifits of object oriented components, and this approuch has very surprising outcomes.</p>
+	<p>The NeoComp approach tries to bridge the gap between these two worlds, offering simple yet powerful fine-grained reactivity while still having the organizational benefits of object-oriented components. This approach has had some very surprising outcomes.</p>
 
-	<h1>The Surprising Powerups of OOP Components</h>
-	<h2>better organization</h2>
-	<p>one of the notable benifits of OOP is its inhereted organizable structures, opposite to the functional component where you have one function than grow out of hand so quickly, you can split the complex logic into multiple methods and interact with each other with shared state in fields, this make object oriented components a better choice for large statefull components with complex logic.</p>
+	<h1>The Surprising Advantages of OOP Components</h1>
+	<h2>Better Organization</h2>
+	<p>One of the notable benefits of OOP is its inherent, organizable structure. In contrast to a functional component where a single function can quickly grow out of hand, you can split complex logic into multiple methods and interact with each other via shared state in fields. This makes object-oriented components a better choice for large, stateful components with complex logic.</p>
 	<pre><code class='language-javascript'><!--
 		function counter (props) {
 			function someLogic1() {}
@@ -86,10 +86,10 @@
 		}
 	--></code></pre>
 
-	<h2>first class citizen components</h2>
-	<p>from the outcomes of swtiching into OOP components are first class citizen components, components in oop have a real accessible value, as opposite to the abstract nature of the functional components, this simplifies the outside world interaction completly and open many new possiblities.</p>
-	<p>interactions can happen from outside the component, not only from the inside, reducing some logic complexity inside the components.</p>
-	<p>components could also officialy expose a public interface in non hacky way, allowing other components to interact with them, as opposite to functional components that get passed events as argumant and that it is.</p>
+	<h2>First-Class Citizen Components</h2>
+	<p>A key outcome of switching to OOP is that components become first-class citizens. Components in OOP have a tangible, accessible value, in contrast to the abstract nature of functional components. This completely simplifies interaction with the outside world and opens many new possibilities.</p>
+	<p>Interactions can happen from outside the component, not only from within, which reduces some logic complexity inside the components.</p>
+	<p>Components can also officially expose a public interface in a non-hacky way, allowing other components to interact with them, in contrast to functional components that are typically passed events as arguments and that's it.</p>
 	<pre><code class='language-javascript'><!--
 		class Counter extends Component {
 			#privateLogic () {}
@@ -103,11 +103,11 @@
 		comp.publicLogic();
 	--></code></pre>
 
-	<h2>full ownership of the DOM</h2>
-	<p>neocomp goal is to give you the developer full control and ownership of the DOM, the components are designed to wrap elements, and create new ones if not provided, this enable wrapping existing elements with their strcutures, not only children constructed at creation, enabling more desgin patterns.</p>
-	<p>also these component can leave their elements after removal if requested, as oppisite to the functional components that always destroys them, allowing for removal animations and changing the components around an element.</p>
-	<p>neocomp fevor direct DOM manipulation when needed and provide utilities for simplifieng the process, and countless utilities for avoiding the need of them.</p>
-	<p>and most crutually, neocomp provide you the true ownership of the DOM, its action on DOM are localized to specific elements and specific attributes defined in the template, you can safely interact with the other elements, moreover, because of the direct nature of the DOM bindings, you can move around the target elements, even outside the component, or remove them and restore them later while presirving the bindings.</p>
+	<h2>Full Ownership of the DOM</h2>
+	<p>NeoComp's goal is to give you, the developer, full control and ownership of the DOM. The components are designed to wrap elements and create new ones if not provided. This enables the wrapping of existing elements with their structures, not just children constructed at creation, which allows for more design patterns.</p>
+	<p>These components can also leave their elements after removal if requested, in contrast to functional components that always destroy them, allowing for removal animations and changing the components around an element.</p>
+	<p>NeoComp favors direct DOM manipulation when needed and provides utilities for simplifying the process, as well as countless utilities for avoiding the need for them.</p>
+	<p>And most crucially, NeoComp provides you with true ownership of the DOM. Its actions on the DOM are localized to specific elements and attributes defined in the template. You can safely interact with other elements. Moreover, because of the direct nature of the DOM bindings, you can move target elements around, even outside the component, or remove and restore them later while preserving the bindings.</p>
 	<pre><code class='language-javascript'><!--
 		static template = $template(`...<div @ref="display" .text>count: @{count}</div>...`);
 
@@ -116,9 +116,9 @@
 		comp.el.append(someForignElement);
 	--></code></pre>
 
-	<h2>simplified internals</h2>
-	<p>having an accessible value for componenst simplify the internals alot, primary, it remove the need for magic functions that work on the underlying internal component strcutures and have their constrains, the only solution for functional components</p>
-	<p>in addition, it also simplifies template internals, instead of having algorithyms that detect the used states and functions in directives, the component value can be passed instead, removing the need for these algorithyms.</p>
+	<h2>Simplified Internals</h2>
+	<p>Having an accessible value for components simplifies the internals a lot. Primarily, it removes the need for magic functions that work on the underlying internal component structures and have their constraints (which are the only solution for functional components).</p>
+	<p>In addition, it also simplifies template internals. Instead of having algorithms that detect the used states and functions in directives, the component's value can be passed instead, removing the need for these algorithms.</p>
 	<pre><code class='language-javascript'><!--
 		const state = signal(0);
 		const state = this.signal(0);
@@ -128,12 +128,12 @@
 		<button @on(click)='comp.increament()'>increament</button>
 	--></code></pre>
 
-	<h2>unmatched flexibility</h2>
-	<p>neocomp primary goal is to be a flexible framework adaptable for all use cases, it achieve this by making its units very flixible and not ristrictive, giving the developer complete freedom.</p>
-	<p>neocomp provide robust toolset, supporting lazy loading, asynchrouness programming in every corner, fine-grained reactivity, indepedable context for state management, auto dependency management and much more.</p>
-	<p>components in neocomp are ananymous by default, there are not fixed in static hiearchy, they behaive more like DOM nodes that other frameworks components, you can move them around in the main hiearchy or betweem different ones, and remove them then restore them later.</p>
-	<p>neocomp expose more broader api surface, and its internal mechanisms are dynamic, the definitions (state, effects, contexts...) are created and modifiable at any time in any place, not only at initialization.</p>
-	<p>you can even have the logic directly in DOM for small hacky projects.</p>
+	<h2>Unmatched Flexibility</h2>
+	<p>NeoComp's primary goal is to be a flexible framework adaptable to all use cases. It achieves this by making its units very flexible and unrestrictive, giving the developer complete freedom.</p>
+	<p>NeoComp provides a robust toolset, supporting lazy loading, first-class asynchronous programming, fine-grained reactivity, independent context for state management, auto dependency management, and much more.</p>
+	<p>Components in NeoComp are anonymous by default. They are not fixed in a static hierarchy; they behave more like DOM nodes than components in other frameworks. You can move them around in the main hierarchy or between different ones, and remove them, then restore them later.</p>
+	<p>NeoComp exposes a broader API surface, and its internal mechanisms are dynamic. The definitions (state, effects, contexts, etc.) can be created and modified at any time, in any place, not only at initialization.</p>
+	<p>You can even have the logic directly in the DOM for small, hacky projects.</p>
 	<pre><code class='language-javascript'><!--
 		new Component(someEl, 'full');
 	--></code></pre>
@@ -144,12 +144,12 @@
 		</div>
 	--></code></pre>
 
-	<h1>The Ending but not the End</h1>
-	<p>in sum, neocomp is a frontend framework that tries to combine the simplicity and effecincy of fine-grained reactivity, with the organizational powers of object oriented components, while also being very flexible in design capable of powering the smallest components to the largest ones.</p>
-	<p>it is a case study showing that simplicity in directness outperform simplicity in declarativeness, simplicity in not in API surface, it is in the implementations.</p>
-	<p>react showed the world the power of declarative reactive UI, but it had its limitations, the rest of the world further enhanced it through optimization and refinement, till the point we made it effecient as munual DOM manipulation through fine-grained reactivity.</p>
-	<p>however there were still issues with our approuches, the function paradigm is for factory paradigm, one shot creation, not for components with lifetime, and absolutly not for components with complex behavios, declarativity is not only meant for functions, it can be integrated with OOP, the paradigm designed primary for statefull entities.</p>
-	<p>finally, the quest dont stop here, there remains patterns in the wild that are yet to be discovered, furthermore, we have the milestone of moving react into the effecient reactivity paradigms, and with it the vast majority of the modern web.</p>
-	<p>if you have interested in neocomp concepts and want to learn more about it and its innerworking, check its documentation and dive into its source code on its <a -href='webdiv.neocomp'>repo</a> in github, and dont forgit it is just a concept.</p>
+	<h1>The Ending, But Not The End</h1>
+	<p>In summary, NeoComp is a frontend framework that combines the simplicity and efficiency of fine-grained reactivity with the organizational power of object-oriented components. It is also flexible enough in design to power everything from the smallest components to the largest ones.</p>
+	<p>It is a case study showing that simplicity in directness outperforms simplicity in declarativeness. Simplicity is not in the API surface; it is in the implementation.</p>
+	<p>React showed the world the power of declarative, reactive UI, but it had its limitations. The rest of the world further enhanced it through optimization and refinement, to the point where we made it as efficient as manual DOM manipulation through fine-grained reactivity.</p>
+	<p>However, there were still issues with our approaches. The function paradigm is for the factory pattern—one-shot creation—not for components with a lifecycle, and absolutely not for components with complex behaviors. Declarativity is not meant only for functions; it can be integrated with OOP, the paradigm designed primarily for stateful entities.</p>
+	<p>Finally, the quest doesn't stop here. There remain patterns in the wild that are yet to be discovered. Furthermore, we have the milestone of moving React into the efficient reactivity paradigms, and with it, the vast majority of the modern web.</p>
+	<p>If you are interested in NeoComp's concepts and want to learn more about it and its inner workings, check its documentation and dive into its source code on its <a -href='webdiv.neocomp'>repo</a> on GitHub, and don't forget it is just a concept.</p>
   </div>
 </body>
