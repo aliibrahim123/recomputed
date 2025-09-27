@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<head>
+	<title>ReComputed: Template Statements, Above Revolutionary</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" class="preserve-on-route" href="../../styles/app.css">
+	<script type="module" src="../../src/base.ts"></script>
+	<script type="module" src='../../src/article.ts'></script>
+	<link rel="stylesheet" class="preserve-on-route" href="../../styles/syntax-highlight.css">
+</head>
+<body>
+  <div id="root" comp-name="@lazy:article" style="display: none" root-href="../../" highlight walk>
+	<div id="info">
+		<span prop="title">Template Statements, Above Revolutionary</span>
+		<span prop="created">27-9-2025</span>
+	</div>
+	<h1>Template Evolution in the Web</h1>
+	<h2>Template Files</h2>
+	<p>from the beginning of the web, and of the UI Design in general, there exist the need to link the UI markup with its logic and states, making them coexist in the same realm.</p>
+	<p>having the dream of declaring ui in a high level way, the original design paradigm were existing in the other side, the options were writing in verbose OOP style, or in low level draw call style, with manually retriving and updating ui on changes, or having a bare primitives of basic binding.</p>
+	<p>as the time went on and the ambitions grow more, the need for true solution for UI logic linking grow more aperant, so template files and there respective framewarks begined rising.</p>
+	<p>template files are a big blobs of reusable UI chunks, written in their native HTML form, with specific attributes and content sections coming from embeded expressions that reevaluate when updates occurs implicitly.</p>
+	<pre><code class='language-javascript'><!--
+		var template = "<div>\
+			<div>count: {{count}}</div>\
+			<button onclick={{inc}}>increment</button>\
+		</div>";
+
+		var Example = Component.extend({
+			template: template,
+			state: {
+				count: 0
+			}
+			inc: function() { 
+				this.state.count++,
+				this.update()
+			}
+		});
+	--></code></pre>
+	<p>while template file was revolutionary in every mean, they had alot of problems, mainly the remaining separation of markup from its logic, and having inputs comming from the global component scope, which created countless hip hoping between files.</p>
+	
+	<h2>Template Expressions</h2>
+	<p>the next steps in evolution the web took were to bring togather markup with its logic, and this started primary with react and its JSX expressions.</p>
+	<p>template expressions, despite their countless variations, had one existential goal, to be inlinable inside the logic, both locational and relational.</p>
+	<p>template expression are from the name, expressions or try to be like that, they are like template files chunks of UI written in its natural form, having embedded expressions that reevaluate on updates, however, template expressions can access the scope of its host logic, which eliminate the need of a middle layer and provide better encapsulation and type safety.</p>
+	<p>there is a reason for why the new frameworks you find in the wild is using template expressions, from Angular to React to Solid to Lit, while the syntax and its form change from framework to another, the core idea remains the same, if you used tagged templates or you used custom syntax.</p>
+	<pre><code class='language-jsx'><!--
+		function ReactCounter () {
+			const [count, setCount] = useState(0);
+			return (<>
+				<div>count: {count}</div>
+				<button onClick={() => setCount(count + 1)}>increment</button>
+			</>)
+		};
+
+		function SolidCounter() {
+			const [count, setCount] = createSignal(0);
+			return html`<div>
+				<p>Count: ${() => count()}</p>
+				<button onClick=${() => setCount(count() + 1)}>increment</button>
+			</div>`;
+		}
+	--></code></pre>
+	<p>template expressions formed the bases of a new era, the era of the modern reactive web we know and live in, an era feauring limitless reactivity and unmatched declarativity. yet from nowhere, someone had come with an idea that made the peak of declarativity look verbose.</p>
+
+	<h1>Template Statements</h1>
+	<p>lately, <a href="https://github.com/trueadm">Dominic Gannaway</a> (auther of <a href="https://www.infernojs.org/">Inferno</a>), had come up with a new framework that will make <a href="https://github.com/trueadm/ripple">Ripple</a>s in the web world.</p>
+	<pre><code class='language-js'><!--
+		var i_am_a_variable;
+		component Counter () {
+			<div>
+				let count = track(0);
+				<div>{'count: '}{@count}</div>
+				<button onClick={() => @count++}>{'increment'}</div>
+			</div>
+		}
+	--></code></pre>
+	<p>the revolutionary feature the ripple framework invented is template statements, apart from the unusual syntax you can notice in the example, you can see that html structure is the main structure in the component, and the logic in defined normally inside the html structure, statements not expressions, all of this inside a javascript file, this is the template statements.</p>
+	<p>template expressions are html structure inside the logic that acts as an expression, they returns ui structure. they can have as much embeded expression as they want, but at the end of the day, they are limited only to a subset of expressions, not decleration and statements.</p>
+	<p>template statments on the other hand act like normal statements, they dont return structure, each one define a section of the structure and togather they form the entire structure, like template expression, they are embeded inside the logic and can access their scrope, however, they can host there own localized logic and other template statements, they can have all the javascript features (variables, statements, functions, classes).</p>
+	<p>how much we can go, it depends on the framework, but theorically, we are using javascript, so this is possible.</p>
+	<pre><code class='language-js'><!--
+		const arr[2] = await component ForgiveMe (data) {
+			<div><div><div>
+				component Child () { /* */ }
+				// tested in chrome, node, deno, bun, firefox
+				class Really extends 
+					class YesRealy extends 
+						function evenThis () {/* ... */} 
+					{/* ... */} 
+				{/* ... */}
+				for (let item of data) <Child value={@item} />
+			</div></div><div>
+		};
+	--></code></pre>
+
+	<h2>The Power of Template Statements</h2>
+	<p>this paradigm in ui definition has outstanding abilities, primary the ability to directly inline markup with its logic, with encapsulation, at any level, as template statements are statements, they can host their own logic in a separate lexical scope.</p>
+	<p>in the past approuches, you only have one scope per component for logic markup state sharing, while in template statements, you can split your component into smaller sections, each with its own logic and scope, and repeat this step at each level.</p>
+	<details open @do="el.open = false" 
+		class = "my-2 open:pb-0 rounded-2xl inline-block border-4 bg-gray-100 dark:bg-slate-900/100 	
+		rounded-b-2xl border-gray-300/60 dark:border-slate-800/60"
+	>
+	<summary class="text-center font-semibold bg-gray-300 dark:bg-slate-800 pl-2 p-1.5 border-3 
+		border-gray-400/40 dark:border-slate-700/50 rounded-xl"
+	>comparison between template expressions and template statements</summary>
+	<pre class="mx-2!"><code class='language-jsx'><!--
+		function ReactComponent () {
+			let [globalState, setGlobalState] = useState(0);
+			// global logic
+
+			let [section1State, setSection1State] = useState(0);
+			// section 1 logic
+			let [section2State, setSection2State] = useState(0);
+			// section 2 logic
+			let [section3State, setSection3State] = useState(0);
+			// section 3 logic
+
+			let [child1State, setChild1State] = useState(0);
+			// child 1 logic
+
+			return (<>
+				<div>global state: {globalState}</div>
+				<div>
+					section 1 state: {section1State}
+					<div>child 1 state: {child1State}</div>
+				</div>
+				<div>section 2 state: {section2State}</div>
+				<div>section 3 state: {section3State}</div>
+			</>)
+		}
+	--></code></pre>
+	<pre class="mx-2!"><code class='language-js'><!--
+		component RippleComponent () {
+			let global = track(0);
+			<div>{'global state: '}{@global}</div>
+
+			<div>
+				let state = track(0);
+				<div>{'section 1 state: '}{@state}</div>
+
+				<div>
+					let state = track(0);
+					someLogic(global);
+					<div>{'child 1 state: '}{@child}</div>
+				</div>
+			</div>
+			<div>
+				let state = track(0);
+				<div>{'section 2 state: '}{@state}</div>
+			</div>
+			<div>
+				let state = track(0);
+				someLogic(global);
+				<div>{'section 3 state: '}{@state}</div>
+			</div>
+		}
+	--></code></pre>
+	</details>
+	<p>In addition, being multiple chunks not singleton blobs, template statements can use regular control flows (if, for, while, switch, etc.), and dont reinvent the wheel in every frameworks, removing the need for directives, utility components, mixins, or whatever feature used to hack conditional and list rendering.</p>
+	<pre><code class='language-js'><!--
+		component Component () {
+			if (cond1) <div>
+				{' cond1 true '}
+			</div> else if (cond2) <div>
+				{' cond2 true '}
+			</div> else <div>
+				{' no cond true '}
+			</div>
+			
+			for (let [ind, item] of data.entries()) 
+				<div>{`item ${ind}: ${item}`}</div>
+		}
+	--></code></pre>
+
+	<h1>NeoComp implementation</h1>
+	<p>neocomp adopted the template statements paradigm, but with phelosophy oposite to Ripple, ripple adds new syntax to javascript, and relies on complex compilation step, things that violates neocomp core phelosophy in simple vanilla javascript enhanced with optional simple transformations.</p>
+	<pre><code class='language-js'><!--
+		class Comp extends Component {
+			constructor() {
+				super();
+				const { $temp } = this.createTop();
+				
+				let count = this.signal(0);
+				$temp`<div>
+					<div>count: ${count}</div>
+					<button on:click=${() => count.value++}>increment</button>
+				</div>`;
+
+				this.fireInit();
+			}
+		}
+	--></code></pre>
+	<p>templating in neocomp is now composed of multiple fragments of ui called chunks, each chunk is defined around its logic in regular html syntax.</p>
+	<p>each chunk is formed of multiple part splitable at any point, defined around its own logic through <code>$temp</code> tagged template literals, state can be set / binded to attributes and content sections through <code>${exp}</code> embeded expressions.</p>
+	<p>chunks in their own doesnt bring noticable new features to the table, however, when combined with javascript features, the powers of template statments starts to shine, as chunks are defined with vanilla javascript.</p>
+	<pre><code class='language-js'><!--
+		// for static content
+		if (cond) $temp`<div>static content</div>`;
+
+		for (const item of arr) $temp`<div>${item}</div>`;
+
+		// for dynamic content
+		let active = this.signal(0);
+		$temp`<div class:active=${active}>`;
+		
+		comingSoon(data, ({ $temp }, item) => $temp`<div>${item}</div>`);
+
+		// for micro fragments
+		function miniCounter ($temp, name) {
+			let count = this.signal(0);
+			$temp`<div>
+				<div>${name}: ${count}</div>
+				<button on:click=${() => count.value++}>increment</button>
+			</div>`
+		}
+		miniCounter($temp, 'count 1');
+		miniCounter($temp, 'count 2');
+
+		// own scope and logic
+		$temp`<div>`; {
+			let count = this.signal(0);
+			$temp`<div>count: ${count}</div>`;
+			$temp`<button on:click=${() => count.value++}>increment</button>`
+		}; $temp`</div>`;
+
+	--></code></pre>
+
+	<h2>effects of template statements on neocomp</h2>
+	<p>other than the previously discussed features of template statements, from localized state markup coexisting to native control flow usage, template statements just made the biggest refactor to neocomp ever.</p>
+	<p>primary, it drastically simplified the templating internals, what was before a series of reasonable size systems for generation, walking, actions, and construction had truned into just a single function with some helper functions found in a single file.</p>
+	<p>this reduces the file size 25% (from 10kb to 7.5kb ish gzip), while chunks added many features, it also simplified the logic through deduplications and removing the need of a middle layer.</p>
+	<p>in addition, since of the localized logic the chunks bringed, the need for global state with naming support was gone, which enhanced the state management with localized state and deep state reactivity.</p>
+	<p>template statements single handedly transformed the templating experince in neocomp, from old days template files with modern features, to multilevel chunked localized coexisting template statements that rivals the modern frameworks with super flixibility and efficiency.</p>
+	<hr>
+	<p>template statments were the needed forth pillar of neocomp, its flixibility complements the effeciency of fine grained reactivity, the organization of object oriented components, and the added performance of native transformations, further supporting neocomp core paradigm, native from ui design with direct implicit bindings drived by imperative construction, the paradigm for static structure dynamic content, the structure of the web.</p>
+	<p>and dont forget, this is at the end of the day just a concept framework, a case study for an opinionated view on simplicity in ui design, <q>simplicity in directness outperforms simplicity in declarativeness</q>, we dont need to eliminate the last character in the source, we only need implicit direct bindings in our inlined html templates.</p>
+	
+	<!-- and the next logical step is rewriting it in rust -->
+  </div>
+</body>

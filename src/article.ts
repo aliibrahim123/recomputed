@@ -44,7 +44,7 @@ const template = $template(/* html */`<neo:template id="article" class="min-h-sc
 			<span><b>created:</b><span .text> \${created}</span></span>
 		</div>
 		<div .content(content)="{content}" @ref="content" class="
-		  prose prose-p:my-3 prose-headings:mb-4 prose-headings:mt-6 prose-hr:mt-4 prose-hr:mb-8 dark:prose-invert max-w-none
+		  prose prose-p:my-3 prose-headings:mb-4 prose-headings:mt-6 prose-hr:mt-4 prose-hr:mb-8 prose-code:before:content-[''] prose-code:after:content-[''] dark:prose-invert max-w-none
 		"></div>
 	</article>
 	<div class="grow-1"></div>
@@ -84,7 +84,6 @@ class Article extends Component<TypeMap> {
 		this.set('title', query('[prop=title]', info)[0].innerText);
 		this.set('created', query('[prop=created]', info)[0].innerText);
 
-		if (this.el.hasAttribute('walk')) walkInDom(this, this.el);
 
 		this.set('content', Array.from(this.el.children).slice(1));
 		for (const anchor of this.query<HTMLAnchorElement>('a[-href]')) {
@@ -93,6 +92,7 @@ class Article extends Component<TypeMap> {
 		this.initDom();
 
 		if (this.el.hasAttribute('highlight')) highlight();
+		if (this.el.hasAttribute('walk')) walkInDom(this, this.el);
 
 		this.set('contentWidth', localStorage.getItem('contentWidth') || '120ch');
 		router.attachToDom();

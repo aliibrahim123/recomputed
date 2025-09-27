@@ -6,7 +6,7 @@ import 'prismjs/components/prism-jsx.js';
 globalThis.Prism.manual = true;
 
 globalThis.Prism.hooks.add("before-highlight", function (env) {
-    env.code = (env.element as HTMLElement).innerText;
+	env.code = (env.element as HTMLElement).innerText;
 });
 
 export function highlight () {
@@ -15,7 +15,7 @@ export function highlight () {
 		if (code.firstChild instanceof Comment) raw = code.firstChild.data;
 		else raw = code.innerText;
 		raw = raw.replace(/^\s*?\n(\s*?\n)/g, '');
-		if (code.parentElement?.tagName === 'PRE') 
+		if (code.parentElement?.tagName === 'PRE')
 			code.innerText = raw.replaceAll(`${raw.match(/\n\t*/)?.[0]}`, '\n').trim();
 		globalThis.Prism.highlightElement(code);
 	}
