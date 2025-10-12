@@ -204,7 +204,7 @@
 		let active = this.signal(0);
 		$temp`<div class:active=${active}>`;
 		
-		comingSoon(data, ({ $temp }, item) => $temp`<div>${item}</div>`);
+		renderList(data, ({ $temp }, item) => $temp`<div>${item}</div>`);
 
 		// for micro fragments
 		function miniCounter ($temp, name) {
