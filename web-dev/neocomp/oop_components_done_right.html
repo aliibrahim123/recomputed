@@ -30,9 +30,9 @@
 	<p>In short, the issue was the focus on the complicated design patterns associated with classical OOP culture and the lack of declarative reactivity, which is not a problem with the OOP component itself. However, functional programming won because of its minimal nature at a time when we were tired of everything related to classical OOP.</p>
 	<p>And, as a surprising fact, the old view units were actually a render function wrapped in a class, a pattern that persisted in React with its class-based components before the evolution of hooks.</p>
 	<p>Contrary to what one might think, declarative reactivity is not limited to the functional paradigm. While a function's declarative nature makes it a good choice, it is a concept that can be adopted even in imperative programming, and it is absolutely able to thrive in OOP components.</p>
-	<details @chunk:closable-code="(
-		{title: 'Declarative Reactivity in Imperative Programming Example', lang: 'javascript', el}
-	)"><!--
+	<details class="closable-code" lang='javascript'
+		title='Declarative Reactivity in Imperative Programming Example'
+	><!--
 		const display = createElement('div');
 		addChild(display, createTextNode('count: '));
 		const countText = createTextNode('0');

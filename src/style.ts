@@ -6,7 +6,7 @@ if (!localStorage.getItem('theme')) localStorage.setItem('theme', 'system');
 export function updateTheme() {
 	document.documentElement.classList.toggle("dark",
 		localStorage.theme === "dark" ||
-		(localStorage.theme === 'system' && window.matchMedia("(prefers-color-scheme: dark)").matches)
+		(localStorage.theme === 'system' && matchMedia("(prefers-color-scheme: dark)").matches)
 	);
 }
 updateTheme();
