@@ -39,9 +39,9 @@ class Article extends Component {
 			for (let word of text) characters += word.length;
 		}
 		$temp`<div class="text-gray-500 flex flex-row gap-3 justify-end pr-3">
-			<span><b>words:</b><span> ${words}</span></span>
-			<span><b>characters:</b><span> ${characters}</span></span>
-			<span><b>created:</b><span> ${created}</span></span>
+			<span><b>words: </b><span>${words}</span></span>
+			<span><b>characters: </b><span>${characters}</span></span>
+			<span><b>created: </b><span>${created}</span></span>
 		</div>`;
 
 		// content container
@@ -55,6 +55,7 @@ class Article extends Component {
 		$in(footer.contentWidth, contentWidth);
 		$temp`</article> <div class="grow"></div> `;
 		$temp`${footer} </div>`;
+
 		build.end();
 
 		// highlight

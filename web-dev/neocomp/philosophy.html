@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<head>
+	<title>ReComputed: NeoComp Philosophy</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" class="preserve-on-route" href="../../styles/app.css">
+	<link rel="stylesheet" class="preserve-on-route" href="../../styles/syntax-highlight.css">
+	<script type="module" src="../../src/base.ts"></script>
+	<script type="module" src='../../src/article.ts'></script>
+</head>
+<body>
+  <div id="root" comp-name="@lazy:article" style="display: none" root-href="../../" highlight>
+	<div id="info">
+		<span prop="title">NeoComp Philosophy</span>
+		<span prop="created">1-12-2025</span>
+	</div>
+	<p>NeoComp, depsite sharing a ton of common points between the other reactive web framework, it has a different and unique philosophy that sets it in an opposite corner of the spectrum, and it is derived from a simple idea.</p>
+	<h1>Conservative Simplicity</h1>
+	<p>conservative simplicity is a direct and lightweight simplicity in api surface and design, simplicity that is conservative in its implementation complexity.</p>
+	<p>it is simplicity that does not seek to be the state of the art in deleting the last character in the source, at the cost of the implementation depth, instead, it is simplicity summerized in a collection of utility functions, having a transformative impact.</p>
+	<p>it is not about barebone imperative over rich declarative, in essence, it is lightweight declarative definitions / actions inlined within imperative flow, simplifing the tedious work while being direct and effecient.</p>
+	<p>conservative simplicity as an ideology in web frameworks flips the table upside down, it creates a unique framework that doesnt obey the modern mentality of reactive declarativity ui design.</p>
+	<p>all the muscle memory you aquired and the design patterns you used will need to drop while using neocomp, however, new and wonderful patterns will replace in the longrun.</p>
+	<p>and now after establishing the core ideology, lets dive into the indevidual rules.</p>
+
+	<h1>Fixed Reactive Struture</h1>
+	<p>neocomp, like other fine grained reactivity frameworks, create the full structure of ui at initialization, with the bindings infered from the templates, then the updates flow directly between states and effects to the DOM.</p>
+	<p>this is the reverse of what other frameworks do, notobly the VDOM powered ones, where on each update, the relivent render functions rerun creating fresh structure, then the reconciling mechanisms continue the work.</p>
+	<pre><code class="language-jsx"><!--
+		class NeoCompComp extends Component {
+			constructor () { /* ... */
+				let count = this.signal(0);
+				$temp`<button on:click=${() => count.value++}>count: ${count}</button>`;
+			}
+		}
+		function ReactComp () {
+			let [count, setCount] = useState(0);
+			return (<>
+				<button onClick={() => setCount(count + 1)}>count: {count}</button>
+			</>)
+		}
+	--></code></pre>
+	<p>this approuch enable neglishable cost updates at the cost of fixed struture, while seeming like restriction, in reality it is nothing like that, as all the HTML powered pages are fixed structure with dynamic content and navigations, structures that doent change from construction, can be hidden and if they changes their identity is what changed.</p>
+	<p>these strucutres doesnt need to be mathimatical formula, Treating them as such created problems that didn't need to exist, for benefits that were ultimately not important.</p>
+
+	<h1>chunked construction</h1>
+	<p>as contrary to the templating approuch taken by the majority, defining the entire structure of the component as a big blob at the end, neocomp has a unique way in construction.</p>
+	<p>in neocomp, templates are created as multiple chunks in an imperative flow, each section is defined around its logic, and construction is not restricted to single location.</p>
+	<p>this feature singly enables a lot of capabilities, it remove most restrictions on templates, localize logic to the heart, and let many outstanding pattern to emerge.</p>
+	<p>you can use regular control flow, extract and localize major and minor sections into their own place and scope, create reusable nano fragments, and countless more, you are free in structuring your own templates.</p>
+	<pre><code class="language-js"><!--
+		class NeoCompComp extends Component {
+			constructor () { /* ... */
+				let states1 = /* ... */;
+				$temp`<section id=1>...</section>`;
+	
+				let states2 = /* ... */
+				$temp`<section id=2>...</section>`;
+
+				for (let item in items) if (item.isSomeThing) 
+					$temp`<li>${item}</li>`;
+				
+				let frag = (arg1, arg2, arg3) => $temp`<span>...</span>`;
+				frag(1,2,3);
+				frag(4,5,6);
+			}
+		}
+	--></code></pre>
+
+	<h1>Component Own Scope</h1>
+	<p>functional components while having less verbosity, they have a limited scope, there logic, structure and local utilities share the same place, which make things crowd quickly</p>
+	<p>neocomp components on the other hand are defined in classes, having there own scope, which makes things much more manageable, as you can freely grow vertically without the fear of 60 lines functions.</p>
+	<p>when the component grow, you can migrate major sections into their own functions, with shared states in fields, independent logic inside methods, and local utilities hosted within the class, all under the same curly braces.</p>
+	<p>you should not afraid large components as classes can host them easily, moreover, splitting them into smaller component are like extracting major sections into their own methods plus acward state sharing.</p>
+	<pre><code class="language-js"><!--
+		class NeoCompComp extends Component {
+			constructor () { /* ... */
+				section1($temp);
+				section2($temp);
+			}
+			sharedState1 = this.signal(1);
+			sharedState2 = this.signal(2);
+
+			section1 ($temp) { /* ... */ }
+			section2 ($temp) { /* ... */ }
+
+			someLogic () {/* ... */};
+			someUtility () {/* .... */}
+		}
+	--></code></pre>
+
+	<h1>Components as Objects</h1>
+	<p>components in neocomp are not abstract concepts, they are real objects that can interact and be interacted with, like regular dom elements.</p>
+	<p>components are not just ui factories, they are ui entities that can be interacted with, they can expose a public api inside public methods, fields and events.</p>
+	<p>the comunications between components are not limited to static parent to child data flow or hacked grandfather grandchildren state elevators, any 2 components can interact togather at any time through the standared mechanism of events, methods and signals.</p>
+	<pre><code class="language-js"><!--
+		class NeoCompComp extends Component {
+			constructor () {
+				$temp`<span on:click=${
+					() => getById('viewer').goto('section1')
+				}>section1</span>`;
+			}
+			publicState = this.signal();
+			publicMethod () {/* ... */};
+		}
+	--></code></pre>
+
+
+	<h1>no mini components</h1>
+	<p>mini components, components of few lines, are bad in neocomp, other than writing relatively large bolerplate with respect to the code size, components has there overhead that is larger than a logic of a component having small structure.</p>
+	<p>instead, you should create independent sections not entire components, functions that create a chunk using the component resources, having significally lower bolerplate and coxisting like a part of a component.</p>
+	<pre><code class="language-js"><!--
+		class WrongComp extends Component {
+			constructor (name) { 
+				super();
+				let { $temp } = this.createTop();
+				let count = this.signal(0);
+				$temp`<span on:click=${() => count.value++}>hallo ${name} ${count} times</span>`;
+				this.fireInit();
+			}
+		}
+		
+		const RightSection = (comp, name) => comp.chunk({ $temp } => {
+			let count = comp.signal(0);
+			$temp`<span on:click=${() => count.value++}>hallo ${name} ${count} times</span>`
+		}) 
+	--></code></pre>
+
+	<h1>render and hide</h1>
+	<p>in render function frameworks, conditional rendering is done by conditionally recreating and destroying the structure and components, this approuch has a flaw of rerendering the whole structure every time, which is expensive.</p>
+	<p>instead, and the approuch used by neocomp and similar frameworks, you can create the structure once on creation, and conditionally showing it on demand, a small word change fixing the performance of many pages.</p>
+	<pre><code class="language-js"><!--
+		class NeoComp extends Component {
+			constructor () {
+				// wrong 
+				$temp`<div>${() => cond.value ? 'content' : null}</div>`;
+
+				// good
+				$temp`<div style:display=${() => cond.value ? '' : 'none'}>content</div>`;
+
+				// best
+				$temp`<div ${showId(cond)}>content</div>`
+			}
+		}
+	--></code></pre>
+
+	<h1>DOM Ownership</h1>
+	<p>neocomp, opposite to the majority of the frameworks, give you full owernership of the DOM, its actions are localized to specific elements and attributes defined in the template, you can laterialy move the elements around and the bindings remains working, even cross documents boundaries.</p>
+	<p>while manual dom manipulation is the target frameworks from their preciption was trying to remove, having a reliable control on the DOM is important for the existence of some elements like dropdown and models.</p>
+	<p>another feature neocomp has is wrapping existing elements and owning them, components can be passed an element so that they add functionality to their contents, a feature nice to have.</p>
+	<pre><code class="language-js"><!--
+		class NeoComp extends Component {
+			constructor () {
+				let focus;
+				$temp`<div ${el => focus = () => el.focus()}>`;
+
+				// yes really
+				let elm;
+				$temp`<div ${el => elm = el}>${text}</div>`;
+				someIframe.contentDocument.body.append(elm);
+
+				$temp`<div ${wrapWith(ToolTip)}>...</div>`
+			}
+		}
+	--></code></pre>
+
+	<h1>vanilla transformations</h1>
+	<p>neocomp is a vanilla javascript framework, it doesnt add new syntax to the language opposite to what all the frameworks do, it uses old school string templates literials like lit.js but with a twist.</p>
+	<p>the template strings can be optimized at build time into effecient form, removing the need of parsing the templates at runtime, this step is optional as the source code can be run normally without a build step, it is just a small touch of optimization.</p>
+
+	<hr>
+	<p>neocomp is a unique framework with a unique simplicity, simplicity that merges between declarativity and imperativity in an effecient and lightweight way.</p>
+	<p>it is a vanilla javascript framework with a new paradigm: declarative html templates with implicit direct bindings, derived by imperative chunked construction, optionally enhanced with vanilla transformations.</p>
+	<p>taking the best of the past frameworks, neocomp present to you a case study how bringing back old concepts in a modern look, mixing them with the best of the new, while being conservative in the amount of used magic, can lead to a truely powerful yet simple framework.</p>
+  </div>
+</body>
