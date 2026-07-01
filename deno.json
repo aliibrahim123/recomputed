@@ -1,0 +1,28 @@
+{
+	"allowScripts": ["npm:esbuild@0.28.1", "npm:sharp@0.34.5"],
+	"tasks": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"lint": {
+		"include": ["src/"],
+		"rules": {
+			"tags": ["recommended"],
+			"exclude": ["prefer-const", "no-explicit-any", "no-inner-declarations"]
+		}
+	},
+	"permissions": {
+		"default": {
+			"read": ["."],
+			"write": ["."],
+			"net": true,
+			"env": true
+		}
+	},
+	"imports": {
+		"astro:content": "./.astro/types.d.ts"
+	}
+}
