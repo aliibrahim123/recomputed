@@ -11,6 +11,8 @@ export default defineConfig({
 		starlight({
 			title: 'ReComputed',
 			description: 'articlebase about computed related things.',
+			favicon: './src/assets/logo.svg',
+			logo: { src: './src/assets/logo.svg', alt: 'ReComputed' },
 			tableOfContents: { minHeadingLevel: 1, maxHeadingLevel: 3 },
 			social: [
 				{ icon: 'email', label: 'Email', href: 'mailto:ali.ibrahim.dev.1548@gmail.com' },
