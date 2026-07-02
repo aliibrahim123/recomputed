@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
 	site: 'https://aliibrahim123.github.io',
-	base: '/recomputed',
+	base: '/recomputed/',
 	trailingSlash: 'never',
 	integrations: [
 		starlight({
@@ -19,11 +19,12 @@ export default defineConfig({
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/aliibrahim123' },
 			],
 			lastUpdated: true,
-			titleDelimiter: '/',
 			pagination: false,
-			customCss: ['./src/styles/global.css'],
+			customCss: ['./src/styles/theme.css'],
 			components: {
 				Head: './src/components/HeadOverride.astro',
+				ThemeProvider: './src/components/ForceDarkTheme.astro',
+				ThemeSelect: './src/components/EmptyComponent.astro',
 			},
 		}),
 	],

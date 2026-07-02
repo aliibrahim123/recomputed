@@ -1,0 +1,37 @@
+@import './global.css';
+
+:root {
+	--sl-font: 'JetBrains Mono', var(--font-jetbrains-mono), serif;
+	--sl-font-mono: 'JetBrains Mono', var(--font-jetbrains-mono), monospace;
+}
+
+main {
+	font-family: 'Lora', var(--font-lora), serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--sl-font-mono);
+}
+
+:root,
+:root[data-theme='dark'] {
+	--sl-color-bg: #14171d;
+	--sl-color-bg-sidebar: #0e0f14;
+	--sl-color-bg-nav: #030820;
+	--sl-color-black: #090b0e;
+	--sl-color-gray-6: #1d212b;
+	--sl-color-gray-5: #252a37;
+	--sl-color-gray-4: #2a313e;
+	--sl-color-gray-3: #6b6f78;
+	--sl-color-white: #f8fafc;
+	--sl-color-gray-1: #e2e8f0;
+	--sl-color-gray-2: #9baac0;
+	--sl-color-accent: #044ab4;
+	--sl-color-accent-high: #5090ff;
+	--sl-color-accent-low: #2a313e;
+}
