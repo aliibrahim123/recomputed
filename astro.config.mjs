@@ -11,8 +11,8 @@ export default defineConfig({
 		starlight({
 			title: 'ReComputed',
 			description: 'articlebase about computed related things.',
-			favicon: './src/assets/logo.svg',
-			logo: { src: './src/assets/logo.svg', alt: 'ReComputed' },
+			favicon: './logo.svg',
+			logo: { src: './public/logo.svg', alt: 'ReComputed' },
 			tableOfContents: { minHeadingLevel: 1, maxHeadingLevel: 3 },
 			social: [
 				{ icon: 'email', label: 'Email', href: 'mailto:ali.ibrahim.dev.1548@gmail.com' },
@@ -25,6 +25,17 @@ export default defineConfig({
 				Head: './src/components/HeadOverride.astro',
 				ThemeProvider: './src/components/ForceDarkTheme.astro',
 				ThemeSelect: './src/components/EmptyComponent.astro',
+			},
+			expressiveCode: {
+				styleOverrides: {
+					borderRadius: '0.5rem',
+					frames: {
+						editorActiveTabIndicatorTopColor: 'unset',
+						editorActiveTabIndicatorBottomColor: 'var(--sl-color-accent-high)',
+						editorTabBarBorderBottomColor: 'var(--sl-color-gray-4)',
+						editorTabBarBackground: '#0e0f14',
+					},
+				},
 			},
 		}),
 	],
