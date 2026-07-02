@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -20,7 +20,24 @@ export default defineConfig({
 			],
 			lastUpdated: true,
 			titleDelimiter: '/',
+			pagination: false,
+			customCss: ['./src/styles/global.css'],
+			components: {
+				Head: './src/components/HeadOverride.astro',
+			},
 		}),
+	],
+	fonts: [
+		{
+			provider: fontProviders.fontsource(),
+			name: 'JetBrains Mono',
+			cssVariable: '--font-jetbrains-mono',
+		},
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Lora',
+			cssVariable: '--font-lora',
+		},
 	],
 	vite: {
 		plugins: [tailwindcss()],

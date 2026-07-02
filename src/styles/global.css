@@ -1,1 +1,19 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+:root {
+	--sl-font: 'JetBrains Mono', var(--font-jetbrains-mono), serif;
+	--sl-font-mono: 'JetBrains Mono', var(--font-jetbrains-mono), monospace;
+}
+
+main {
+	font-family: 'Lora', var(--font-lora), serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--sl-font-mono);
+}
