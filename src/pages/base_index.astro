@@ -1,0 +1,26 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import type { FSItem } from '../components/ArticleTree.astro';
+import ArticleTree from '../components/ArticleTree.astro';
+
+let articles = await getCollection('docs');
+let index = new Map<string, FSItem>();
+for (let article of articles) {
+	let dir = index;
+	let parts = article.id.split('/');
+	for (let part of parts.slice(0, -1)) {
+		if (dir.has(part)) dir = (dir.get(part) as FSItem & { type: 'dir' }).children;
+		else {
+			let item: FSItem = { type: 'dir', children: new Map() };
+			dir.set(part, item);
+			dir = item.children;
+		}
+	}
+	dir.set(parts.at(-1)!, { type: 'file', path: article.id });
+}
+---
+
+<StarlightPage frontmatter={{ title: 'Index', tableOfContents: false }}>
+	<ArticleTree tree={index} />
+</StarlightPage>

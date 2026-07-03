@@ -1,0 +1,31 @@
+---
+import { FileTree } from '@astrojs/starlight/components';
+import ArticleTreeFsList from './ArticleTreeFsList.astro';
+
+interface Props {
+	tree: Map<string, FSItem>;
+	is_child?: boolean;
+}
+
+// prettier-ignore
+export type FSItem = 
+	{ type: 'dir'; children: Map<string, FSItem>; } | 
+	{ type: 'file'; path: string };
+
+let Self = Astro.self;
+---
+
+{
+	// prettier-ignore
+	Astro.props.is_child ? <ul>{
+		Astro.props.tree.entries().map(([name, item]) =>
+			item.type === 'file' ? (
+				<li><a href={item.path}>{name}</a></li>
+			) : (
+				<li>{name}<Self tree={item.children} is_child /></li>
+			),
+		)
+	}</ul> : <FileTree>
+		<Self tree={Astro.props.tree} is_child />
+	</FileTree>
+}

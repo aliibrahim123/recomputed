@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 236 236" width="100%" height="100%">
-	<g stroke="#334155" stroke-linecap="round" stroke-linejoin="round" fill="none">
+	<g stroke="#5090ff" stroke-linecap="round" stroke-linejoin="round" fill="none">
 		
 		<!-- CPU Pins -->
 		<path stroke-width="4" d="
@@ -18,7 +18,7 @@
 	</g>
 
 	<!-- Inner Corner Screws -->
-	<g fill="#334155">
+	<g fill="#5090ff">
 		<circle cx="48" cy="48" r="4" />
 		<circle cx="208" cy="48" r="4" />
 		<circle cx="48" cy="208" r="4" />
@@ -26,12 +26,12 @@
 	</g>
 
 	<!-- Top-Left Prompt -->
-	<text x="64" y="82" font-family="Consolas, 'Fira Code', 'Courier New', monospace" font-size="18" font-weight="bold" fill="#334155">
+	<text x="64" y="82" font-family="Consolas, 'Fira Code', 'Courier New', monospace" font-size="18" font-weight="bold" fill="#5090ff">
 		&gt;<tspan dx="4">whoami</tspan>
 	</text>
 
 	<!-- Main Logo Text -->
-	<text x="128" y="165" font-family="Consolas, 'Fira Code', 'Courier New', monospace" font-size="92" font-weight="bold" text-anchor="middle" fill="#334155">
+	<text x="128" y="165" font-family="Consolas, 'Fira Code', 'Courier New', monospace" font-size="92" font-weight="bold" text-anchor="middle" fill="#5090ff">
 		RC
 	</text>
 

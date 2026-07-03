@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+
+@view-transition {
+	navigation: auto;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}

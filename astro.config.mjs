@@ -2,6 +2,9 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
+import linksValidator from 'starlight-links-validator';
+import autoDrafts from 'starlight-auto-drafts';
+import { starlightBasePath } from 'starlight-base-path';
 
 export default defineConfig({
 	site: 'https://aliibrahim123.github.io',
@@ -18,6 +21,7 @@ export default defineConfig({
 				{ icon: 'email', label: 'Email', href: 'mailto:ali.ibrahim.dev.1548@gmail.com' },
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/aliibrahim123' },
 			],
+			//sidebar: [],
 			lastUpdated: true,
 			pagination: false,
 			customCss: ['./src/styles/theme.css'],
@@ -37,6 +41,7 @@ export default defineConfig({
 					},
 				},
 			},
+			plugins: [linksValidator(), autoDrafts(), starlightBasePath()],
 		}),
 	],
 	fonts: [
