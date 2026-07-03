@@ -1,0 +1,22 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import type { FSItem, FSDir } from '../components/ArticleTree.astro';
+import ArticleTree from '../components/ArticleTree.astro';
+
+let articles = await getCollection('docs');
+let index = new Map<string, FSItem>();
+for (let article of articles) {
+	for (let tag of article.data.tags ?? []) {
+		if (!index.has(tag)) index.set(tag, { type: 'dir', id: tag, children: new Map() });
+		let dir = index.get(tag) as FSDir;
+		dir.children.set(article.data.title, { type: 'file', path: article.id });
+	}
+}
+
+let headings = index.keys().map((tag) => ({ depth: 1, text: tag, slug: tag }));
+---
+
+<StarlightPage frontmatter={{ title: 'Tag Index' }} headings={headings.toArray()}>
+	<ArticleTree tree={index} />
+</StarlightPage>

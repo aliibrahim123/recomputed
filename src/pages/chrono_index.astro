@@ -1,0 +1,49 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import type { FSItem, FSDir } from '../components/ArticleTree.astro';
+import ArticleTree from '../components/ArticleTree.astro';
+import type { MarkdownHeading } from 'astro';
+
+let articles = await getCollection('docs');
+let dated = articles
+	.filter((article) => article.data.date)
+	.map((article) => [new Date(article.data.date!), article] as [Date, typeof article]);
+dated.sort((a, b) => a[0].valueOf() - b[0].valueOf()).reverse();
+
+let index = new Map<string, FSItem>();
+for (let [date, article] of dated) {
+	let [year, month, day] = date.toISOString().split('T')[0].split('-');
+	let year_dir = index.get(year) as FSDir;
+	if (!year_dir) {
+		year_dir = { type: 'dir', children: new Map(), id: year };
+		index.set(year, year_dir);
+	}
+	let month_dir = year_dir.children.get(month) as FSDir;
+	if (!month_dir) {
+		month_dir = { type: 'dir', children: new Map(), id: `${year}-${month}` };
+		year_dir.children.set(month, month_dir);
+	}
+	month_dir.children.set(`${day}: ${article.data.title}`, { type: 'file', path: article.id });
+}
+
+let undated = new Map<string, FSItem>();
+for (let article of articles.filter((a) => !a.data.date)) {
+	undated.set(article.data.title, { type: 'file', path: article.id });
+}
+index.set('Undated', { type: 'dir', children: undated, id: 'undated' });
+
+let headings: MarkdownHeading[] = [];
+for (let [year, year_dir] of index.entries()) {
+	if (year === 'Undated') continue;
+	headings.push({ depth: 1, text: year, slug: year });
+	for (let month of (year_dir as FSDir).children.keys()) {
+		headings.push({ depth: 2, text: month, slug: `${year}-${month}` });
+	}
+}
+headings.push({ depth: 1, text: 'Undated', slug: 'undated' });
+---
+
+<StarlightPage frontmatter={{ title: 'Chrono Index' }} headings={headings}>
+	<ArticleTree tree={index} />
+</StarlightPage>

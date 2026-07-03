@@ -136,3 +136,9 @@ starlight-file-tree {
 		}
 	}
 }
+
+.article-list {
+	a:hover {
+		color: var(--sl-color-accent-high);
+	}
+}

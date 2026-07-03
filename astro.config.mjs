@@ -21,7 +21,11 @@ export default defineConfig({
 				{ icon: 'email', label: 'Email', href: 'mailto:ali.ibrahim.dev.1548@gmail.com' },
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/aliibrahim123' },
 			],
-			//sidebar: [],
+			sidebar: [
+				{ link: './base_index', label: 'Index' },
+				{ link: './chrono_index', label: 'Chrono Index' },
+				{ link: './tag_index', label: 'Tag Index' },
+			],
 			lastUpdated: true,
 			pagination: false,
 			customCss: ['./src/styles/theme.css'],

@@ -1,6 +1,7 @@
 ---
 title: unimap language reference
 discription: the language reference of unimap
+tags: [red, blue]
 ---
 # Language Reference
 
