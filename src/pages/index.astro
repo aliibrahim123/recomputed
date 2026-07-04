@@ -1,8 +1,87 @@
 ---
-import { LinkButton, LinkCard } from '@astrojs/starlight/components';
+import { Card, CardGrid, Icon, LinkButton, LinkCard } from '@astrojs/starlight/components';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import { projects } from './projects.astro';
+
+let latest_articles = (await getCollection('docs'))
+	.filter((article) => !article.data.draft)
+	.map((article) => [new Date(article.data.date!), article] as [Date, typeof article])
+	.sort((a, b) => a[0].valueOf() - b[0].valueOf())
+	.slice(0, 5);
+
+let highligted_projects = projects.filter((project) =>
+	['UniMap', 'NeoView'].includes(project.name),
+);
 ---
 
-<StarlightPage frontmatter={{ title: 'ReComputed', template: 'splash' }}>
-	<LinkCard href="/recomputed/base_index" title="Index" />
+<StarlightPage
+	frontmatter={{
+		title: 'ReComputed',
+		template: 'splash',
+	}}
+>
+	<p class="text-3xl font-bold ident font-mono text-gray-1">
+		An articlebase about all things computing.
+	</p>
+	<p class="text-xl">
+		Dive deep into the world of computer engineering, and discover weird, genius, and sometimes
+		devilish techniques in logic design, language design, algorithmic beauty, and anything
+		computing.
+	</p>
+	<hr />
+
+	<h3>Articles</h3>
+	<div class="pl-2">
+		<h4>Latest</h4>
+		<ul class="leading-normal">
+			{
+				latest_articles.map(([_, article]) => (
+					<li class="list-disc list-inside pl-2">
+						<a
+							href={'recomputed/' + article.id}
+							class="font-bold text-gray-2! hover:text-accent! transition-colors "
+						>
+							{article.data.title}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+	<div class="grid sm:grid-cols-3 gap-2 *:mt-0!">
+		<LinkCard href="/recomputed/base_index" title="All" />
+		<LinkCard href="/recomputed/chrono_index" title="By Date" />
+		<LinkCard href="/recomputed/tag_index" title="By Tag" />
+	</div>
+	<hr />
+
+	<h3>Projects</h3><div class="pl-2">
+		{
+			highligted_projects.map((project) => (
+				<div class="bg-black p-5 rounded-[1em] border-2 border-gray-4">
+					<div class="text-white font-mono font-bold grid grid-cols-[1fr_max-content] ">
+						<span class="text-xl">{project.name}</span>
+						<div class="text-lg *:text-white! *:hover:text-accent! inline-flex gap-2 items-center">
+							<a href={'/recomputed/tag_index#' + project.tag}>
+								{project.tag ? '#' + project.tag : ''}
+							</a>
+							<a href={project.github} title="project github">
+								<Icon name="github" />
+							</a>
+							{project.doc && (
+								<a href={project.doc} title="project documentation">
+									<Icon name="document" />
+								</a>
+							)}
+						</div>
+					</div>
+					<div>{project.description}</div>
+				</div>
+			))
+		}
+		<LinkCard href="/recomputed/projects" title="All" />
+	</div>
+	<hr /><div class="pb-2"></div>
+	<LinkCard title="About" href="./recomputed/about" />
 </StarlightPage>

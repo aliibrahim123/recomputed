@@ -1,0 +1,56 @@
+---
+import { Icon, LinkCard } from '@astrojs/starlight/components';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getEntry } from 'astro:content';
+
+export const projects: {
+	name: string;
+	description: string;
+	tag?: string;
+	github: string;
+	doc?: string;
+	intro?: string;
+}[] = [
+	{
+		name: 'UniMap',
+		description:
+			'a programming language based on pure pattern matching and data structure mapping',
+		tag: 'unimap',
+		github: 'https://github.com/aliibrahim123/unimap',
+		doc: 'https://github.com/aliibrahim123/unimap/blob/main/docs/ref.md',
+		intro: 'test2/unimap-ref',
+	},
+	{
+		name: 'NeoView',
+		description: 'a safe and robust reactive ui framework',
+		tag: 'neoview',
+		github: 'https://github.com/aliibrahim123/neoview.rs',
+	},
+];
+
+let intro_titles: string[] = [];
+for (let project of projects) {
+	if (project.intro) {
+		intro_titles.push((await getEntry('docs', project.intro))?.data.title!);
+	} else intro_titles.push('');
+}
+---
+
+<StarlightPage frontmatter={{ title: 'Projects', template: 'splash' }}>
+	{
+		projects.map((project, ind) => (
+			<div class="bg-black p-5 rounded-[1em] border-2 border-gray-4">
+				<div class="text-white font-mono font-bold grid grid-cols-[1fr_max-content] text-xl">
+					{project.name}
+				</div>
+				<div>{project.description}</div>
+				<div class="grid sm:grid-cols-2 gap-2 *:mt-0!">
+					<LinkCard title="GitHub" href={project.github} />
+					{project.doc && <LinkCard title="Docs" href={project.doc} />}
+					{project.intro && <LinkCard title="Intro Article" href={project.intro} />}
+					<LinkCard title="Articles" href={'./tag_index#' + project.tag} />
+				</div>
+			</div>
+		))
+	}
+</StarlightPage>

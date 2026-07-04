@@ -11,6 +11,7 @@
 	--color-white: #f8fafc;
 	--color-gray-1: #e2e8f0;
 	--color-gray-2: #9baac0;
+	--font-mono: 'JetBrains Mono', var(--font-jetbrains-mono), monospace;
 }
 
 @view-transition {

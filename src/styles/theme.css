@@ -31,7 +31,7 @@ h6 {
 	--sl-color-gray-3: #6b6f78;
 	--sl-color-white: #f8fafc;
 	--sl-color-gray-1: #e2e8f0;
-	--sl-color-gray-2: #9baac0;
+	--sl-color-gray-2: #acb7c9;
 	--sl-color-accent: #044ab4;
 	--sl-color-accent-high: #5090ff;
 	--sl-color-accent-low: #2a313e;
@@ -88,6 +88,10 @@ starlight-toc li {
 }
 
 .sl-markdown-content {
+	ul:not(:where(.not-content *)) > li {
+		list-style: disc inside;
+	}
+
 	tr:nth-child(2n):not(:where(.not-content *)) {
 		background-color: #191c24;
 	}
