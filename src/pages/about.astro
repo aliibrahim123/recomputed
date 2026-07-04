@@ -1,0 +1,49 @@
+---
+import { Code } from '@astrojs/starlight/components';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import { projects } from './projects.astro';
+
+let info = `
+> aboutfetch
+name: Ali Ibrahim
+birth: Late Summer 2006
+role: Undergraduate Student
+location: Lebanon
+
+favorites:
+	language: Rust
+	linux_distro: OpenSuse SlowRoll
+	cpu_architecture: arm64
+	programming_paradigm: trait oriented, matching and mapping
+
+domains: 
+	major: logic design, language design
+	minor: web development
+
+social: 
+	github: aliibrahim123
+	email: ali.ibrahim.dev.1548@gmail.com
+	reddit: u/ali_compute_unit
+
+workspace:
+	desktop environment: Plasma
+	ide: VSCode
+	terminal: Konsole
+	shell: fish
+	ai_assistant: Codeium
+
+milestones:
+	cpu_isas: TEEP, MEP
+	programming_languages: unimap, gramex
+	frameworks: neoview (x5)
+	data_formats: structom
+	project_count: ${projects.length}
+	article_count: ${(await getCollection('docs')).length}
+	devilish_creations: TEEP
+`.trim();
+---
+
+<StarlightPage frontmatter={{ title: 'about', template: 'splash' }}>
+	<Code code={info} lang="yaml" />
+</StarlightPage>
