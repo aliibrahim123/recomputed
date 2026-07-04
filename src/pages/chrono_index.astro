@@ -24,7 +24,10 @@ for (let [date, article] of dated) {
 		month_dir = { type: 'dir', children: new Map(), id: `${year}-${month}` };
 		year_dir.children.set(month, month_dir);
 	}
-	month_dir.children.set(`${day}: ${article.data.title}`, { type: 'file', path: article.id });
+	month_dir.children.set(`${day}: ${article.data.title}`, {
+		type: 'file',
+		path: '/recomputed/' + article.id,
+	});
 }
 
 let headings: MarkdownHeading[] = [];

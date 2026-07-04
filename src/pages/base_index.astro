@@ -18,7 +18,7 @@ for (let article of articles) {
 			dir = item.children;
 		}
 	}
-	dir.set(article.data.title, { type: 'file', path: article.id });
+	dir.set(article.data.title, { type: 'file', path: '/recomputed/' + article.id });
 }
 
 let headers: MarkdownHeading[] = [];

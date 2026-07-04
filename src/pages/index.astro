@@ -39,7 +39,7 @@ let highligted_projects = projects.filter((project) =>
 				latest_articles.map(([_, article]) => (
 					<li class="list-disc list-inside pl-2">
 						<a
-							href={'recomputed/' + article.id}
+							href={'/recomputed/' + article.id}
 							class="font-bold text-gray-2! hover:text-accent! transition-colors "
 						>
 							{article.data.title}
@@ -83,5 +83,5 @@ let highligted_projects = projects.filter((project) =>
 		<LinkCard href="/recomputed/projects" title="All" />
 	</div>
 	<hr /><div class="pb-2"></div>
-	<LinkCard title="About" href="./recomputed/about" />
+	<LinkCard title="About" href="/recomputed/about" />
 </StarlightPage>

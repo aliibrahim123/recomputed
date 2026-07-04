@@ -10,7 +10,7 @@ for (let article of articles) {
 	for (let tag of article.data.tags ?? []) {
 		if (!index.has(tag)) index.set(tag, { type: 'dir', id: tag, children: new Map() });
 		let dir = index.get(tag) as FSDir;
-		dir.children.set(article.data.title, { type: 'file', path: article.id });
+		dir.children.set(article.data.title, { type: 'file', path: '/recomputed/' + article.id });
 	}
 }
 
