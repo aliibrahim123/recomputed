@@ -33,6 +33,7 @@ export default defineConfig({
 				Head: './src/components/HeadOverride.astro',
 				ThemeProvider: './src/components/ForceDarkTheme.astro',
 				ThemeSelect: './src/components/EmptyComponent.astro',
+				TableOfContents: './src/components/TableOfContentOverride.astro',
 			},
 			expressiveCode: {
 				styleOverrides: {

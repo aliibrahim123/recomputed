@@ -62,6 +62,10 @@ h6 {
 	}
 }
 
+.right-sidebar .sl-container {
+	width: unset !important;
+}
+
 starlight-toc li {
 	& > a {
 		border-inline-start: 1px solid var(--sl-color-hairline-light);

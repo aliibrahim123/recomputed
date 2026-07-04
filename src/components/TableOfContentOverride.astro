@@ -1,0 +1,65 @@
+---
+import TableOfContents from '@astrojs/starlight/components/TableOfContents.astro';
+let entry = Astro.locals.starlightRoute.entry;
+let siteTitleHref = Astro.locals.starlightRoute.siteTitleHref;
+let { date, tags } = entry.data;
+let textContent = entry.body || '';
+
+let plainText = textContent.replace(/[#*_\[\]()`>]/g, '');
+let words = plainText.split(/\s+/).filter((word) => word.length > 0).length;
+let readTime = words / 200;
+
+const no_meta_routes = ['base_index', 'chrono_index', 'tag_index'].map(
+	(v) => `${siteTitleHref}/${v}`,
+);
+---
+
+{
+	!no_meta_routes.includes(Astro.url.pathname) && (
+		<div class="leading-normal">
+			{date && (
+				<div>
+					<span class="text-gray-1 font-bold ">Date: </span>
+					<span class="text-[0.9em]">{new Date(date).toISOString().split('T')[0]}</span>
+				</div>
+			)}
+			<div>
+				<span class="text-gray-1 font-bold">read time: </span>
+				<span class="text-[0.9em]">
+					{readTime.toFixed(readTime > 99 ? 0 : readTime > 9 ? 1 : 2)} min ({words} words)
+				</span>
+			</div>
+			{tags && (
+				<div>
+					<span class="text-gray-1 font-bold">tags: </span>
+					{tags.map((tag) => (
+						<a href={`${siteTitleHref}/tag_index#${tag}`} class="tag">
+							{tag}
+						</a>
+					))}
+				</div>
+			)}
+			<div class="pb-1" />
+		</div>
+	)
+}
+
+<TableOfContents />
+<style>
+	.tag {
+		display: inline-block;
+		padding: 0.3em 0.5em;
+		margin: 0 0.3em 0.3em 0;
+		background: var(--sl-color-bg-nav);
+		color: var(--sl-color-white);
+		border-radius: 0.75em;
+		font-weight: bold;
+		font-size: 0.8em;
+		border: 1px solid var(--color-gray-5);
+
+		&:hover {
+			color: var(--color-accent);
+			border-color: var(--color-accent);
+		}
+	}
+</style>

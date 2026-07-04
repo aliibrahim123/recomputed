@@ -1,5 +1,18 @@
 @import 'tailwindcss';
 
+@theme {
+	--color-accent: #5090ff;
+	--color-bg: #14171d;
+	--color-black: #090b0e;
+	--color-gray-6: #1d212b;
+	--color-gray-5: #252a37;
+	--color-gray-4: #2a313e;
+	--color-gray-3: #6b6f78;
+	--color-white: #f8fafc;
+	--color-gray-1: #e2e8f0;
+	--color-gray-2: #9baac0;
+}
+
 @view-transition {
 	navigation: auto;
 }
