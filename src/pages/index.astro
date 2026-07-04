@@ -11,7 +11,7 @@ let latest_articles = (await getCollection('docs'))
 	.slice(0, 5);
 
 let highligted_projects = projects.filter((project) =>
-	['UniMap', 'NeoView'].includes(project.name),
+	['UniMap', 'NeoView', 'MEP'].includes(project.name),
 );
 ---
 

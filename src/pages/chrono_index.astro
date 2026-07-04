@@ -27,21 +27,23 @@ for (let [date, article] of dated) {
 	month_dir.children.set(`${day}: ${article.data.title}`, { type: 'file', path: article.id });
 }
 
-let undated = new Map<string, FSItem>();
-for (let article of articles.filter((a) => !a.data.date)) {
-	undated.set(article.data.title, { type: 'file', path: article.id });
-}
-index.set('Undated', { type: 'dir', children: undated, id: 'undated' });
-
 let headings: MarkdownHeading[] = [];
 for (let [year, year_dir] of index.entries()) {
-	if (year === 'Undated') continue;
 	headings.push({ depth: 1, text: year, slug: year });
 	for (let month of (year_dir as FSDir).children.keys()) {
 		headings.push({ depth: 2, text: month, slug: `${year}-${month}` });
 	}
 }
-headings.push({ depth: 1, text: 'Undated', slug: 'undated' });
+
+let undated_articles = articles.filter((a) => !a.data.date);
+if (undated_articles.length) {
+	let undated = new Map<string, FSItem>();
+	for (let article of undated_articles) {
+		undated.set(article.data.title, { type: 'file', path: article.id });
+	}
+	index.set('Undated', { type: 'dir', children: undated, id: 'undated' });
+	headings.push({ depth: 1, text: 'Undated', slug: 'undated' });
+}
 ---
 
 <StarlightPage frontmatter={{ title: 'Chrono Index' }} headings={headings}>

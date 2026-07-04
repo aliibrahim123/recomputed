@@ -3,7 +3,21 @@ import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { z } from 'astro/zod';
 
-const tags = ['orange', 'blue', 'red', 'green', 'yellow', 'purple'] as const;
+const tags = [
+	'unimap',
+	'neoview',
+	'neocomp',
+	'madness',
+	'gramex',
+	'structom',
+	'mep',
+	'teep',
+	'language design',
+	'web',
+	'rust',
+	'js',
+	'ts',
+] as const;
 
 export const collections = {
 	docs: defineCollection({

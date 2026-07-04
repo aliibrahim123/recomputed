@@ -4,7 +4,6 @@ let entry = Astro.locals.starlightRoute.entry;
 let siteTitleHref = Astro.locals.starlightRoute.siteTitleHref;
 let { date, tags } = entry.data;
 let textContent = entry.body || '';
-
 let plainText = textContent.replace(/[#*_\[\]()`>]/g, '');
 let words = plainText.split(/\s+/).filter((word) => word.length > 0).length;
 let readTime = words / 200;

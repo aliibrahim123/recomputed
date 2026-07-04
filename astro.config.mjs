@@ -25,6 +25,10 @@ export default defineConfig({
 				{ link: 'base_index', label: 'Index' },
 				{ link: 'chrono_index', label: 'Chrono Index' },
 				{ link: 'tag_index', label: 'Tag Index' },
+				{
+					label: 'Web and UI',
+					items: [{ autogenerate: { directory: 'Web and UI', collapsed: false } }],
+				},
 			],
 			lastUpdated: true,
 			pagination: false,

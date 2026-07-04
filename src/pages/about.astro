@@ -6,14 +6,14 @@ import { projects } from './projects.astro';
 
 let info = `
 > aboutfetch
-name: Ali Ibrahim
-birth: Late Summer 2006
-role: Undergraduate Student
-location: Lebanon
+name: ali ibrahim
+birth: 2006
+role: undergraduate student
+location: lebanon
 
 favorites:
-	language: Rust
-	linux_distro: OpenSuse SlowRoll
+	language: rust
+	linux_distro: opensuse slowroll
 	cpu_architecture: arm64
 	programming_paradigm: trait oriented, matching and mapping
 
@@ -27,23 +27,23 @@ social:
 	reddit: u/ali_compute_unit
 
 workspace:
-	desktop environment: Plasma
-	ide: VSCode
-	terminal: Konsole
+	desktop environment: plasma
+	ide: vscode
+	terminal: konsole
 	shell: fish
-	ai_assistant: Codeium
+	ai_assistant: codeium
 
 milestones:
-	cpu_isas: TEEP, MEP
+	cpu_isas: teep, mep
 	programming_languages: unimap, gramex
 	frameworks: neoview (x5)
 	data_formats: structom
 	project_count: ${projects.length}
 	article_count: ${(await getCollection('docs')).length}
-	devilish_creations: TEEP
+	devilish_creations: teep
 `.trim();
 ---
 
-<StarlightPage frontmatter={{ title: 'about', template: 'splash' }}>
+<StarlightPage frontmatter={{ title: 'About', template: 'splash' }}>
 	<Code code={info} lang="yaml" />
 </StarlightPage>
