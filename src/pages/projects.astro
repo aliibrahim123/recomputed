@@ -84,9 +84,24 @@ for (let project of projects) {
 					<LinkCard title="GitHub" href={project.github} />
 					{project.doc && <LinkCard title="Docs" href={project.doc} />}
 					{project.intro && <LinkCard title="Intro Article" href={project.intro} />}
-					<LinkCard title="Articles" href={'./tag_index#' + project.tag} />
+					<LinkCard title="Articles" href={'/recomputed/tag_index#' + project.tag} />
 				</div>
 			</div>
 		))
 	}
+	<h2>To Be Refactored</h2>
+	<ul>
+		<li>
+			<span class="font-bold font-mono text-white text-xl">Structom: </span>enhance
+			expressivity and powerfullness.
+		</li>
+		<li><span class="font-bold font-mono text-white text-xl">Gramex: </span>add cursor.</li>
+	</ul>
+
+	<h2>Futue Projects</h2>
+	<ul>
+		<li>
+			<span class="font-bold font-mono text-white text-xl">ALoGate: </span>a logic simulator.
+		</li>
+	</ul>
 </StarlightPage>

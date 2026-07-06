@@ -1,7 +1,107 @@
 ---
 title: "NeoComp: LightWeight UI with a Unique Twist"
 description: An Introduction aout NeoComp
-date: 2026-07-04
+date: 2026-07-06
 tags: [neocomp, web, js]
 ---
-under construction
+
+import { AnchorHeader } from '@astrojs/starlight/components';
+
+it was well known, before it becomed a new ai model every week, there was a new js framework every week.
+
+<div class='*:mt-7.5! *:mb-2!'>
+# the modern js revolution 
+</div>
+
+it is impossible to not notice the massive js revolution that was ongoing in the past decade or 2, when the web was still viewed as a clanky document viewer powered by prehistoric and tapped togather tech, in a blink of an eye, copying the web bacame the norm, and js skyrocked to the stratosphere.
+
+while the web engines were neing engineerd into masterpeices, the frontend world was tackling a more higher level concept, making the ui definition more ergonomic, and they master it.
+
+while the rest of the world was building the interfaces the 90s way, the web world was pioneering the frontiers of ui inovation, ui becomed a clean mathematical formula declared in consize syntax with reactivity as the core foundation, supported by unmatched tooling with strict type-safety and highly intelligent ides, freactions were vanished, and developers flowed with their ui.
+
+it was a golden age and what it produce was even more reamrkable, a quick trip back to the stone ages with every page navigation, a sudden shutter on every click to remind you to upgrade your high end workstation, 10 megabyte worth of js just for a simple counter, and a ci pipeline that build an entire compiler toolchain as a build artifact.
+
+did we sell the lightwight and simplicity soul of javascript for the sake of removing 2 additional characters, actually yes.
+
+this is why I present NeoComp, a conceptual framework built to prove a point: for God's sake, dear frontend developers, the only remaining frontier is Descriptive UI, describing ui in plain English and letting AI generate the code on every route. If we just bring back those two characters, we can have it all, ergonomic declarative reactivity combined with the old school lightweightness of javascript in a unique way.
+
+With that introduction out of the way, lets dive into how we got here.
+
+# React
+## the old web
+Every sane person knows that JS was doomed from the start. Yet, it not only survived, it thrived. Why? Because it works. It is more than simple, capable and lightweight for a scripting language originally designed to add a quick touch of reactivity to a small, static site.
+
+This humble persona was clearly reflected in the old school UI boilerplates. The first UI libraries werent designed for complex, highly-architected applications, they were a few liners built for pure utility and minimal verbosity. Think jQuery, Backbone, and the like.
+
+however as time went on and ambitions growed more and more, the manual targeting elements and attaching listeners and updaters were quickly thrown out the window for the trendy `/MV.+/` family to arrive: **MVP**, **MVC**, **MVVM**, **MVT**, **HMVC**, **PAC**, **MVA**, **VIPER**, **MVVM-C**, **MV-Whatever**.
+
+This explosion of paradigms took over the web and made JavaScript less "scripty" and more "Javay." It forced OOP design patterns onto a language that didnt even have proper syntax for inheritance. It demanded a strict separation of concerns between the Model and the View, pushing developers to fight holy wars over which ideology best represented that goal, all while jQuery quietly continued to power the world.
+
+While this era was essential for the webs evolution as it elevating JavaScript from scribbles of scripts into real, architected applications, it focused entirely on structure and design, and ignored the real root of the issue. And out of that chaos, React was born to declare the web truly reactive.
+
+## why react won
+it is diffult to comprehend how react won this hard, how it turned a community full of OOP traditionalists to functional purists, they say it was the component model, other says it was jsx, some says it was the vdom, however if you actually look deeep into it, you will find the real cause was declarative reactivity to infinity and beyond.
+
+yes, we did have reactivity and magic, however it was just simple humble utility, the reactivity that react pioneered belongs to another world, one even most of modern frameworks cant even replicate in this simple syntax, the bindings are not reactive, the states are not either, the ui is the reactivity primitive.
+
+react transformed the components from naive manual binders into mathimaticaly pure ui functions, you dont construct ui, you compute it, you transfrom the state into ui blocks, and using native control flow you select and join them together, and with the power of components you step up the abstraction levels and compose the ui in your own declarative way, you are free to flow while react handle the rest.
+
+that reactivity paradigm was the real spark that begined and powered the modern js revolution, and with it the recent web copying phenomena, it was a miracle that we served with our best ideas and most shopisticated tools, along with our enginnering workshops and optimization jourinies. 
+
+however it cost us everything.
+
+## the cost of react reactivity
+react best silling point was its death sentence, react component model requires its code to rerun on every update, this is the only practicle way to handle coupled reactivity code, and is the most beutifull existintial curse you can gift to performance.
+
+while react components are meant to be lightweight pure and updated localy, the truth is that the react code is the app code, the components are full of side effects, and the global scope is connected by the tinies component in indirect ways.
+
+in most react application you encounter in the wild, any little click rerun megabytes worth of heavy app logic everytime, leading to serious shutters even on beavy workstations, and no, missery dont stop there, due to modern requirements, aggressive sources of updates invaded most apps, from complex animation to streaming content, 60 fpsing the shutter you love.
+
+a native guy would thank god he dont interact that much with the web, i would like to inform you that since of low cost of js devs, every heavy native application is being written in react, and not only that, react started to power and throttle the shells of the world predomining survilance system "windows".
+
+this my deer friend is called overrendiring hell, the source of the slugishness of the modern web, actually it must be called overupdating hell since the dom is being updated and rendered effeciently by react runtime and the browser rendering engine, just the app logic is the bottleneck, and that how react flee with this.
+
+react initially responded to this criticism by explaining that updating dom is the slowest part, and that it use a very optimized algorithym called reconciliation where 2 lightwight representation of ui are diffed togather and only necessary changes are made, this make react faster than manual code.
+
+first yes, the js engine is an engineering beast that is highly optimized for creating and managing millions of tiny objects, and the dom is slow if you trigger reflows, and react runtime is over engineerd for performance, second what is even the code react was comparing itself to.
+
+```js
+document.body.innerHTML = app(state);
+```
+
+now the image is more clear.
+
+## The Cost of React Reactivity
+React's best selling point was also its death sentence. The React component model requires its code to rerun on every single update. This is the only practical way to handle coupled reactivity code, but it is also the most beautiful existential curse you can gift to performance.
+
+While React components are meant to be lightweight, pure, and updated locally, the truth is that React code is the application code. The components are packed with side effects, and the global scope is connected to even the tiniest component in indirect ways.
+
+In most React applications you encounter in the wild, any little click reruns megabytes of heavy application logic every single time, leading to serious stutters even on heavy workstations. And no, the misery doesn't stop there. Due to modern requirements, aggressive sources of updates have invaded most apps, from complex animations to streaming content, 60-FPSing the stutters you love.
+
+A native developer would thank God they don't have to interact that much with the web. But I would like to inform you that because buisness appeals, almost every heavy native application is now being written in React. Not only that, but React has even started to power and throttle the shells of the world's predominant surveillance system: "Windows".
+
+This, my dear friend, is called over-rendering hell, the true source of the sluggishness of the modern web. Actually, it should be called over-updating hell, since the DOM is being updated and rendered efficiently by the browser rendering engine. The application logic itself is the bottleneck, and that is how React got away with this.
+
+### the vdom myth
+React initially responded to this criticism by explaining that updating the DOM is the slowest part of the process. and that React uses a highly optimized algorithm called reconciliation, where two lightweight representations of the UI are diffed together, and only the necessary changes are made. This, they claimed, made React faster than manual code.
+
+First, yes: the JS engine is an engineering beast that is highly optimized for creating and managing millions of tiny objects. Yes, the DOM is slow if you trigger layout reflows. And yes, the React runtime is heavily over-engineered for performance. 
+
+But second... what was the "manual code" that React was actually comparing itself to?
+
+```js
+document.body.innerHTML = app(state);
+```
+
+Now the image is a lot clearer.
+
+## the result of react reactivity
+react was our revolution against the traditional OOP verbosity and over abstractions, to the world of functional purity and declarative reactivity, however we reached so deep into delcarative reactivity that we becomed restrained by its computation complexity.
+
+just like how we reached into the better architectures of MVCs after the chaous that was the script era, and how we over fell in the OOP superperfection and overcategorization.
+
+this is just how evolution occurs and develop, we just need to push react to the better direction, by rethinking reactivity, and yeah, react becomed the new jquery, it becamed the default option and the most restrained one, rethinking react needs not just internal refactoring but flipping of ideology and phelosophy, a new react can coexist with the old one, but the mental frameworks we developed in the past decade will be grabaged away, and that is a push viable theoritically, impossible egonomicaly, and ongoing youthfully.
+
+# solid
+# ripple
+# neocomp
