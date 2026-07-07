@@ -50,27 +50,6 @@ that reactivity paradigm was the real spark that begined and powered the modern 
 
 however it cost us everything.
 
-## the cost of react reactivity
-react best silling point was its death sentence, react component model requires its code to rerun on every update, this is the only practicle way to handle coupled reactivity code, and is the most beutifull existintial curse you can gift to performance.
-
-while react components are meant to be lightweight pure and updated localy, the truth is that the react code is the app code, the components are full of side effects, and the global scope is connected by the tinies component in indirect ways.
-
-in most react application you encounter in the wild, any little click rerun megabytes worth of heavy app logic everytime, leading to serious shutters even on beavy workstations, and no, missery dont stop there, due to modern requirements, aggressive sources of updates invaded most apps, from complex animation to streaming content, 60 fpsing the shutter you love.
-
-a native guy would thank god he dont interact that much with the web, i would like to inform you that since of low cost of js devs, every heavy native application is being written in react, and not only that, react started to power and throttle the shells of the world predomining survilance system "windows".
-
-this my deer friend is called overrendiring hell, the source of the slugishness of the modern web, actually it must be called overupdating hell since the dom is being updated and rendered effeciently by react runtime and the browser rendering engine, just the app logic is the bottleneck, and that how react flee with this.
-
-react initially responded to this criticism by explaining that updating dom is the slowest part, and that it use a very optimized algorithym called reconciliation where 2 lightwight representation of ui are diffed togather and only necessary changes are made, this make react faster than manual code.
-
-first yes, the js engine is an engineering beast that is highly optimized for creating and managing millions of tiny objects, and the dom is slow if you trigger reflows, and react runtime is over engineerd for performance, second what is even the code react was comparing itself to.
-
-```js
-document.body.innerHTML = app(state);
-```
-
-now the image is more clear.
-
 ## The Cost of React Reactivity
 React's best selling point was also its death sentence. The React component model requires its code to rerun on every single update. This is the only practical way to handle coupled reactivity code, but it is also the most beautiful existential curse you can gift to performance.
 
@@ -95,13 +74,62 @@ document.body.innerHTML = app(state);
 
 Now the image is a lot clearer.
 
-## the result of react reactivity
-react was our revolution against the traditional OOP verbosity and over abstractions, to the world of functional purity and declarative reactivity, however we reached so deep into delcarative reactivity that we becomed restrained by its computation complexity.
+## the aftermath of react reactivity
+React was our revolution against traditional OOP verbosity and over-abstraction, carrying us into the world of functional purity and declarative reactivity. However, we dove so deep into declarative reactivity that we became restrained by its own computational complexity.
 
-just like how we reached into the better architectures of MVCs after the chaous that was the script era, and how we over fell in the OOP superperfection and overcategorization.
+It is exactly how we escaped the chaos of the early scripting era by fleeing to the structured architectures of MVC, only to fall too deeply in OOP hyper-perfection and over-categorization.
 
-this is just how evolution occurs and develop, we just need to push react to the better direction, by rethinking reactivity, and yeah, react becomed the new jquery, it becamed the default option and the most restrained one, rethinking react needs not just internal refactoring but flipping of ideology and phelosophy, a new react can coexist with the old one, but the mental frameworks we developed in the past decade will be grabaged away, and that is a push viable theoritically, impossible egonomicaly, and ongoing youthfully.
+This is how evolution occurs and develop. we must push react to the better direction, by rethinking reactivity. And yeah, React has indeed become the new jQuery. It is now the default option, and consequently, the most restrained one. Rethinking React requires more than just internal refactoring, it requires a complete flip of our ideology and philosophy.
 
-# solid
+A new react can easily coexist with the old react, but the mental frameworks we developed over the past decade will have to be garbage-collected. This shift is theoretically viable, economically impossible, youthfully ongoing.
+
+# Solid
+There have been many attempts to fix React and push the web forward over the past decade. Some tried to patch React with minor improvements, while others were revolutionary, packed with fresh ideas and energy. They dove deep into the depths of innovation and came up with brilliant concepts. The most successful and important of them all is **SolidJS**.
+
+Solid is a frontend framework developed by Ryan Carniato that focused on one thing: merging a React-style declarative UI with fine-grained reactivity, while keeping build steps to an absolute minimum. It successfully fulfilled its goal and pushed fine-grained reactivity back to the forefront of web development.
+
+## Fine-Grained Reactivity: The Best Reactivity
+Fine-grained reactivity is reactivity that is efficient and performant. It only runs the exact, required chunk of code on each update, unlike coarse reactivity, which runs more than needed, and sometimes, the entire application.
+
+While it may seem like a modern invention, fine-grained reactivity was invented before the web even existed. The most primitive form of binding you created back in the scripting era is, in fact, fine-grained reactivity. Most reactive solutions that relied on observables are fine-grained if they set up their dispatching correctly. In addition, compilers like Svelte emit raw, fine-grained reactive code under the hood.
+
+Solid didn't invent fine-grained reactivity, nor was it the first to push it to the web. What it did was much more brilliant: it incorporated it into a React-style declarative UI.
+
+## React-Style UI, the Solid Way
+Solid kept the declarative UI patterns we all adore. It maintained functional components, JSX template syntax, hooks, and a very similar overall developer feel.
+
+However, it flipped components from mathematical UI functions into builder functions. In Solid, a component runs exactly once to initialize the UI structure and its initial state, it also declare the bindings. After that, the component steps aside, passing full responsibility to the fine-grained reactivity engine, which dispatches updates in a highly efficient, targeted flow.
+
+If you look at a Solid code, you won't see much difference compared to the corresponding React code, mostly just naming changes. However, if you squeeze your eyes a little bit, you will notice that every reactive code is wrapped inside a closure. That is exactly how Solid achieves its fine-grained magic.
+
+## Improved Reactivity Primitives
+The primary and most crucial thing Solid transformed was reactive code separation. It took the massive, unorganized blob of reactive code and extracted it from the static code, slicing it into smaller, focused chunks with clear boundaries called effects.
+
+Effects are essentially why fine-grained reactivity is achievable. By isolating side effects, only the required snippets of reactivity are executed on an update. It freed us from the chaotic, disordered nature of React reactivity, where we were forced to rerun the entire application logic on every state change.
+
+In the spirit of improvement, Solid wrapped state in lightweight boxes called signals. Reactive state can not be act on like plain data, and Unlike frameworks that rely on heavy compilers and complex infrastructure to fake a rigidly controlled, "semi-vanilla" vibe, Solid took the honest, vanilla route of raw signals. 
+
+This route unlocked several essential capabilities, ranging from passing reactivity with data, accessing latest versions of state, triggering updates and most important tracking dependencies implicitly.
+
+## The Brilliance of Implicit Minimal Syntax
+Each effect holds a specific list of dependencies. However, manually declaring this list is verbose and highly prone to errors. Solid doesn't require manual declaration because it simply infers them. Magic? No, just engineering brilliance.
+
+Remember that signals know exactly when they are accessed. We can use this information to infer the dependencies during the effect's initial execution. This isn't magic or complex compiler analysis, it is just a clever, lightweight runtime trick.
+
+This single, life-saving detail summarizes Solid's philosophy and mission. It identified React's core problem, an over-pushed reactivity model that forced an ultra-heavy runtime and execution paradigm, and presented a solution showing how by slightly restraining it, we maintiain that elite level of declarativity while maintaining near-metal performance.
+
+Solid didn't enforce heavy restrictions, nor did it insanely increase the syntax load. It just added, or rather restored, a few basic characters: `state()`, `state(value)`, `() => state() * 2`, and `effect(() => console.log(state()))`. Not only did a few parentheses here and there solve our existential performance threat, but they also eliminated a ton of restrictions on us. We can even use signals across document boundaries.
+
+## The Reality of Fine-Grained Reactivity
+it is true that React's declarative power is out of this world, theoretically. In practice, negligible. React can handle any theoretical UI structure and render it efficiently with zero syntax overhead. But the actual, physical nature of the web is static structure, dynamic content.
+
+Every HTML page on the web has a fixed structure. What is dynamic are simple bindings and the occasional templated structure that gets added or removed, mostly hidden or shown using the power of CSS. And that is precisely where fine-grained reactivity shines. The only high-density structural changes are page transitions, and those belong to another document and another context entirely. Solid optimizes for real-world usage, not theoretical ideals.
+
+Solid didn't invent fine-grained reactivity. Inspired by Knockout, its calling was to bring fine-grained reactivity back to the mainstream, and it succeeded. Almost every modern JS framework has incorporated signals and fine-grained reactivity into its stack, even if only at the component level. Except React. 
+
+And if you look at the framework benchmarks, you will be glad to see most of the scores hovering right near the vanilla baseline, and sometimes, even beating it. Fine-grained reactivity really won.
+
+You might assume that potential, simple-yet-revolutionary innovations in UI frameworks plateaued after SolidJS. The reality is that we were just sitting on a local plateau. Soon, a new framework would come suddenly, creating ripples in the web world. It targeted not the already-mastered reactivity, but its closest friend: templating, and its very identity.
+
 # ripple
 # neocomp
