@@ -1,5 +1,5 @@
 ---
-title: "NeoComp: LightWeight UI with a Unique Twist"
+title: 'NeoComp: LightWeight UI with a Unique Twist'
 description: An Introduction aout NeoComp
 date: 2026-07-06
 tags: [neocomp, web, js]
@@ -9,9 +9,7 @@ import { AnchorHeader } from '@astrojs/starlight/components';
 
 it was well known, before it becomed a new ai model every week, there was a new js framework every week.
 
-<div class='*:mt-7.5! *:mb-2!'>
-# the modern js revolution 
-</div>
+<div class="*:mt-7.5! *:mb-2!"># the modern js revolution</div>
 
 it is impossible to not notice the massive js revolution that was ongoing in the past decade or 2, when the web was still viewed as a clanky document viewer powered by prehistoric and tapped togather tech, in a blink of an eye, copying the web bacame the norm, and js skyrocked to the stratosphere.
 
@@ -28,29 +26,113 @@ this is why I present NeoComp, a conceptual framework built to prove a point: fo
 With that introduction out of the way, lets dive into how we got here.
 
 # React
+
 ## the old web
+
 Every sane person knows that JS was doomed from the start. Yet, it not only survived, it thrived. Why? Because it works. It is more than simple, capable and lightweight for a scripting language originally designed to add a quick touch of reactivity to a small, static site.
 
-This humble persona was clearly reflected in the old school UI boilerplates. The first UI libraries werent designed for complex, highly-architected applications, they were a few liners built for pure utility and minimal verbosity. Think jQuery, Backbone, and the like.
+This humble persona was clearly reflected in the old school UI boilerplates. The first UI libraries werent designed for complex, highly-architected applications, they were a few liners built for pure utility and minimal verbosity. Think jQuery, Prototype.js, MooTools, and the like.
+
+```html
+<div id="counter">
+	<button class="dec">dec</button>
+	<span class="count-value">0</span>
+	<button class="inc">inc</button>
+</div>
+
+<script>
+	// the old days
+	$(document).ready(function () {
+		var count = 0;
+		var $countSpan = $('.count-value');
+
+		$('.dec').click(function () {
+			count--;
+			console.log('count: ', count);
+			$countSpan.text(count);
+		});
+
+		$('.inc').click(function () {
+			count++;
+			console.log('count: ', count);
+			$countSpan.text(count);
+		});
+	});
+</script>
+```
 
 however as time went on and ambitions growed more and more, the manual targeting elements and attaching listeners and updaters were quickly thrown out the window for the trendy `/MV.+/` family to arrive: **MVP**, **MVC**, **MVVM**, **MVT**, **HMVC**, **PAC**, **MVA**, **VIPER**, **MVVM-C**, **MV-Whatever**.
+
+```html
+<div id="counter"></div>
+<script>
+	// ah, this is a simple counter right?
+	const counterModel = new Backbone.Model({ count: 0 });
+	const CounterView = Backbone.View.extend({
+		el: '#counter',
+		events: {
+			'click .dec': function () {
+				counterModel.set('count', counterModel.get('count') - 1);
+			},
+			'click .inc': function () {
+				counterModel.set('count', counterModel.get('count') + 1);
+			},
+		},
+		initialize: function () {
+			this.$el.html(`
+				<button class="dec">dec</button>
+				<span>${this.model.get('count')}</span>
+				<button class="inc">inc</button>
+			`);
+
+			this.$count = this.$('.count-value');
+			this.listenTo(counterModel, 'change:count', this.updateCount);
+		},
+		updateCount: function (model, count) {
+			console.log('count: ', count);
+			this.$count.text(count);
+		},
+	});
+	new CounterView();
+</script>
+```
 
 This explosion of paradigms took over the web and made JavaScript less "scripty" and more "Javay." It forced OOP design patterns onto a language that didnt even have proper syntax for inheritance. It demanded a strict separation of concerns between the Model and the View, pushing developers to fight holy wars over which ideology best represented that goal, all while jQuery quietly continued to power the world.
 
 While this era was essential for the webs evolution as it elevating JavaScript from scribbles of scripts into real, architected applications, it focused entirely on structure and design, and ignored the real root of the issue. And out of that chaos, React was born to declare the web truly reactive.
 
 ## why react won
+
 it is diffult to comprehend how react won this hard, how it turned a community full of OOP traditionalists to functional purists, they say it was the component model, other says it was jsx, some says it was the vdom, however if you actually look deeep into it, you will find the real cause was declarative reactivity to infinity and beyond.
 
 yes, we did have reactivity and magic, however it was just simple humble utility, the reactivity that react pioneered belongs to another world, one even most of modern frameworks cant even replicate in this simple syntax, the bindings are not reactive, the states are not either, the ui is the reactivity primitive.
 
 react transformed the components from naive manual binders into mathimaticaly pure ui functions, you dont construct ui, you compute it, you transfrom the state into ui blocks, and using native control flow you select and join them together, and with the power of components you step up the abstraction levels and compose the ui in your own declarative way, you are free to flow while react handle the rest.
 
-that reactivity paradigm was the real spark that begined and powered the modern js revolution, and with it the recent web copying phenomena, it was a miracle that we served with our best ideas and most shopisticated tools, along with our enginnering workshops and optimization jourinies. 
+```jsx
+export default function Counter() {
+	const [count, setCount] = useState(0);
+
+	useEffect(() => {
+		console.log('count: ', count);
+	}, [count]);
+
+	return (
+		<div id="counter">
+			<button onClick={() => setCount(count - 1)}>dec</button>
+			<span>{count}</span>
+			<button onClick={() => setCount(count + 1)}>inc</button>
+		</div>
+	);
+}
+```
+
+that reactivity paradigm was the real spark that begined and powered the modern js revolution, and with it the recent web copying phenomena, it was a miracle that we served with our best ideas and most shopisticated tools, along with our enginnering workshops and optimization jourinies.
 
 however it cost us everything.
 
 ## The Cost of React Reactivity
+
 React's best selling point was also its death sentence. The React component model requires its code to rerun on every single update. This is the only practical way to handle coupled reactivity code, but it is also the most beautiful existential curse you can gift to performance.
 
 While React components are meant to be lightweight, pure, and updated locally, the truth is that React code is the application code. The components are packed with side effects, and the global scope is connected to even the tiniest component in indirect ways.
@@ -62,9 +144,10 @@ A native developer would thank God they don't have to interact that much with th
 This, my dear friend, is called over-rendering hell, the true source of the sluggishness of the modern web. Actually, it should be called over-updating hell, since the DOM is being updated and rendered efficiently by the browser rendering engine. The application logic itself is the bottleneck, and that is how React got away with this.
 
 ### the vdom myth
+
 React initially responded to this criticism by explaining that updating the DOM is the slowest part of the process. and that React uses a highly optimized algorithm called reconciliation, where two lightweight representations of the UI are diffed together, and only the necessary changes are made. This, they claimed, made React faster than manual code.
 
-First, yes: the JS engine is an engineering beast that is highly optimized for creating and managing millions of tiny objects. Yes, the DOM is slow if you trigger layout reflows. And yes, the React runtime is heavily over-engineered for performance. 
+First, yes: the JS engine is an engineering beast that is highly optimized for creating and managing millions of tiny objects. Yes, the DOM is slow if you trigger layout reflows. And yes, the React runtime is heavily over-engineered for performance.
 
 But second... what was the "manual code" that React was actually comparing itself to?
 
@@ -75,6 +158,7 @@ document.body.innerHTML = app(state);
 Now the image is a lot clearer.
 
 ## the aftermath of react reactivity
+
 React was our revolution against traditional OOP verbosity and over-abstraction, carrying us into the world of functional purity and declarative reactivity. However, we dove so deep into declarative reactivity that we became restrained by its own computational complexity.
 
 It is exactly how we escaped the chaos of the early scripting era by fleeing to the structured architectures of MVC, only to fall too deeply in OOP hyper-perfection and over-categorization.
@@ -84,11 +168,13 @@ This is how evolution occurs and develop. we must push react to the better direc
 A new react can easily coexist with the old react, but the mental frameworks we developed over the past decade will have to be garbage-collected. This shift is theoretically viable, economically impossible, youthfully ongoing.
 
 # Solid
+
 There have been many attempts to fix React and push the web forward over the past decade. Some tried to patch React with minor improvements, while others were revolutionary, packed with fresh ideas and energy. They dove deep into the depths of innovation and came up with brilliant concepts. The most successful and important of them all is **SolidJS**.
 
 Solid is a frontend framework developed by Ryan Carniato that focused on one thing: merging a React-style declarative UI with fine-grained reactivity, while keeping build steps to an absolute minimum. It successfully fulfilled its goal and pushed fine-grained reactivity back to the forefront of web development.
 
 ## Fine-Grained Reactivity: The Best Reactivity
+
 Fine-grained reactivity is reactivity that is efficient and performant. It only runs the exact, required chunk of code on each update, unlike coarse reactivity, which runs more than needed, and sometimes, the entire application.
 
 While it may seem like a modern invention, fine-grained reactivity was invented before the web even existed. The most primitive form of binding you created back in the scripting era is, in fact, fine-grained reactivity. Most reactive solutions that relied on observables are fine-grained if they set up their dispatching correctly. In addition, compilers like Svelte emit raw, fine-grained reactive code under the hood.
@@ -96,22 +182,43 @@ While it may seem like a modern invention, fine-grained reactivity was invented 
 Solid didn't invent fine-grained reactivity, nor was it the first to push it to the web. What it did was much more brilliant: it incorporated it into a React-style declarative UI.
 
 ## React-Style UI, the Solid Way
+
 Solid kept the declarative UI patterns we all adore. It maintained functional components, JSX template syntax, hooks, and a very similar overall developer feel.
 
 However, it flipped components from mathematical UI functions into builder functions. In Solid, a component runs exactly once to initialize the UI structure and its initial state, it also declare the bindings. After that, the component steps aside, passing full responsibility to the fine-grained reactivity engine, which dispatches updates in a highly efficient, targeted flow.
 
-If you look at a Solid code, you won't see much difference compared to the corresponding React code, mostly just naming changes. However, if you squeeze your eyes a little bit, you will notice that every reactive code is wrapped inside a closure. That is exactly how Solid achieves its fine-grained magic.
+```jsx
+export default function Counter() {
+	const [count, setCount] = createSignal(0);
+
+	useEffect(() => {
+		console.log('count: ', count());
+	});
+
+	return (
+		<div id="counter">
+			<button onClick={() => setCount(count() - 1)}>dec</button>
+			<span>{count()}</span>
+			<button onClick={() => setCount(count() + 1)}>inc</button>
+		</div>
+	);
+}
+```
+
+If you look at a Solid code, you won't see much difference compared to the corresponding React code, mostly just naming changes. However, if you squeeze your eyes a little bit, you will notice some extra parantheses for some reason. That is exactly how Solid achieves its fine-grained magic.
 
 ## Improved Reactivity Primitives
+
 The primary and most crucial thing Solid transformed was reactive code separation. It took the massive, unorganized blob of reactive code and extracted it from the static code, slicing it into smaller, focused chunks with clear boundaries called effects.
 
 Effects are essentially why fine-grained reactivity is achievable. By isolating side effects, only the required snippets of reactivity are executed on an update. It freed us from the chaotic, disordered nature of React reactivity, where we were forced to rerun the entire application logic on every state change.
 
-In the spirit of improvement, Solid wrapped state in lightweight boxes called signals. Reactive state can not be act on like plain data, and Unlike frameworks that rely on heavy compilers and complex infrastructure to fake a rigidly controlled, "semi-vanilla" vibe, Solid took the honest, vanilla route of raw signals. 
+In the spirit of improvement, Solid wrapped state in lightweight boxes called signals. Reactive state can not be act on like plain data, and Unlike frameworks that rely on heavy compilers and complex infrastructure to fake a rigidly controlled, "semi-vanilla" vibe, Solid took the honest, vanilla route of raw signals.
 
 This route unlocked several essential capabilities, ranging from passing reactivity with data, accessing latest versions of state, triggering updates and most important tracking dependencies implicitly.
 
 ## The Brilliance of Implicit Minimal Syntax
+
 Each effect holds a specific list of dependencies. However, manually declaring this list is verbose and highly prone to errors. Solid doesn't require manual declaration because it simply infers them. Magic? No, just engineering brilliance.
 
 Remember that signals know exactly when they are accessed. We can use this information to infer the dependencies during the effect's initial execution. This isn't magic or complex compiler analysis, it is just a clever, lightweight runtime trick.
@@ -120,16 +227,178 @@ This single, life-saving detail summarizes Solid's philosophy and mission. It id
 
 Solid didn't enforce heavy restrictions, nor did it insanely increase the syntax load. It just added, or rather restored, a few basic characters: `state()`, `state(value)`, `() => state() * 2`, and `effect(() => console.log(state()))`. Not only did a few parentheses here and there solve our existential performance threat, but they also eliminated a ton of restrictions on us. We can even use signals across document boundaries.
 
+```jsx
+export default function CrossCounter() {
+	let [count, setCount] = createSignal(0);
+
+	// this isnt crazy... relativly to javascript
+	let iframe = document.createElement('iframe');
+	let button = document.createElement('button');
+	button.onclick = () => setCount(count() + 1);
+	button.textContent = 'increment';
+	setTimeout(() => iframe.contentDocument?.body.append(button));
+
+	return (
+		<div>
+			count: {count()} {iframe}
+		</div>
+	);
+}
+```
+
 ## The Reality of Fine-Grained Reactivity
+
 it is true that React's declarative power is out of this world, theoretically. In practice, negligible. React can handle any theoretical UI structure and render it efficiently with zero syntax overhead. But the actual, physical nature of the web is static structure, dynamic content.
 
 Every HTML page on the web has a fixed structure. What is dynamic are simple bindings and the occasional templated structure that gets added or removed, mostly hidden or shown using the power of CSS. And that is precisely where fine-grained reactivity shines. The only high-density structural changes are page transitions, and those belong to another document and another context entirely. Solid optimizes for real-world usage, not theoretical ideals.
 
-Solid didn't invent fine-grained reactivity. Inspired by Knockout, its calling was to bring fine-grained reactivity back to the mainstream, and it succeeded. Almost every modern JS framework has incorporated signals and fine-grained reactivity into its stack, even if only at the component level. Except React. 
+Solid didn't invent fine-grained reactivity. Inspired by Knockout, its calling was to bring fine-grained reactivity back to the mainstream, and it succeeded. Almost every modern JS framework has incorporated signals and fine-grained reactivity into its stack, even if only at the component level. Except React.
 
 And if you look at the framework benchmarks, you will be glad to see most of the scores hovering right near the vanilla baseline, and sometimes, even beating it. Fine-grained reactivity really won.
 
 You might assume that potential, simple-yet-revolutionary innovations in UI frameworks plateaued after SolidJS. The reality is that we were just sitting on a local plateau. Soon, a new framework would come suddenly, creating ripples in the web world. It targeted not the already-mastered reactivity, but its closest friend: templating, and its very identity.
 
-# ripple
+# Ripple
+
+**Ripple.ts** is a frontend framework developed by Dominic Gannaway that emerged in September 2025. It arrived and shocked the web world with a concept that targeted the very heart of JSX, a concept that promised to skyrocket the expressiveness of our templates and eliminate their decade-old restrictions.
+
+It was born to provide a highly capable solution to the decade-old problem.
+
+## JSX is Kinda Limiting
+
+Before discussing the limitations of JSX, let's dive into some historical trivia.
+
+In simple terms, JSX is JavaScript + HTML expressions. Formally, it utilizes angle-bracket delimiters in primary expressions to introduce HTML syntax to ECMAScript, using minor additions like the `{}` embedded expression syntax.
+
+Writing HTML inside JavaScript was pushed to the mainstream by Facebook with React, but its roots are buried deep in web history. other than the template strings and the recent tagged `html` literals, JavaScript actually supported HTML comments (`<!-- comment -->`). Even ECMAScript 4 tried to introduce native XML syntax to the language through **E4X** (ECMAScript for XML), the true precursor to JSX (JavaScript XML).
+
+```jsx
+default xml namespace = "http://www.w3.org/1999/xhtml";
+
+let active = true;
+var database = <users>
+  <user id="101" role="guest">
+    <name>Alice</name>
+    <status>inactive</status>
+  </user>
+  <user id="102" role="user">
+    <name>Bob</name>
+    <status>{active}</status>
+    <tags>
+      <tag>newbie</tag>
+    </tags>
+  </user>
+</users>;
+
+// XPath running natively in JS
+print(database..user.(name == "Bob").tags.tag);
+database..user.(@id == "101").@role = 'admin';
+database..user.(name == "Alice") += <profile><bio>Joined today!</bio></profile>;
+database..user.(@id == "101").* = "Access Revoked";
+```
+
+The primary limitation of JSX stems from the fact that its embedded expressions must be expressions. While JS expressions are powerful, even allowing to declare classes inline, JavaScript, like the majority of C-style languages, is statement-oriented, not expression-oriented. Consequently, its expression-based control flow is incredibly lacking. It cannot go beyond a single level of ternary depth, and it completely lacks looping or jumping expressions.
+
+The awkward moments we all experience in JSX when trying to implement anything more complicated than a simple binding are symptoms of this design. The lack of control-flow expressions leads to the extreme abuse of the ternary operator, logical operators, and `Array.map`, resulting in the indentation hell pre-bundled with every slightly complex JSX component.
+
+```jsx
+// in someplaces if you passed the 3 ident depth mark you are killed.
+// here the ident itself trigger word wrap and life is good
+export function JSXHell({ items }) {
+	return (
+		<div>
+			{items.length
+				? items.map((item) => (
+						<div>
+							<h1>{item.title}</h1>
+							{item.description && <p>{item.description}</p>}
+						</div>
+					))
+				: 'No items found.'}
+		</div>
+	);
+}
+
+// the only solution, OOP inspired overabstraction
+function JSXHellItem({ title, description }) {
+	return (
+		<div>
+			<h1>{title}</h1>
+			{description && <p>{description}</p>}
+		</div>
+	);
+}
+export function JSXHell2({ items }) {
+	return (
+		<div>
+			{items.length ? items.map((item) => <JSXHellItem {...item} />) : 'No items found.'}
+		</div>
+	);
+}
+```
+
+## Statements in Templates
+
+If we don't have good control-flow expressions, why not just the statements? While it sounds bizarre at first, it is actually possible, syntactically beautiful, potentially powerful, and serves as the headline selling feature of Ripple: the statement container `@{}`.
+
+Conceptually, the statement container is a block expression that can be placed as a JSX child. It is a block composed of multiple statements of any kind, from expressions to control flow to even declerations. It can host its own local variables, and it must end with a JSX expression.
+
+If you visualize how this works, a smile will likely appear on your face. The restrictive limitation of only component-scope logic vanishes. At any point in your template, you can open a block and write that specific section's state and helper logic directly inline with its structure. You can nest this infinitely deep, the only limitation is your own indentation redline.
+
+```TSRX
+export function Example() {
+	return <div>
+		<h1>counter</h1>
+		@{
+			let &[count] = track(0);
+			<>
+				<button onClick={() => count--}>dec</button>
+				<span>{count}</span>
+				<button onClick={() => count++}>inc</button>
+			</>
+		}
+		<h1>inputter</h1>
+		@{
+			let &[text] = track('');
+			<>
+				<input onInput={(e) => text = e.target.value} />
+				<span>{text}</span>
+			</>
+		}
+	</div>;
+}
+```
+
+Additionally, you can use native control flow statements prefixed with `@`. They work exactly as expected, except they are reactive, with their blocks acting as statement containers.
+
+```TSRX
+export default function App() @{
+	let list = new RippleArray();
+
+	let i = 0;
+	setInterval(() => list.push(i++), 1000)
+
+	<div>
+		@for (let item of list) {
+			<>
+				<div>{item}</div>
+				@if (item % 3 == 2) { <hr/> }
+			</>
+		}
+	</div>
+}
+```
+
+This is one of the biggest revolutions in the history of JSX and templating as a whole. It unlocked a massive wave of architectural potential, enabled flexible patterns, and made nesting components effortless. Yet, like most inventions, it has a slight but noticeable catch.
+
+## Non-Standard Syntax
+
+The JS developer community loves adding new syntax to the language. While extending the language adds a ton of usefulness and expressiveness, it has the major drawback of being non-standard. This breaks everything consuming the language, the runtimes, formatters, linters, editors, and the broader tooling ecosystem.
+
+While these issues can be resolved by a custom build step, and our tools can be configured to support those extensions, with some even becoming semi-standardized, like TypeScript and JSX, they still remain non-vanilla.
+
+I respect the designers of these extensions from the bottom of my heart. TypeScript, for example, is a core feature that should have been native to JavaScript two and a half decades ago. However, non-standard extensions kill the basic promise of JavaScript: the ability to run everywhere. They also prevent us from benefiting from the collective engineering of platform layer, the browser and engine maintainers.
+
+Fortunately, some of these non-standard complications can be eliminated entirely... using only three extra characters.
+
 # neocomp

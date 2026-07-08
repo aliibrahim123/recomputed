@@ -6,6 +6,10 @@ import linksValidator from 'starlight-links-validator';
 import autoDrafts from 'starlight-auto-drafts';
 import { starlightBasePath } from 'starlight-base-path';
 
+let tsrx_grammer = await fetch(
+	'https://raw.githubusercontent.com/Ripple-TS/ripple/refs/heads/main/grammars/textmate/ripple.tmLanguage.json',
+).then((res) => res.json());
+
 export default defineConfig({
 	site: 'https://aliibrahim123.github.io',
 	base: '/recomputed/',
@@ -40,6 +44,7 @@ export default defineConfig({
 				TableOfContents: './src/components/TableOfContentOverride.astro',
 			},
 			expressiveCode: {
+				shiki: { langs: [tsrx_grammer] },
 				styleOverrides: {
 					borderRadius: '0.5rem',
 					frames: {
