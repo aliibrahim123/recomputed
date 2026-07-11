@@ -1,15 +1,13 @@
 ---
 title: 'NeoComp: LightWeight UI with a Unique Twist'
 description: An Introduction aout NeoComp
-date: 2026-07-06
+date: 2026-07-11
 tags: [neocomp, web, js]
 ---
 
-import { AnchorHeader } from '@astrojs/starlight/components';
-
 it was well known, before it becomed a new ai model every week, there was a new js framework every week.
 
-<div class="*:mt-7.5! *:mb-2!"># the modern js revolution</div>
+<div class="*:mt-7.5! *:mb-2!">the modern js revolution</div>
 
 it is impossible to not notice the massive js revolution that was ongoing in the past decade or 2, when the web was still viewed as a clanky document viewer powered by prehistoric and tapped togather tech, in a blink of an eye, copying the web bacame the norm, and js skyrocked to the stratosphere.
 
@@ -31,7 +29,7 @@ With that introduction out of the way, lets dive into how we got here.
 
 Every sane person knows that JS was doomed from the start. Yet, it not only survived, it thrived. Why? Because it works. It is more than simple, capable and lightweight for a scripting language originally designed to add a quick touch of reactivity to a small, static site.
 
-This humble persona was clearly reflected in the old school UI boilerplates. The first UI libraries werent designed for complex, highly-architected applications, they were a few liners built for pure utility and minimal verbosity. Think jQuery, Prototype.js, MooTools, and the like.
+This humble persona was clearly reflected in the old school UI boilerplates. The first UI libraries werent designed for complex, highly-architected applications, they were a few liners built for pure utility and minimal verbosity. Think [jQuery](https://jquery.com), [Prototype.js](https://prototypejs.org), [MooTools](http://mootools.net), and the like.
 
 ```html
 <div id="counter">
@@ -99,7 +97,7 @@ however as time went on and ambitions growed more and more, the manual targeting
 
 This explosion of paradigms took over the web and made JavaScript less "scripty" and more "Javay." It forced OOP design patterns onto a language that didnt even have proper syntax for inheritance. It demanded a strict separation of concerns between the Model and the View, pushing developers to fight holy wars over which ideology best represented that goal, all while jQuery quietly continued to power the world.
 
-While this era was essential for the webs evolution as it elevating JavaScript from scribbles of scripts into real, architected applications, it focused entirely on structure and design, and ignored the real root of the issue. And out of that chaos, React was born to declare the web truly reactive.
+While this era was essential for the webs evolution as it elevating JavaScript from scribbles of scripts into real, architected applications, it focused entirely on structure and design, and ignored the real root of the issue. And out of that chaos, [React](https://react.dev) was born to declare the web truly reactive.
 
 ## why react won
 
@@ -169,7 +167,7 @@ A new react can easily coexist with the old react, but the mental frameworks we 
 
 # Solid
 
-There have been many attempts to fix React and push the web forward over the past decade. Some tried to patch React with minor improvements, while others were revolutionary, packed with fresh ideas and energy. They dove deep into the depths of innovation and came up with brilliant concepts. The most successful and important of them all is **SolidJS**.
+There have been many attempts to fix React and push the web forward over the past decade. Some tried to patch React with minor improvements, while others were revolutionary, packed with fresh ideas and energy. They dove deep into the depths of innovation and came up with brilliant concepts. The most successful and important of them all is [SolidJS](https://www.solidjs.com).
 
 Solid is a frontend framework developed by Ryan Carniato that focused on one thing: merging a React-style declarative UI with fine-grained reactivity, while keeping build steps to an absolute minimum. It successfully fulfilled its goal and pushed fine-grained reactivity back to the forefront of web development.
 
@@ -191,9 +189,7 @@ However, it flipped components from mathematical UI functions into builder funct
 export default function Counter() {
 	const [count, setCount] = createSignal(0);
 
-	useEffect(() => {
-		console.log('count: ', count());
-	});
+	createEffect(() => console.log('count: ', count()));
 
 	return (
 		<div id="counter">
@@ -212,6 +208,8 @@ If you look at a Solid code, you won't see much difference compared to the corre
 The primary and most crucial thing Solid transformed was reactive code separation. It took the massive, unorganized blob of reactive code and extracted it from the static code, slicing it into smaller, focused chunks with clear boundaries called effects.
 
 Effects are essentially why fine-grained reactivity is achievable. By isolating side effects, only the required snippets of reactivity are executed on an update. It freed us from the chaotic, disordered nature of React reactivity, where we were forced to rerun the entire application logic on every state change.
+
+moreover, effects are not limited to pure logic code, they are the engine of the simple bindings, when defining bindingns inside jsx, you encapsulate the computed expression inside a clojure, which in turn the template engine transform into an isolated effect.
 
 In the spirit of improvement, Solid wrapped state in lightweight boxes called signals. Reactive state can not be act on like plain data, and Unlike frameworks that rely on heavy compilers and complex infrastructure to fake a rigidly controlled, "semi-vanilla" vibe, Solid took the honest, vanilla route of raw signals.
 
@@ -248,7 +246,7 @@ export default function CrossCounter() {
 
 ## The Reality of Fine-Grained Reactivity
 
-it is true that React's declarative power is out of this world, theoretically. In practice, negligible. React can handle any theoretical UI structure and render it efficiently with zero syntax overhead. But the actual, physical nature of the web is static structure, dynamic content.
+it is true that React's declarative power is from another planet, theoretically. In practice, negligible. React can handle any theoretical UI structure and render it efficiently with zero syntax overhead. But the actual, physical nature of the web is static structure, dynamic content.
 
 Every HTML page on the web has a fixed structure. What is dynamic are simple bindings and the occasional templated structure that gets added or removed, mostly hidden or shown using the power of CSS. And that is precisely where fine-grained reactivity shines. The only high-density structural changes are page transitions, and those belong to another document and another context entirely. Solid optimizes for real-world usage, not theoretical ideals.
 
@@ -260,7 +258,7 @@ You might assume that potential, simple-yet-revolutionary innovations in UI fram
 
 # Ripple
 
-**Ripple.ts** is a frontend framework developed by Dominic Gannaway that emerged in September 2025. It arrived and shocked the web world with a concept that targeted the very heart of JSX, a concept that promised to skyrocket the expressiveness of our templates and eliminate their decade-old restrictions.
+[Ripple.ts](https://www.ripple-ts.com) is a frontend framework developed by Dominic Gannaway that emerged in September 2025. It arrived and shocked the web world with a concept that targeted the very heart of JSX, a concept that promised to skyrocket the expressiveness of our templates and eliminate their decade-old restrictions.
 
 It was born to provide a highly capable solution to the decade-old problem.
 
@@ -270,7 +268,7 @@ Before discussing the limitations of JSX, let's dive into some historical trivia
 
 In simple terms, JSX is JavaScript + HTML expressions. Formally, it utilizes angle-bracket delimiters in primary expressions to introduce HTML syntax to ECMAScript, using minor additions like the `{}` embedded expression syntax.
 
-Writing HTML inside JavaScript was pushed to the mainstream by Facebook with React, but its roots are buried deep in web history. other than the template strings and the recent tagged `html` literals, JavaScript actually supported HTML comments (`<!-- comment -->`). Even ECMAScript 4 tried to introduce native XML syntax to the language through **E4X** (ECMAScript for XML), the true precursor to JSX (JavaScript XML).
+Writing HTML inside JavaScript was pushed to the mainstream by Facebook with React, but its roots are buried deep in web history. other than the template strings and the recent tagged `html` literals, JavaScript actually supported HTML comments (`<!-- comment -->`). Even [ECMAScript 4](https://archives.ecma-international.org/2006/misc/es4lang-Jan06.pdf) tried to introduce native XML syntax to the language through [E4X](https://www-archive.mozilla.org/js/language/ECMA-357.pdf) (ECMAScript for XML), the true precursor to JSX (JavaScript XML).
 
 ```jsx
 default xml namespace = "http://www.w3.org/1999/xhtml";
@@ -297,7 +295,9 @@ database..user.(name == "Alice") += <profile><bio>Joined today!</bio></profile>;
 database..user.(@id == "101").* = "Access Revoked";
 ```
 
-The primary limitation of JSX stems from the fact that its embedded expressions must be expressions. While JS expressions are powerful, even allowing to declare classes inline, JavaScript, like the majority of C-style languages, is statement-oriented, not expression-oriented. Consequently, its expression-based control flow is incredibly lacking. It cannot go beyond a single level of ternary depth, and it completely lacks looping or jumping expressions.
+The primary limitation of JSX stems from the fact that its it returns a value and its embedded expressions must be expressions. While JS expressions are powerful, even allowing to declare classes inline, JavaScript, like the majority of C-style languages, is statement-oriented, not expression-oriented.
+
+Consequently, its expression-based control flow is incredibly lacking. It cannot go beyond a single level of ternary depth, and it completely lacks looping or jumping expressions.
 
 The awkward moments we all experience in JSX when trying to implement anything more complicated than a simple binding are symptoms of this design. The lack of control-flow expressions leads to the extreme abuse of the ternary operator, logical operators, and `Array.map`, resulting in the indentation hell pre-bundled with every slightly complex JSX component.
 
@@ -351,6 +351,7 @@ export function Example() {
 		<h1>counter</h1>
 		@{
 			let &[count] = track(0);
+			effect(() => console.log('count: ', count));
 			<>
 				<button onClick={() => count--}>dec</button>
 				<span>{count}</span>
@@ -402,3 +403,296 @@ I respect the designers of these extensions from the bottom of my heart. TypeScr
 Fortunately, some of these non-standard complications can be eliminated entirely... using only three extra characters.
 
 # neocomp
+
+now we had arrived at the main dish of this article, [neocomp](https://github.com/aliibrahim123/neocomp.js) is similar to every lightweight and vanilla modern framework, inspired by solid js, it is powered by fine grained reactivity, and uses tagged `html` literals for templating.
+
+## tagged literals
+
+tagged literials are normal functions called using the template literial syntax, they are the closest thing we have to native macros, while they cant introduce new global syntax, they can express any block syntax that is compatible with template literial, and html is from that family.
+
+some frameworks like [lit](https://lit.dev) and solid use this feature to create full vanila experience, contradictory to exeptions, they support full tooling: hightlighting, formatting and complete intellesence, and are even simpler to implement than syntax extensions.
+
+full jsx experience can be achieved all thanks to 3 character, the `` ` ` `` that delimite the html structure and `$` that prefix the embedded expressions, yet we love magic, even if it hunt our soul.
+
+```lit
+function Vanilla () {
+	let count = signal(0);
+	return html`<div>
+		<button on:click=${() => count.value--}>dec</button>
+		<span>${count}</span>
+		<button on:click=${() => count.value++}>inc</button>
+	</div>`;
+}
+```
+
+this would be a pretty great stack for lightweight vanilla framework, however with the arrival of ripple, template expression becomed old fashion, and statments in templates become the cool guy, so neocomp come up with a unique and innovative twist from the depth of imperative ui.
+
+## builder pattern
+
+the existenial quetion that inevitably comes to the mind is: why must the html structure behave like a value?
+
+almost every modern ui solution treats the ui as value returned by the component. the obvoius justification for this is to apply control flow over the ui and maintain more vanilla feel, however, we have already comprehended this ideology limitation in a statement oriented language.
+
+why not like everything in nature we adapt to out habitat and harness the power of the statements by quetioning the template primitive identity, and that what neocomp does using the builder pattern.
+
+we all used the builder pattern someway in our life, the builder pattern is any pattern that relies on implicit construction of structures though imperative api, the opposite of object composition where the structure is built explicity using native object initialization.
+
+```js
+// builder pattern
+let buf = [];
+buf.push('a');
+for (let i = 0; i < 10; i++) buf.push('b');
+if (some_cond) buf.push('c');
+let struct = buf.join(' ');
+
+// object composition
+let struct = build('a', Array(10).fill('b'), some_cond && 'c');
+```
+
+from the example you can derived several insights, the builder pattern is favored by imperative languages while the object composition is favored by the object oriented languages, the second is we didnt even consider the builder pattern because of its verbosity, and used object composition because it is more expressive.
+
+object composition is super expressive, however even in expression based language it has extremely rigid prettiness limits and if not controlled can transform into syntax monsters, contradictory, the builder pattern is less symbolicly expressive but very consistent, and if you glimps more, you might notice its power.
+
+neocomp doesnt just rely on builder pattern for everything since it is not invluenced by java, its `html` literials are exactly as the loved solid ones with some dialect defferencies, except they dont return the structre, the declared chunk is implicitly pushed into an internal more overall structure.
+
+```lit
+let { html, signal, effect } = build;
+
+let count = signal(0);
+effect(() => console.log(count.value));
+html`<div>
+	<button on:click=${() => count.value--}>dec</button>
+	<span>${count}</span>
+	<button on:click=${() => count.value++}>inc</button>
+</div>`;
+
+let text = signal('');
+html`
+	<input on:input=${(e) => (text.value = e.target.value)} />
+	<div>${text}</div>
+`;
+```
+
+if you still facinated from this primitive example, let me discuss it thourouly, neocomp borrowd the lightwight declarative html decleration from lit fuse it with the power of fine grained reactivity called by solid, and drive it with imperative construction based on the builder pattern, creating a unique harmony between the imperative and declarative paradigms, and totaly in vanilla js.
+
+## the powers of chunked construction
+
+neocomp call this revolutionary inovation chunked construction, and it is provide by builders called `ChunkBuild`s, this aprouch in templating adhere to the core principles of declarative reactive ui, however, it add its own twist of expressivity.
+
+the most obvious powerup is the localization of logic and structure, since ui is composed of multiple chunks, you are not forced to compley with a strict logic then ui blobs nor the delegation to mini and nano components, you just lay them sequencially inlined with their logic, exactly like in the prevous example.
+
+in addition, since the ui is drived by imperative construction, you can use any imperative control flow and even any imperative pattern, throw away the ternary madness or any other polite engineered primitive and just stick with the old pals the `if`, `for`, `while` and even the `switch` statements.
+
+```lit
+for (let i = 0; i < 10; i++) {
+	let count = signal(0);
+	html`<button on:click=${() => count.value++}>counter ${i}: ${count}</button>`;
+	if (i % 5 === 4) html`<br />`;
+}
+```
+
+while the corresponding structure is static not dynamic, as explained in the solid section, the only places that demand complex control flow are the initial ui structure not the simple bindings, and chunks can be created at demand even inside effects.
+
+as noted by ripple, having an expression block placable inside the template unlocks infinite mirits of expressivity and freedom, for that neocomp provide this functionality by just passing a clojure as a placeholder using syntax `<do ${() => { ... }}>`.
+
+the do blocks are executed at their deinition point in the structure and calls to `html` function target also that point, this transforms the chunk build from linear builder into tree builder where chunks can be nested infinitely deep, deepifing with them the localization ability.
+
+```lit
+let a = signal(0);
+html`
+	<button on:click=${() => a.value++}>a: ${a}</button>
+	<${() => {
+		let b = signal(0);
+		html`<button on:click=${() => b.value++}>b: ${b}</button>`;
+		html`<div>a + b = ${() => a.value + b.value}</div>`;
+		html`<div><${() => {
+			let c = signal(0);
+			setInterval(() => c.value++, 1000);
+			html`a + b * c = ${() => a.value + b.value * c.value}`;
+		}} /></div>`;
+	}}>
+`;
+```
+
+components were marketed as the revolutionary building block that started the modern js revolution, with them millions of mechanisim, patterns and rules arrived just from their mere existence, we accepted this reality as a regular cost of moderness, yet in neocomp there are no components, since there are no need for components
+
+the do block nuked every existential justification of nano components, the imperative chunked construction killed every convenience of utility components, neocomp is chunk oriented where you can pass the chunk build with complete freedom to any depth, the remeaning and real components are just normal functions that borrow the chunk build.
+
+```lit
+function counter (build, name) {
+	let count = build.signal(0);
+	build.html`<button on:click=${() => count.value++}>counter ${name}: ${count}</button>`;
+}
+
+html`<div><${() => {
+	for (let name of ['a', 'b', 'c']) counter(build, name);
+}}></div>`;
+```
+
+despite all this expressivity, neocomp chunk builds function like primitive utility, chunks can be build at demand with no specific rules, scopes or order simultanisly, asyncronously and even recursively, many advance functionality that tipically demand complex builtin utilities or sophisticated patterns are achieved here with the regular imperative logic in pure elegance.
+
+```js
+let pending = build.signal(true);
+let async_build = build.ctx.new_chunk(document.createElement('div'));
+build.html`${async_build} ${() => (pending.value ? 'pending' : '')}`;
+
+// execute in parallel
+(async () => {
+	let data = await fetch('/data.json').then((res) => res.json());
+	async_build.html`${data}`;
+	pending.value = false;
+})();
+```
+
+## lightweight vanilla
+
+steering at neocomps examples enrich you with the old school vanilla vibe, it feels like returning to your home village after decades living inside crowding city, yet this is not just ordinary feelings, this has real and forgetten abilities in being just vanilla.
+
+the primary one to come to the mind is direct runablity, while like every modern project it is written in typescript, a quick unconfigured dev server, bundler bundle, or any minified version laying in a cdn across the globe, gives you a quickly hope into coding neocomp apps will full featureset without manadory build step annoying you.
+
+it is true that majority codebases use the example config from the official frameworks docs and call it a day, however the quition is why an interpreted language comunity find it normal and regular in requiring production level compiler infrastructure just for a counter example.
+
+---
+
+even though neocomp is featurefull, having expressive html syntax, advance reactivity system and many chunk utilities (list rendering), its size is minuscule, wighting 3 kb gzip for counter example, 4 kb gzip for full featureset, and 5 kb gzip if runtime chunk parsing is enabled.
+
+---
+
+moreover, add to all this architectural flexibility dom flexibility, when a chunk is commited, you gain total control over it, you are free to reorder the elements as you wish since thanks to fine grained reactivity, there are no hidden internal mechanisim working on the generated dom, and the bindings target the target element by reference.
+
+who need portals when tranfering the chunk across document boundaries work perfectly fine exactly like any other ordinary thing.
+
+```js
+let exported = build.ctx.new_chunk(document.createElement('div'));
+let count = exported.signal(0);
+exported.html`<button on:click=${() => count.value++}>${count}</button>`;
+
+let iframe = document.createElement('iframe');
+build.html`${iframe}`;
+// just an ordinary day
+iframe.contentDocument?.body.append(exported.base_el);
+```
+
+featuring this vanilla lightweightness turns neocomp a good canidate for ilands and microfrontends. and to support that neocomp provide context based approuched where multiple ui systems can coexist completly independently in the same page, each having its bounded reactivity system.
+
+there are no global systems whatsoover, just local fully deterministec ui contexes that owns everything inside them, even its reactivity primitives, this is not a limitation, this is architectural freedom.
+
+```html
+<!-- old school scripts -->
+<script type="module">
+	import { Context } from 'https://some-cdn.com/neocomp.js';
+
+	function widget(chunk) {
+		let { signal, html } = chunk;
+
+		let count = signal(0);
+		html`<button on:click=${() => count.value++}>counter: ${count}</button>`;
+	}
+
+	let context = new Context(document.querySelector('.some-widget#w123'));
+	widget(context.root_chunk());
+</script>
+```
+
+```js title=''
+// modern moduled apps
+// context.js
+import { Context } from '@neocomp/core';
+
+let context = new Context(document.querySelector('#main'));
+export const { html, signal, effect, computed } = ctx.root_chunk();
+
+// counter.js
+import { html, signal } from './context.js';
+
+export function counter(name) {
+	let count = signal(0);
+	html`<button on:click=${() => count.value++}>counter ${name}: ${count}</button>`;
+}
+
+// app.js
+import { html } from './context.js';
+import { counter } from './counter.js';
+
+html`<div><${() => counter(1)} /></div>`;
+```
+
+the general essence of neocomp gives you multiple vipes, the old school vanilla vibe, the modern architectured vibe, and most weirdly a low level vibe.
+
+## an essence of low levelness
+
+to begin, i am not a web developer, i am not even a mid range developer, i am a person who detacated there life for logic desgin and language design.
+
+what made me develop a high level js framework? it was on my shelf from my old web days, sounding like decades old but actually ~2023.
+
+this is in essence a weekend port of a rust ui framework called neoview, neoview is neocomp but more lower, more robust and more rusty.
+
+```rs
+fn counter(build: &mut ChunkBuild, name: &str) {
+	let count = build.signal(0);
+	chunk!(build, button(
+		on.click: (move |ctx, _| ctx.update(count, |v| *v += 1))
+	) { format!("counter {name}: "), count });
+}
+
+let mut build = ctx.root_chunk();
+chunk!(build, div {
+    h3 { "Hello world!" }
+	for name in 'a'..='c' {
+		counter(build, name);
+	}
+});
+build.build();
+```
+
+this rust port background explain every thought you have on why the framework is full of entity component system patterns, imperative intensict optimizations and minimal douse of modern magic, the old shool scripter mintality is the default mentatily of low level engineerer quick hoping to the web.
+
+while this new iteration is neocomp is a rust port, neocomp actually has a rich history and multiple pervouis iterations sumerized by `web_history.reduce(v => v !== 'vdom').shuffel().join()`, it evoluved from [backbone](https://backbonejs.org/) era monstrosity to reasnable mid verbosity component classes, to the latest and most practical craziest coctail of paradigms.
+
+you have mid verbosity component classes with backbone vibe apis, deep state fine grained reactivity with imperative chunked construction, and there were no do blocks, you just break the template at any point, do some calculations, then continue normaly like nothing ever happened, just your teammates will be tramidized after reading your code.
+
+{/* prettier-ignore */}
+```js
+// a middle ground for everyone
+class Counter extends Component {
+	constructor() {
+		super();
+		const { html } = this.createTop();
+
+		html`<div>`; for (let name of ['a', 'b', 'c']) {
+			let count = this.signal(0);
+			html`<button on:click=${() => count.value++}>count: ${count}</button>`;
+		} html`</div>`;
+
+		this.fireInit();
+	}
+}
+```
+
+# javascript, quicky beuty
+
+it is impossible to emphizise sheer absurdity of JavaScript. how a language a brainf\*ck style language was an emergend property of its quirkiness yet casually powing the entire web, a language where imutability is mutable, optimizable to bare metal, a language its bugs are at line -42, and its typed superset can run doom in its types, a language build for exotic madness, the language of next gen expressivity.
+
+the language that encompassed the modern web revolution, yet we established sophistically complecated mechanisims, compiler infrastructure, language extensions, overengineered patterns, and abtracted dark magic just to work with it while we hide on another planet.
+
+why use javascript while not using javascript, why build towers, fortresses and bastions around a language that its quirkeness is detreministic, if it work, it work, and its quirkness is a side effect of its expressivity and forgivness.
+
+while `{} + [] === 0` is devilish logic and a trillion dolar mistake, all of js quirkness is a sideeffect of implicit conversions created to help non programmers creating their site with ease, `1 + '1' == '2'`, and what remains is a very capable, expressive and powerful language that can do what mandad deep runtime interfaces in other language using regular normal js.
+
+```js
+if (!globalThis.Temporal) globalThis.Temporal = TemporalPolyfill;
+```
+
+neocomp is a ginuint call to harness javascript uniqueness for more benifits, and not escape from it with overcomplicated abstractions that only overload the mind, by being humble like the humble javascript, we can merge all of our inovations in declarative reactivity with the powerfull imperative chunked construction, creatig a unique harmony between the imperative and declarative paradigms.
+
+and the twist, bring back these characters: `.value`, `() => {}`, `` html` ` ``, `$`, `build`.
+
+### the end
+
+hope you enjoyed this verly long yet informative ride in the history of web dev and the heart of framework design, and hope you take a little taste of vanilla javascript to colorify your ideologies and mentality.
+
+and for the future of neocomp, for now it is just a non production ready prototype and side project capable proof of concept, it will be hardly maintained since i am still an undergraduated student under development, yet it is in a good shape for now.
+
+i adore hearing your thoughts and feadbacks on this new paradigm, and if you like this work you might be interested in viewing more of my work.
+
+my last work before neoview was unimap a pure patttern matching language, and the last web related was teep a cpu implemented in typescript types.

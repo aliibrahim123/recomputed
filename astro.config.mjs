@@ -44,6 +44,7 @@ export default defineConfig({
 				TableOfContents: './src/components/TableOfContentOverride.astro',
 			},
 			expressiveCode: {
+				tabWidth: 4,
 				shiki: { langs: [tsrx_grammer] },
 				styleOverrides: {
 					borderRadius: '0.5rem',
