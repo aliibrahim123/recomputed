@@ -163,7 +163,7 @@ It is exactly how we escaped the chaos of the early scripting era by fleeing to 
 
 This is how evolution occurs and develops. We must push React in a better direction by rethinking reactivity. And yeah, React has indeed become the new jQuery. It is now the default option, and consequently, the most restrained one. Rethinking React requires more than just internal refactoring, it requires a complete flip of our ideology and philosophy.
 
-A new React can easily coexist with the old React, but the mental frameworks we developed over the past decade will have to be garbage-collected. This shift is theoretically viable, economically impossible, and youthfully ongoing.
+A new React can easily coexist with the old React, but the mental frameworks we developed over the past decade will have to be garbage-collected. Even though the React team has done a great job enhancing React and not breaking the web, Like React Fiber and React Compiler, they are just internal optimizations and not overall rethinking. Yet, the shift is theoretically viable, economically impossible, but youthfully ongoing.
 
 # Solid
 
@@ -514,11 +514,12 @@ html`
 `;
 ```
 
-Components were marketed as the revolutionary building block that started the modern JS revolution. With them, millions of mechanisms, patterns, and rules arrived just from their mere existence. We accepted this reality as a regular cost of modernity, yet in NeoComp, there are no components, since there is no need for components.
+Components were marketed as the revolutionary building block that started the modern JS revolution. With them, millions of mechanisms, patterns, and rules arrived just from their mere existence. We accepted this reality as a regular cost of modernity, yet in NeoComp, there are no Components, since there is no need for Components.
 
-The do block nuked every existential justification for nano components, and the imperative chunked construction killed every convenience of utility components. NeoComp is chunk-oriented where you can pass the chunk build with complete freedom to any depth. The remaining, real components are just normal functions that borrow the chunk build.
+The do block nuked every existential justification for nano Components, and the imperative chunked construction killed every convenience of utility Components. NeoComp is chunk-oriented where you can pass the chunk build with complete freedom to any depth. The remaining, real components are just normal functions that borrow the chunk build, not an abstract entity.
 
 ```lit
+// not a Component, but a component
 function counter (build, name) {
 	let count = build.signal(0);
 	build.html`<button on:click=${() => count.value++}>counter ${name}: ${count}</button>`;
