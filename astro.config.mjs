@@ -2,7 +2,6 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
-import linksValidator from 'starlight-links-validator';
 import autoDrafts from 'starlight-auto-drafts';
 import { starlightBasePath } from 'starlight-base-path';
 
@@ -56,7 +55,7 @@ export default defineConfig({
 					},
 				},
 			},
-			plugins: [linksValidator(), autoDrafts(), starlightBasePath()],
+			plugins: [autoDrafts(), starlightBasePath()],
 		}),
 	],
 	fonts: [
