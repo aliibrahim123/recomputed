@@ -1,0 +1,207 @@
+---
+title: 'NeoView: Robust and Safe UI'
+description: An Introduction for NeoView
+date: 2026-07-16
+tags: [neoview, web, rust]
+---
+
+rust is a very unique language, how a critical systems programming language feature extreme ergonomic and expressivity that rivals that of scripting languages. this traits had made rust the most desired language for low level domains, and recently it started expanding to higher level stuff, expecially web frontends.
+
+rust features noteable declarative reactive ui frameworks (Dioxus, Leptos, Yew, Sycamore...) that get inspired by javascript frameworks, and worked on porting their paradigms and concepts while adding the rusty flavour on them, and they absolutly succeded, untill you look inside.
+
+if you glimps inside these frameworks internals, you will see a world of `RC<RefCell<T>>` powering every primitive, furthermore, there are possibility for dangiling signals, yes under the hood of this declarativity masterpeices lies extreme architectural compormises.
+
+please note that these frameworks work as intended, there goal is to provide extremely ergonomic declarativity and with deep reactivity, their codebases is highly optimized for this as they target the web not os kernels, also dangiling signals are rare cases most will never ever encounter.
+
+yet we are in rust, we develop our codebases to be robust and performant, not for requirements, but because we can and because it is great, and if you dont bleive it, we can reframe thier ergonomics in a more robust, performant and rusty way, and that is what neoview does.
+
+## NeoView principles
+
+before diving into the technical twists neoview made lets provide an overwhole look into its philosophy.
+
+[neoview](/recomputed/projects#neoview) is a lightweight and modern declarative UI framework that prioritizes robustness, safety, and efficiency over complex runtime magic. it offers a practical middle ground in declarative UI design by providing ergonomic deeply reactive UI definitions that is aligned with Rust core principles.
+
+neoview pioritize performance and efficiency, it doesnt sacrifice the lightwightness spirit of the framework for the sake of few characters removals, yet it doesnt violate the reactivity principle for bare metal performance, it is optimized for unristricted and light fine grained reactivity, which cost regular collection access and slight runtime dispatch.
+
+neoview is renderer agnostic since it is nice to have, it is a family of renderers sharing the same reactive primitives, templating language and core phelosophy, but each has its own flavor regarding rendering primitives, implementations and supported platforms.
+
+# templating style
+
+depsite the countless variations of templating syntaxes and styles that were featured in rust ui crates, there consists of two main families: vanilla and macro.
+
+the vanilla family use native rust syntax in ui definitions, they have simpler learning curve, beutifull vanilla vibes, exprissivity and confertness of the language, and coexist incridibly well with the rest of the rust world since they are a unit of it.
+
+however if your ui primitives has slightly more diverse arguments, you will hit the wall of explicitness principle where the regular functions and structs become to limiting, leading you to abuse typles as a hetrogenous list, and depend on generic madness builders / type constructors dependeing on your own taste.
+
+```rust
+// this simple xilem counter
+fn app_logic(data: &mut Counter) -> impl WidgetView<Counter> + use<> {
+    flex(Axis::Vertical, (
+        label(format!("{}", data.num)),
+        text_button("increment", |data: &mut Counter| data.num += 1),
+    ))
+}
+
+// its return type is this monstrosity
+Flex<(Label, Button<impl Fn(&mut Counter), Label>), Counter>
+
+// and you can imagine how a complex component would be
+```
+
+on the other hand, they are the macro based style where you use the power of macros to hide the ui implementation details under whatever syntax beauty you can dream about, macros are expressive and higly ergonomic, and they are the goto choice of the majority of the frameworks.
+
+yet they are non standared syntax that every generic tooling will give up upon it, though through span coloring tech we can achieve excellent intellesence with highliting, hover discription, implementation goto and fully customizable complitions, but without a working formatting.
+
+```rust
+// use modules and init structs as meta items
+mod tags {
+	/// [`div`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div) html element
+	pub struct div;
+	// ...
+}
+
+macro_rules! el {
+	($tag:ident $($t:tt)*) => {{
+		// this noop is the magic
+		tags::$tag;
+		let el = __runtime::create_el(stringify!($tag));
+		// ...
+	}}
+}
+
+fn example () {
+	// `div` has unexpected intellesence
+	el!(div, /* .. */)
+}
+```
+
+neoview being a middle gorund provide boths, the macro style as the primary one since it is less symbolicly verbose, it is object styled to better align with the rust overall style, it also provide a type constructor native style primary for utility snippets, use what you like how you like.
+
+```rust
+chunk!(build, div {
+	h1 { "hello world" }
+	input(r#type: "text")
+	p(style.color: "red") { "i am a content" }
+});
+
+/// focus the element based on a reactive property
+fn focus(prop: PropId<bool>) -> impl Applicable {
+	move |build: &mut ChunkBuild| build.ref_el(move |ctx, el| {
+		// just mild web_sys verbosity
+		let el = el.clone().dyn_into::<HtmlElement>().unwrap();
+		ctx.effect(move |ctx| if ctx.get(prop) { el.focus().unwrap() });
+	});
+}
+build.apply(focus(show))
+
+// what is the `build`, that is the twist
+```
+
+# rethinked reactivity patterns
+
+## wrong primitives
+
+if you dive into it, you would trace all the overengineering occured in the reactive systems to a single primitive: the signals.
+
+signals in their right arent bad, they are even miracles, reactivity wrappers with no ristrictions on transportations and storage, their freedom in everything and minimal syntax are what created the huge ergonomics of todays reactive ui frameworks, yet their selling point was there fetal flaw.
+
+we are in a language where memory safety and clear ownership model are its identity, and you are trying to force primitives where that constrain is agianst their very spirit. how can you satisfy the borrow chicker with a nomad inherenlty unbounded using sane methods.
+
+the mechanisms developed by rustaceans for this dilemma are of 2 faces: naivly dump into `Rc<RefCell>` and call it a day, or engineer a global dispatcher where you dump the state into thread local arenas so the signals are just light `Copy`able ids.
+
+while the second one is actually incridibly great, achieving a pretty elegance solution for this trouble, however it has visible edge cases, no memory unsafety, even though signals are not pointers, they are indexes that can be dangeled if their ui scope is dropped. while this can be fixed with explicit scopes and owners, the signals remain unbounded values that can be used at any time, triggering safety panic on use after free, the thing rust borned to eliminate.
+
+the proposed solution, just through signals and use old school collection access patern.
+
+## collection access pattern
+
+multiple thoughts would come to the mind, what, how, isnt this against the ergonomics principle, to answer them lets dicuss what even is collection access pattern.
+
+collection access pattern is `store.read(prop)` instead of `prop.read()`, this quickly answer the ergonomics violation argument, it is just additional `store` at every access, while these 5 chars seems humble, they are the root of the entire crises.
+
+this approuche is exactly like the arena reactive system, the access primitive (`PropId`) is copyable index / id and the state is stored inside an arena, however the reactive system is not accessed though a hidden and mysterous link, it is passed explicitly, and now the borrow checker is praying for your parents.
+
+the issue decended from high level abstraction to ground level rust, the missing link is now explicit, the borrow checker can enforce its law, and the overengineered system can be regular collections, since the `Store` is passed by mutable reference, yes a deep and unrestrcited reactive system can and is build on this limitation, since all just take its trun.
+
+begining at the nano scale, how can the chaoitic state access be done though a single mutable referece? you use rust, you know how, there are multiple times where you pass with you a collection / context and read / mutate it at the fly, just like that.
+
+the fine grained reactivity system is just a collection, except its values are of independeble types, and it track the access and dispatch updates when it is free, plus it contain metadata and other items, but at the end of the day it is like any regular collection type.
+
+```rust
+let a = store.prop(1);
+let b = store.prop(String::from("abc"));
+let c = store.prop(true);
+
+// you can reference multiple properties tagather
+println!("{} {} {}", store.read(a), store.read(b), store.read(c));
+
+// you can write exactly one property while there are no active reference
+store.write(a, 2);
+
+// dont worry and enfore the read compute write pattern
+store.write(b, format!("{}: {}", store.read(b), store.read(a)));
+
+// just throw this pattern
+if false {
+	let a_value = store.read(a);
+	store.write(c, *a_value == 2);
+	store.write(b, a_value.to_string());
+}
+
+// you also have convinence methods
+let _: u64 = store.get(a);
+*store.read_mut(a) += 1;
+store.update(c, |v| *v ^= true);
+
+// this pattern covers 99.99% of the cases
+// however if you realy nead to mutate multiple properties at the same time
+let (a_value, b_value) = store.read_disjoint_mut((a, b));
+*a_value += 1;
+b_value.push_str("def");
+```
+
+accessing properties is fine, and for how the store is getten, you pass it to yourself, we love to praise the flixible and asyncrouness nature of our reactivity systems, but all architectered uis has predictible and syncroness logic flow triggered by events, passing the store is just extra identifier at each callsite, with no lifetime madness since properties are just ids.
+
+and before your code, the ui system will pass it to it, on creation, events and even inside effects, we already track the updated properties and dispatch them as one batch for performance reasons, so effect execution is a pridictable function call not interaccess chore, yes even the reactivity system is like you take its turn in state access.
+
+```rust
+let count = store.prop(0);
+store.effect(|ctx| println!("count: {}", ctx.get(count)));
+```
+
+wait a minute, what is `ctx`, nothing, just the entire ui system, we already pass the entire reactivity system around, so the entire ui system is the next on the list.
+
+## context passing
+
+while sounding absurd, it is identical to the store passing just more overwhole, and similar to it, all the paterns discussed above applies also here, it still an identifier passed around all ui creation / state access sites, to and from api functions, user functions and also effects.
+
+and for your calm, the most finiky part is the state access, and it is still highly ergonomic, in addition, all common reactivity methods are redirected by every context type through `StoreProv`. the remaining ui part is mostly push based, ui construction and bindings creation, and most input come in owned types just like events.
+
+much like what happened with the state access, the ui system gained an explicit lifetime, while most declarative ui frameworks gives the impression of supporting multiple ui systems, they are not independend, since the surface api is global exposing a global runtime, unlike in neoview where the ui systems are completly isolated and have enforced lifetime and boundries.
+
+even though the ui system is a single owned value, due to events it is not directly owned, the renderer is the true owner of the context and a handle is given to the user dectating the ui lifetime, furthermore mutable reference are created when needed with locks to ensure one mutator at once.
+
+```rust
+// same thing, but with explicit apis
+
+fn rest_counter (name: &str) -> impl View {
+	let count = signal(0);
+	effect(move || println!("count: {}", count.read()));
+	view! { button {
+		on.click: move || count.update(|v| *v += 1),
+		name, ": ", count
+	} }
+}
+
+fn neoview_counter (build: &mut ChunkBuild, name: &str) {
+	let count = build.prop(0);
+	build.effect(move |ctx| println!("count: {}", ctx.get(count)));
+	chunk!(build, button (
+		on.click: (move |ctx, _| ctx.update(count, |v| *v += 1)),
+	) { name, ": ", count });
+}
+```
+
+now the reactivity system is fully resolved, being explicit with stronger granduates and simpler internals, and to explain the misterous `ChunkBuild`, lets examine the identity of templating itself.
+
+# chunked construction

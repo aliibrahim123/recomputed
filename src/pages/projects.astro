@@ -1,5 +1,5 @@
 ---
-import { Icon, LinkCard } from '@astrojs/starlight/components';
+import { Aside, LinkCard } from '@astrojs/starlight/components';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import { getEntry } from 'astro:content';
 
@@ -32,6 +32,7 @@ export const projects: {
 		tag: 'neoview',
 		github: 'https://github.com/aliibrahim123/neoview.rs',
 		doc: 'https://docs.rs/neoview',
+		intro: '/recomputed/web-and-ui/neoview/intro',
 	},
 	{
 		name: 'NeoComp',
@@ -73,6 +74,7 @@ for (let project of projects) {
 ---
 
 <StarlightPage frontmatter={{ title: 'Projects', template: 'splash' }}>
+	<Aside>These projects are currently not production ready</Aside>
 	{
 		projects.map((project, ind) => (
 			<div class="bg-black p-5 rounded-[1em] border-2 border-gray-4">
@@ -105,7 +107,7 @@ for (let project of projects) {
 		</li>
 	</ul>
 
-	<h2>Futue Projects</h2>
+	<h2>Future Projects</h2>
 	<ul>
 		<li>
 			<span class="font-bold font-mono text-white text-xl">ALoGate: </span>a logic simulator.

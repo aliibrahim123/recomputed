@@ -8,6 +8,7 @@ let latest_articles = (await getCollection('docs'))
 	.filter((article) => !article.data.draft)
 	.map((article) => [new Date(article.data.date!), article] as [Date, typeof article])
 	.sort((a, b) => a[0].valueOf() - b[0].valueOf())
+	.reverse()
 	.slice(0, 5);
 
 let highligted_projects = projects.filter((project) =>
