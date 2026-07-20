@@ -27,7 +27,7 @@ neoview is renderer agnostic since it is nice to have, it is a family of rendere
 
 # templating style
 
-depsite the countless variations of templating syntaxes and styles that were featured in rust ui crates, there consists of two main families: vanilla and macro.
+all the countless variations of templating syntaxes and styles that were featured in rust ui crates, consists of two main families: vanilla and macro.
 
 the vanilla family use native rust syntax in ui definitions, they have simpler learning curve, beutifull vanilla vibes, exprissivity and confertness of the language, and coexist incridibly well with the rest of the rust world since they are a unit of it.
 
@@ -50,7 +50,7 @@ Flex<(Label, Button<impl Fn(&mut Counter), Label>), Counter>
 
 on the other hand, they are the macro based style where you use the power of macros to hide the ui implementation details under whatever syntax beauty you can dream about, macros are expressive and higly ergonomic, and they are the goto choice of the majority of the frameworks.
 
-yet they are non standared syntax that every generic tooling will give up upon it, though through span coloring tech we can achieve excellent intellesence with highliting, hover discription, implementation goto and fully customizable complitions, but without a working formatting.
+macro has a big weakness being non standared syntax that every generic tooling will give up upon, though through span coloring tech we can achieve excellent intellesence with highliting, hover discription, implementation goto and fully customizable complitions, still a working formatting must be done manually.
 
 ```rust
 // use modules and init structs as meta items
@@ -103,13 +103,13 @@ build.apply(focus(show))
 
 if you dive into it, you would trace all the overengineering occured in the reactive systems to a single primitive: the signals.
 
-signals in their right arent bad, they are even miracles, reactivity wrappers with no ristrictions on transportations and storage, their freedom in everything and minimal syntax are what created the huge ergonomics of todays reactive ui frameworks, yet their selling point was there fetal flaw.
+signals in their right arent bad, they are even miracles, reactivity wrappers with no ristrictions on transportations and storage, their freedom in everything and minimal syntax are what created the huge ergonomics of todays reactive ui frameworks, though their selling point was there fetal flaw.
 
 we are in a language where memory safety and clear ownership model are its identity, and you are trying to force primitives where that constrain is agianst their very spirit. how can you satisfy the borrow chicker with a nomad inherenlty unbounded using sane methods.
 
 the mechanisms developed by rustaceans for this dilemma are of 2 faces: naivly dump into `Rc<RefCell>` and call it a day, or engineer a global dispatcher where you dump the state into thread local arenas so the signals are just light `Copy`able ids.
 
-while the second one is actually incridibly great, achieving a pretty elegance solution for this trouble, however it has visible edge cases, no memory unsafety, even though signals are not pointers, they are indexes that can be dangeled if their ui scope is dropped. while this can be fixed with explicit scopes and owners, the signals remain unbounded values that can be used at any time, triggering safety panic on use after free, the thing rust borned to eliminate.
+while the second one is actually incridibly great, achieving a pretty elegance solution for this trouble, it has visible edge cases, no memory unsafety, signals are not pointers, but are indexes that can be dangeled if their ui scope is dropped. while this can be fixed with explicit scopes and owners, the signals remain unbounded values that can be used at any time, triggering safety panic on use after free, the thing rust borned to eliminate.
 
 the proposed solution, just through signals and use old school collection access patern.
 
@@ -117,15 +117,13 @@ the proposed solution, just through signals and use old school collection access
 
 multiple thoughts would come to the mind, what, how, isnt this against the ergonomics principle, to answer them lets dicuss what even is collection access pattern.
 
-collection access pattern is `store.read(prop)` instead of `prop.read()`, this quickly answer the ergonomics violation argument, it is just additional `store` at every access, while these 5 chars seems humble, they are the root of the entire crises.
+collection access pattern is `store.read(prop)` instead of `prop.read()`, this quickly answer the ergonomics violation argument, it is just additional `store` at every access, also this is rust, a language explicit more than c, these 5 chars are nothing compared to other monstrosities we deal with, yet they are the root of the entire crises.
 
-this approuche is exactly like the arena reactive system, the access primitive (`PropId`) is copyable index / id and the state is stored inside an arena, however the reactive system is not accessed though a hidden and mysterous link, it is passed explicitly, and now the borrow checker is praying for your parents.
+this approuche is exactly like the arena reactive system, with the exception being passing the reactive system explicitly, now the borrow checker is praying for your parents, as the issue becomed ground level rust, it can enfore its laws, and the overengineered systems can be regular collections.
 
-the issue decended from high level abstraction to ground level rust, the missing link is now explicit, the borrow checker can enforce its law, and the overengineered system can be regular collections, since the `Store` is passed by mutable reference, yes a deep and unrestrcited reactive system can and is build on this limitation, since all just take its trun.
+the `Store` is passed by mutable reference, yes a deep and unrestrcited reactive system can and is build on this limitation, since all just take its turn, exactly like how you pass with you a collection / context and read / mutate it at the fly, the choatic state access should just be tamed.
 
-begining at the nano scale, how can the chaoitic state access be done though a single mutable referece? you use rust, you know how, there are multiple times where you pass with you a collection / context and read / mutate it at the fly, just like that.
-
-the fine grained reactivity system is just a collection, except its values are of independeble types, and it track the access and dispatch updates when it is free, plus it contain metadata and other items, but at the end of the day it is like any regular collection type.
+the fine grained reactivity system is just a collection, a super collection that have hetrogenous type values, track the access and dispatch updates when it is free, plus it contain metadata and other items, at the end of the day it is like any regular collection type.
 
 ```rust
 let a = store.prop(1);
@@ -177,12 +175,8 @@ while sounding absurd, it is identical to the store passing just more overwhole,
 
 and for your calm, the most finiky part is the state access, and it is still highly ergonomic, in addition, all common reactivity methods are redirected by every context type through `StoreProv`. the remaining ui part is mostly push based, ui construction and bindings creation, and most input come in owned types just like events.
 
-much like what happened with the state access, the ui system gained an explicit lifetime, while most declarative ui frameworks gives the impression of supporting multiple ui systems, they are not independend, since the surface api is global exposing a global runtime, unlike in neoview where the ui systems are completly isolated and have enforced lifetime and boundries.
-
-even though the ui system is a single owned value, due to events it is not directly owned, the renderer is the true owner of the context and a handle is given to the user dectating the ui lifetime, furthermore mutable reference are created when needed with locks to ensure one mutator at once.
-
 ```rust
-// same thing, but with explicit apis
+// notice any significant difference
 
 fn rest_counter (name: &str) -> impl View {
 	let count = signal(0);
@@ -202,6 +196,284 @@ fn neoview_counter (build: &mut ChunkBuild, name: &str) {
 }
 ```
 
-now the reactivity system is fully resolved, being explicit with stronger granduates and simpler internals, and to explain the misterous `ChunkBuild`, lets examine the identity of templating itself.
+much like what happened with the state access, the ui system gained an explicit lifetime, while most declarative ui frameworks gives the impression of supporting multiple ui systems, they are not independend, since the surface api is global exposing a global runtime, in neoview the ui systems are completly isolated and have enforced lifetime and boundries.
+
+due to events it is not directly owned, the renderer is the true owner of the context and a handle is given to the user dectating the ui lifetime, furthermore mutable reference are created when needed with locks to ensure one mutator at once.
+
+being explicit and explicitly mutable drastically simplifies the internals to the point it loses its aura, a control + click take you to the beating heart of the framework, and instead of ginourmess systems with hyper engineered mechanisms, you will find bare yet effective primitives.
+
+now the reactivity system is fully resolved, being explicit with stronger granduates and simpler internals, and to explain the misterous `ChunkBuild`, lets quition the identity of templating itself.
 
 # chunked construction
+
+## why ui as value
+
+lets begin with an existential question: why should the ui structures be returned as values.
+
+if we go back in history, the biggest milestone in declarative ui was and is still inlining the templates inside the master programming language. the transformation of templates from alien DSL blobs into regular language construct behaving and living like any ordinary language construct.
+
+so being a value expressions was the way to go, especially in expression based languages like rust, the ui difinition just declare the strcuture and its bindings, then harness the language native flow and existing mental model by just returning a value.
+
+```rust
+// differnet species, same semantics.
+let cond = true;
+let list = vec!["a", "b", "c"];
+
+let sub = "sub";
+format!("{} {} {sub}",
+	if cond { "true" } else { "false" },
+	list.iter().enumerate().map(|(i, item)| format!("{i}: {item}")),
+);
+
+let sub = view! { "sub" };
+view! {
+	if cond { "true" } else { "false" },
+	list.iter().enumerate().map(|(i, item)| view! { format!("{i}: {item}") }),
+	sub
+}
+```
+
+everyone addmits that that combo had served us exponentially well, expecially with powerfull patterns like the match expression, the iterator paradigm, and the less known the expression block, however try to create 3+ level deep structures and syntax nightmares emerges from the masterpeice of expressivity.
+
+```rust
+fn identation_to_infinity_and_beyond (list: &[&str]) -> impl View {
+	view! {
+		ol {
+			if list.is_empty() {
+				"no items"
+			}
+			else {
+				list.iter().enumerate().map(|(i, item)| view! {
+					li { format!("{i}: {item}") }
+				})
+			}
+		}
+	}
+}
+```
+
+the universal accepted solution for this problem is accepting word wrapping identation, or OOP inspired delegation into gazillion nano components, the neoview answer to this, freeing the ui using the builder pattern.
+
+## builder pattern
+
+the builder pattern is a common pattern in rust, it is any pattern that relies on the implicit construction of structures through an imperative API, the opposite of object composition, where the structure is built explicitly using object initialization syntax.
+
+neoview doesnt utilize the builder pattern in element creation as used by the majority of the ecosystem. it notices something remarkable in using the builder pattern as its name as an actual constructor of the ui structure.
+
+```rust
+// builder pattern
+let mut buf = vec![];
+buf.push('a');
+for i in 0..3 { buf.push('b'); }
+if (some_cond) { buf.push('c'); }
+let seq = buf.iter().collect::<String>();
+
+// object composition
+let seq = build([one('a'), repeat('b', 3), cond(some_cond, 'c')])
+```
+
+absolutly it looks verbose and completly unergonomic, however, it scales pretty well, extremely consistent in fact. and if you glimpse closer, you might notice its power. but it still inexpressive enough, so with object composition it get merged to unleash endless power.
+
+the template primitive in neoview behave exactly like other fine grained reactive declarative frameworks, the `chunk` macro takes ui difinitions of declarative object style syntax with hetroginous arguments and implicit bindings, and the twist, the constructed ui is not returned, it is pushed into internal more overall structure.
+
+```rust
+let count = build.prop(0);
+build.effect(move |ctx| println!("count: {}", ctx.get(count)));
+chunk!(build, button (
+	on.click: (move |ctx, _| ctx.update(count, |v| *v += 1))
+) { "counter: ", count });
+
+let text = build.prop("");
+chunk!(build,
+	input(on.input: (move |ctx, evt| {
+		let el = evt.target().unwrap().dyn_into::<HtmlInputElement>().unwrap();
+		ctx.write(text, el.value());
+	}))
+	div { "text: ", text }
+);
+```
+
+this primitive example sums neoview pretty well, it took the render context / draw call api from the graphics programming and fushed it with expressive ui definitions of declarative ui frameworks, merging the teaching of 2 schools on the opposing edges, and creating a unique harmony between imperative and declarative paradigms, unleashing the power of boths.
+
+## the power of chunked construction
+
+neoview calls this inovation chunked construction, and `ChunkBuild` is the builder that provide it, the `ChunkBuild` borrows the context, redirects the reactivity primitives though `StoreProv`, and return the context when it finishes.
+
+chunked construction ideolody seems completly unrelated to ui values at all, but in fact, they are very similar as both harness their expressivity by making their primitives a flowing value, and in chunk oriented construction it is the builder, that difference is the source of all chunked construction uniqueness.
+
+the primary powerup of chunk oriented construction is localization of logic and structure, since the ui is composed of multiple chunks, there are no requirement for strict "logic then UI" blobs, you can interleave them normally, it is even best practice for each ui section to locally define its logic around it as seen in the previous example.
+
+being imperative draw calls not type constructors, `chunk` calls can be used inside any native control flow, and even inside any imperative pattern, forget about required else block and overly long iterator chain, enforce the native flow expressions: `if`, `for`, `match` and even `while` and `loop`.
+
+```rust
+for i in 0..12 {
+	let count = build.prop(0);
+	chunk!(build,
+		button (
+			on.click: (move |ctx, _| ctx.update(count, |v| *v += 1))
+		) { "count ", i, ": ", count }
+
+		// control flow can be used directly inside chunk but only structure
+		match i % 6 {
+			2 => br(),
+			5 => hr(),
+			_ => {}
+		}
+	);
+}
+// note that these control flows are static not reactive
+```
+
+there are things in nature when you know them, you cant live without them, and expression blocks are one of them. in rust, expression blocks are statement blocks used as expressions, letting you insert a tiny local, multi statement snippet directly between expressions, every rustacean adores them, and neoview indeed has them.
+
+do blocks are code blocks executed at their definition place inside the struture, inside them `chunk` calls target the block point in the structures, this transforms the chunk build from a linear builder into a tree builder where chunks can be nested idefinitly, achieving ever deep logic structure localization.
+
+```rust
+chunk!(build, div {
+	h1 { "counter" }
+	do {
+		let count = build.prop(0);
+		chunk!(build, button (
+			on.click: (move |ctx, _| ctx.update(count, |v| *v += 1))
+		) { "count: ", count });
+		chunk!(build, div {
+			"count * 2 = ", move |ctx| ctx.get(count) * 2,
+			do { build.apply(show_if(move |ctx| ctx.get(count) > 0)) }
+		});
+	}
+});
+```
+
+components are the building block of most ui framework, literaly the only, every solution inside the framework will be a component, primitive ui constructs (dynamic flow, error boundry...), ui utility / design patterns, even state providers are also components for some reason.
+
+components were marketed as just an abstract concept, but due to implementations, they become the only scope, leading for their abuse.
+
+in neoview, there are no components, since there are no need for specific constructs for them, nano components and utility component can be just do blocks or utility functions, while the other real components are just regular functions that borrow the build.
+
+```rust
+fn counter(build: &mut ChunkBuild, name: char) {
+	let count = build.prop(0);
+	chunk!(build, button (
+		on.click: (move |ctx, _| ctx.update(count, |v| *v += 1))
+	) { name, ": ", count });
+}
+
+counter(build, 'a');
+chunk!(build, div {
+	for name in 'b'..='g' {
+		do { counter(build, name) }
+	}
+})
+```
+
+## true potential of chunked construction
+
+these features might seems unique for chunk oriented construction, but in reality, ui value pattern can achieve most of them effortlessly, espicially isolated chunks and expression blocks, semantically there are no restriction preventing them, yet strict logic then structure principle is rooted deeply inside the comunity intrinsics.
+
+```rust
+fn example () -> impl View {
+	let state_a = signal(0);
+	let section_a = view!{
+		button { onclick: move || state_a.update(|v| *v += 1), "a: ", state_a }
+	}
+
+	let state_b = signal(0);
+	set_interval(move || state_b.update(|v| *v += 1), 1000);
+	let section_b = view!{
+		"b: ", state_b
+	}
+
+	view! { section_a, section_b, {
+		let state_c = computed(move || state_a.read() + state_b.read());
+		view! { "a + b: ", state_c }
+	} }
+}
+```
+
+ui value pattern can do them with slightly more verbosity, but these arent even chunked construction true potential, ui value pattern has an existential curse being the requirement to be returned by every component, which lock it in a very restrictive syncroness flow, in neoview, chunks are spatially and temporally isolated.
+
+chunk builds being the flowing primitive lead to the usability of every possible imperative pattern, not only the famous control flows, every pattern you dream in, syncrouness or inside effects, asyncrouness, concurent and even recursive, the only limitation, an active mutable reference to the context.
+
+while that limitation seams very restrictive, one build can handle any static structure however ginourmess it is, moreover, the context is already borrowed implicitly from the chunk build on every reactive access, exactly like any ordinary field inside a mutabily borrowed struct.
+
+this fact can be used to enable the creation of mutliple isolated chunk builds across the call stack, each finishing before handing control back to the higherup build, and this mechanism is what drive many builtin utilities like `render_list`.
+
+```rust
+// chunk builds generally inherit the global scope.
+// but can have their own reactive scope if they get removed
+let removable = build.ctx().removable_chunk("div");
+counter(&mut removable);
+let (el, remover) = removable.build();
+let mut remover = Some(remover);
+chunk!(build, el, button(
+	on.click: (move |ctx, _| if let Some(remover) = remover.take() { remover.remove() })
+) { "remove counter" });
+```
+
+this pattern solve the majority of syncrouness cases, still there cant be multiple active chunks at the same time since only one context mutator can be alive, while other frameworks would opt to internal mutability and sohpistecated internals to allow multiple chunks, neoview always choose the plain solution in just hibernate the chunk build.
+
+when hibernating a chunk, it returns its dormant self and the context, at any point you can wake it up by giving it the context and continue where you left, this transfer the ownership trobules into the context, which is the only one responsible and equiped for that madness, and now chunk construction true potential had been unlocked.
+
+```rust
+// this is theoritical for now since the only renderer implemented is syncroness not requiring this mechanism
+
+async fn async_content (parent: &mut ChunkBuild) {
+	let mut build = parent.ctx().new_chunk(/* web_sys madness to construct a div */);
+	chunk!(build, "async content");
+	let (mut chunk_data, ctx) = build.hibernate();
+	let ctx_id = ctx.id();
+	chunk!(parent, chunk_data.base_el());
+
+	while let Some(content) = content_stream.next().await {
+		// wait for context since it may be used
+		let ctx = acquire_ctx(ctx_id).await;
+		let mut build = chunk_data.wake(ctx);
+		chunk!(build, content);
+		(chunk_data, _) = build.hibernate();
+	}
+
+	let ctx = acquire_ctx(ctx_id).await;
+	chunk_data.wake(ctx).build();
+}
+```
+
+## flixible internals
+
+other than the architectural flixibility neoview provide to users, it also provide more flixibility for renderer implementors.
+
+in ui value pattern the ui definitions returns values, which requires your rendering engine to be element object oriented, and if it is not of that nature, in most cases, the entire app logic will dissent from the stack to be render at the main function.
+
+```rust
+// plain intermediary structs
+// acceptable runtime overhead, easy implementation
+struct Element {
+	tag: String,
+	attrs: Vec<Attr>
+	children: Vec<Child>,
+}
+
+// type encoded structure
+// near metal performance, mad level implementation, monomorphization engine prays on you.
+struct Element<T: TagName, A: TupleList<Attr>, C: TupleList<Child>>;
+
+// counter type
+Element<Button, (Event<Click>)), (StaticText, SignalText)>
+```
+
+neoview take the opposite approch, the chunk build remains in place while its pointer travel around the app, and `chunk` macro directly write into the inner structure without any intermediary moves or meduims. there are no restriction as it is just direct calls, so your rendering engine flavor is the chunk build internals
+
+implementation freedom is a core part of neoview renderer agnostic principle, and chunked construction support the full spectrum of renderers paradigms, thee underlaying primitives can ranging from element objects to direct draw calls, if it behave as chunk, it is a chunk.
+
+while the curent selection of implemented renderers is tiny (only 1), it is enough to show this freedom versitality, in neoview web renderer, the ui definitions turns into buffers of bytecodes executed on the js side, and since `chunk` compiles into a series of calls, the codegen takes this local static and shallow calls and turns them into minimal memory stores, achieving the optimal efficiency inside wasm boundries.
+
+# just one identifier
+
+all this time we were passing around a single identifier, at first it was the reactive system, then it turned into the ui system, and lastly a chunk builder, with each turn it gathered more of the ui family until it grouped them all, however, did you feel the entire app ui under its weight.
+
+no, it was a light traveller around your codebase, an identifier whose only role was to link all of your ui logic with explicit links, while you were not looking, it drastically simplified the ui runtime and made it faster, robust, and more rusty, and that was one identifier, why was its species get bured.
+
+what made us dive that deep into the magnificent world of reactive declarativity, to the point we sold our technologies spirit just to watch another round of declarativity magic, removing yet another character. and like every magic trick, the character never actually vanished, it just moved under the stage, into the insfrastructures and runtimes that grew incredibly heavy and sophisticated to hide a few characters. energy cannot be destroyed, only entropy increases.
+
+lets just return to the healthy evolution track, and show the true identity of declarative reactivity, a humble trick, not a portal into a magical world, a trick which is a few lines of code, but holds on its shoulders the economy of our ergonomics. what it needs is just an identifier to link onto, to satisfy the borrow checker, our guard, not our enemy.
+
+and that was the tale of the `build` identifier, a small bit quietly wandering around your cpu and memory.

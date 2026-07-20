@@ -13,6 +13,7 @@ export default defineConfig({
 	site: 'https://aliibrahim123.github.io',
 	base: '/recomputed/',
 	trailingSlash: 'never',
+	output: 'static',
 	integrations: [
 		starlight({
 			title: 'ReComputed',
